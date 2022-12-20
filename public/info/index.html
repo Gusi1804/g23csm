@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Información y Formularios</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+
+    <style>
+        /* Tooltip container */
+        .tooltip {
+            position: relative;
+            display: inline-block;
+            border-bottom: 1px dotted black; /* If you want dots under the hoverable text */
+            opacity: 1;
+            z-index: auto;
+        }
+
+        /* Tooltip text */
+        .tooltiptext {
+            visibility: hidden;
+            width: 120px;
+            background: black;
+            color: rgb(255, 255, 255);
+            text-align: center;
+            padding: 5px 0;
+            border-radius: 6px;
+
+            /* Position the tooltip text - see examples below! */
+            position: absolute;
+            z-index: 1;
+
+            opacity: 1;
+        }
+
+        /* Show the tooltip text when you mouse over the tooltip container */
+        .tooltip:hover .tooltiptext {
+            visibility: visible;
+            opacity: 1;
+        }
+    </style>
+</head>
+<body>
+    <div class="container-sm py-5 text-center align-items-center justify-content-center">
+        <main>
+            <h1 class="pb-4">Información y Formularios</h1>
+
+            <!-- Reporte Financiero -->
+            <div class="row align-items-start">
+                <div class="col">
+                    <div class="card mb-4">
+                        <div class="card-header">
+                            Reporte Financiero Actual (25.10.22)
+                        </div>
+                        <div class="card-body">
+                            <div class="accordion" id="accordion">
+                                <!-- Balance -->
+                                <div class="accordion-item">
+                                    <h2 class="accordion-header" id="heading0">
+                                        <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapse0" aria-expanded="true" aria-controls="collapse0">
+                                            Balance Total
+                                        </button>
+                                    </h2>
+                                    <div id="collapse0" class="accordion-collapse collapse show" aria-labelledby="heading0" data-bs-parent="#accordion">
+                                        <div class="accordion-body">
+                                            <iframe width="477" height="296" seamless frameborder="0" scrolling="no" src="https://docs.google.com/spreadsheets/d/e/2PACX-1vRDTSQ2jdjnGL-4D5LP_6GcX8VxE2BER5cNT4kMsAsM58TsDB_twde1SqsyqVI6eqFRzouEteQP1znH/pubchart?oid=638408561&amp;format=interactive"></iframe>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Ganancias, Gastos, Ingresos, etc. -->
+                                <div class="accordion-item">
+                                    <h2 class="accordion-header" id="headingOne">
+                                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                                            Ganancias, Gastos e Ingresos
+                                        </button>
+                                    </h2>
+                                    <div id="collapseOne" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#accordion">
+                                        <div class="accordion-body">
+                                            <iframe width="681" height="486" seamless frameborder="0" scrolling="no" src="https://docs.google.com/spreadsheets/d/e/2PACX-1vRDTSQ2jdjnGL-4D5LP_6GcX8VxE2BER5cNT4kMsAsM58TsDB_twde1SqsyqVI6eqFRzouEteQP1znH/pubchart?oid=1098252038&amp;format=interactive"></iframe>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Ganancias por evento -->
+                                <div class="accordion-item">
+                                    <h2 class="accordion-header" id="heading2">
+                                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse2" aria-expanded="true" aria-controls="collapse2">
+                                            Ganancias por evento
+                                        </button>
+                                    </h2>
+                                    <div id="collapse2" class="accordion-collapse collapse" aria-labelledby="heading2" data-bs-parent="#accordion">
+                                        <div class="accordion-body">
+                                            <iframe width="395" height="296" seamless frameborder="0" scrolling="no" src="https://docs.google.com/spreadsheets/d/e/2PACX-1vRDTSQ2jdjnGL-4D5LP_6GcX8VxE2BER5cNT4kMsAsM58TsDB_twde1SqsyqVI6eqFRzouEteQP1znH/pubchart?oid=1243597318&amp;format=interactive"></iframe>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Estimación de dinero para viaje de acuerdo a # maestres invitades -->
+            <div class="row align-items-start">
+                <div class="col">
+                    <div class="card mb-4">
+                        <div class="card-header">
+                            Estimación de dinero para viaje de acuerdo a # maestres invitades
+                        </div>
+                        <div class="card-body">
+                            <table class="table">
+                                <thead>
+                                <tr>
+                                    <th># maestres con boleto pagado</th>
+                                    <th>Dinero para viaje por persona [ESTIMADO]</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr>
+                                    <td>10</td>
+                                    <td>$8,200.00</td>
+                                </tr>
+                                <tr>
+                                    <td>15</td>
+                                    <td>$7,900.00</td>
+                                </tr>
+                                <tr>
+                                    <td>20</td>
+                                    <td>$7,500.00</td>
+                                </tr>
+                                <tr>
+                                    <td>30</td>
+                                    <td>$6,700.00</td>
+                                </tr>
+                                <tr>
+                                    <td>40</td>
+                                    <td>$6,000.00</td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <div class="input-group">
+                                            <span class="input-group-text" id="label_1">Otro #</span>
+                                            <input type="number" class="form-control" placeholder="0" id="otros_invitados" oninput="update_res()" aria-label="Otro número">
+                                        </div>
+                                    </td>
+                                    <td id="otros_invitados_res">$9,039.01</td>
+                                </tr>
+                                </tbody>
+
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Invitades Graduación, Maestres Invitades y Fechas Graduación y Viaje -->
+            <!--
+            <div class="row align-items-start">
+                <div class="col">
+                    <div class="card mb-4">
+                        <div class="card-header">
+                            Invitades Graduación <a href="https://forms.gle/p13XYoMMeWpXLbHw7" target="_blank" class="btn btn-primary btn-sm">IR</a>
+                        </div>
+                        <div class="card-body">
+                            <p class="card-text">Encuesta para reportar aproximandamente cuántas personas vas a invitar a la graduación.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="card mb-4">
+                        <div class="card-header">
+                            Maestres invitades Graduación (anónimo) <a href="https://forms.gle/jT3jRidve6iPAdtB7" target="_blank" class="btn btn-primary btn-sm">IR</a>
+                        </div>
+                        <div class="card-body">
+                            <p class="card-text">Encuesta para elegir los maestros que vamos a invitar a la graduación.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="card mb-4">
+                        <div class="card-header">
+                            <span class="badge bg-success">Nuevo</span> Fechas de graduación y viaje <a href="https://forms.gle/htBJGrWF57JR7ryY8" target="_blank" class="btn btn-primary btn-sm">IR</a>
+                        </div>
+                        <div class="card-body">
+                            <p class="card-text">Encuesta para elegir las fechas de la graduación y del viaje de graduación.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            -->
+
+            <!-- Destinos Viaje -->
+            <div class="row align-items-start">
+                <div class="col">
+                    <div class="card mb-4">
+                        <div class="card-header">
+                            Destinos del Viaje
+                        </div>
+                        <div class="card-body">
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th>Destino</th>
+                                        <th>Costo del Vuelo/persona</th>
+                                        <th><div class="tooltip">Dinero Sobrante Para Hospedaje
+                                            <span class="tooltiptext">(10 maestros con boleto graduación pagado) [dinero total – vuelos] ¡ESTIMADO!</span>
+                                        </div></th>
+                                        <th><div class="tooltip">Hospedaje total (7 noches)
+                                            <span class="tooltiptext">¡ESTIMADO!</span>
+                                        </div></th>
+                                        <th><div class="tooltip">A pagar adicional por persona
+                                            <span class="tooltiptext">¡ESTIMADO!</span>
+                                        </div></th>
+                                        <th>Hospedaje propuesto</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>Nayarit</td>
+                                        <td>$1,800.00</td>
+                                        <td>$213,000.00</td>
+                                        <td>$251,000.00</td>
+                                        <td>$1,200.00</td>
+                                        <td><a href="https://www.airbnb.mx/rooms/731527173246480958?adults=16&check_in=2023-06-21&check_out=2023-06-28&federated_search_id=7cc69783-c279-4f8e-b8c3-322d0f4c7d88&source_impression_id=p3_1666748827_ekafcJcCCZNVyKqn" target="_blank">Link</a></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Costa Rica</td>
+                                        <td>$4,000.00</td>
+                                        <td>$141,000.00</td>
+                                        <td>$60,000.00</td>
+                                        <td><div class="tooltip">–$2,500.00
+                                            <span class="tooltiptext">¡Dinero sobrante!</span>
+                                        </div></td>
+                                        <td><a href="https://www.airbnb.mx/rooms/733808153922109787?adults=16&check_in=2023-06-21&check_out=2023-06-28&federated_search_id=1b1c8a27-3692-484d-843e-0e03353133df&source_impression_id=p3_1666790597_%2FfCxofQt6pE%2BuQoR" target="_blank">Link</a></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Los Cabos</td>
+                                        <td>$1,800.00</td>
+                                        <td>$214,000.00</td>
+                                        <td><div class="tooltip">$276,000.00
+                                            <span class="tooltiptext">¡Solo 16 camas!</span>
+                                        </div></td>
+                                        <td>$1,900.00</td>
+                                        <td><a href="https://www.airbnb.mx/rooms/2124300?adults=16&check_in=2023-06-21&check_out=2023-06-28&federated_search_id=1f0cf6dd-a069-4b98-b89e-5391d08394b4&source_impression_id=p3_1666791744_uh85wA8%2FCFU0dftu" target="_blank">Link</a></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Cancún</td>
+                                        <td>$1,800.00</td>
+                                        <td>$214,000.00</td>
+                                        <td>$62,000.00</td>
+                                        <td><div class="tooltip">–$4,000.00
+                                            <span class="tooltiptext">¡Dinero sobrante!</span>
+                                        </div></td>
+                                        <td><a href="https://www.airbnb.mx/rooms/47893405?adults=16&check_in=2023-06-21&check_out=2023-06-28&federated_search_id=5a0b8010-a3cb-4913-b135-161be138d028&source_impression_id=p3_1666791979_Y2tTCOjzRZLPPLBT" target="_blank">Link</a></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Mérida</td>
+                                        <td>$2,000.00</td>
+                                        <td>$206,000.00</td>
+                                        <td>$56,000.00</td>
+                                        <td><div class="tooltip">–$4,600.00
+                                            <span class="tooltiptext">¡Dinero sobrante!</span>
+                                        </div></td>
+                                        <td><a href="https://www.airbnb.mx/rooms/52280407?adults=16&check_in=2023-06-21&check_out=2023-06-28&federated_search_id=6e703c85-4c20-4030-9bfb-4cc975320b4f&source_impression_id=p3_1666792127_akjHzL1jaSUaNylh" target="_blank">Link</a></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Puerto Escondido</td>
+                                        <td>$1,700.00</td>
+                                        <td>$218,000.00</td>
+                                        <td>$300,000.00</td>
+                                        <td>$2,500.00</td>
+                                        <td><a href="https://www.airbnb.mx/rooms/40680484?adults=16&check_in=2023-06-21&check_out=2023-06-28&federated_search_id=6d6c9c45-83b0-4cff-85b4-cdf5528e7283&source_impression_id=p3_1666792271_2WX13OvZdyWlh2Ho" target="_blank">Link</a></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <p><b>OJO:</b> Estos costos solo incluyen el vuelo y el hospedaje. ¡La alimentación, bebidas, souvenirs, recorridos, etc. corren a cuenta de cada quien!</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Selección del Vuelo -->
+            <div class="row align-items-start">
+                <div class="col">
+                    <div class="card mb-4">
+                        <div class="card-header">
+                            <span class="badge bg-success">Nuevo</span> Selección/Aprobación del Vuelo <a href="https://forms.gle/canubGFdb5j1rN4K7" target="_blank" class="btn btn-primary btn-sm">IR</a>
+                        </div>
+                        <div class="card-body">
+                            <p class="card-text">Votación para seleccionar el vuelo para el viaje de graduación.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Destinos Viaje de Graduación Votación Final -->
+            <!--
+            <div class="row align-items-start">
+                <div class="col">
+                    <div class="card mb-4">
+                        <div class="card-header">
+                            <span class="badge bg-success">Nuevo</span> Destinos Viaje (final) <a href="https://forms.gle/kpALqhUbUtR2Toh5A" target="_blank" class="btn btn-primary btn-sm">IR</a>
+                        </div>
+                        <div class="card-body">
+                            <p class="card-text">Votación final para seleccionar el destino del viaje de graduación.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            -->
+
+            <!-- Feedback Halloween y Destinos Graduación -->
+            <!--
+            <div class="row align-items-start">
+                <div class="col">
+                    <div class="card mb-4">
+                        <div class="card-header">
+                            Feedback Halloween (anónimo) <a href="https://forms.gle/zptPUCNkepAL2LGJ6" target="_blank" class="btn btn-primary btn-sm">IR</a>
+                        </div>
+                        <div class="card-body">
+                            <p class="card-text">Encuesta para calificar el rendimiento de tus compañeres durante el Halloween.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="card mb-4">
+                        <div class="card-header">
+                            Destinos Graduación <a href="https://forms.gle/sjpCWEgcsSTAsARE6" target="_blank" class="btn btn-primary btn-sm">IR</a>
+                        </div>
+                        <div class="card-body">
+                            <p class="card-text">Encuesta para seleccionar el destino de nuestro viaje de graduación.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            -->
+
+
+
+            <!-- Destinos Viaje de Graduación Resultados -->
+            <div class="row align-items-start">
+                <div class="card mb-4">
+                    <div class="card-header">
+                        Resultados Vuelo Viaje de Graduación
+                    </div>
+                    <div class="card-body">
+                        <!-- Frecuencias -->
+                        <!--
+                        <iframe width="600" height="371" seamless frameborder="0" scrolling="no" src="https://docs.google.com/spreadsheets/d/e/2PACX-1vSXOKKymy8l8DT_kWOpoWC2tqgb6yTOSeXTU9XOWmr9BrBZ8xmNF_l_xblaQgc72Hph_CQRUcuH2zTD/pubchart?oid=721764486&amp;format=interactive"></iframe>
+                        -->
+
+                        <!-- Prioridad promedio -->
+                        <!--
+                        <iframe width="600" height="371" seamless frameborder="0" scrolling="no" src="https://docs.google.com/spreadsheets/d/e/2PACX-1vSXOKKymy8l8DT_kWOpoWC2tqgb6yTOSeXTU9XOWmr9BrBZ8xmNF_l_xblaQgc72Hph_CQRUcuH2zTD/pubchart?oid=873211689&amp;format=interactive"></iframe>
+                        -->
+
+                        <!-- Final -->
+                        <!--
+                        <iframe width="604" height="371" seamless frameborder="0" scrolling="no" src="https://docs.google.com/spreadsheets/d/e/2PACX-1vSXOKKymy8l8DT_kWOpoWC2tqgb6yTOSeXTU9XOWmr9BrBZ8xmNF_l_xblaQgc72Hph_CQRUcuH2zTD/pubchart?oid=973900567&amp;format=interactive"></iframe>
+                        -->
+                        <!-- Opción Preferida -->
+                        <iframe width="331" height="331" seamless frameborder="0" scrolling="no" src="https://docs.google.com/spreadsheets/d/e/2PACX-1vSXOKKymy8l8DT_kWOpoWC2tqgb6yTOSeXTU9XOWmr9BrBZ8xmNF_l_xblaQgc72Hph_CQRUcuH2zTD/pubchart?oid=284528275&amp;format=interactive"></iframe>
+
+                        <!-- Aceptación Volaris -->
+                        <iframe width="331" height="331" seamless frameborder="0" scrolling="no" src="https://docs.google.com/spreadsheets/d/e/2PACX-1vSXOKKymy8l8DT_kWOpoWC2tqgb6yTOSeXTU9XOWmr9BrBZ8xmNF_l_xblaQgc72Hph_CQRUcuH2zTD/pubchart?oid=1667379143&amp;format=interactive"></iframe>
+
+                        <!-- Aceptación Aeroméxico para todes -->
+                        <iframe width="331" height="331" seamless frameborder="0" scrolling="no" src="https://docs.google.com/spreadsheets/d/e/2PACX-1vSXOKKymy8l8DT_kWOpoWC2tqgb6yTOSeXTU9XOWmr9BrBZ8xmNF_l_xblaQgc72Hph_CQRUcuH2zTD/pubchart?oid=2033001203&amp;format=interactive"></iframe>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Maestres Invitades Resultados -->
+            <div class="row align-items-start">
+                <div class="card mb-4">
+                    <div class="card-header">
+                        Resultados Maestres Invitades
+                    </div>
+                    <div class="card-body">
+                        <iframe width="708" height="371" seamless frameborder="0" scrolling="no" src="https://docs.google.com/spreadsheets/d/e/2PACX-1vSXOKKymy8l8DT_kWOpoWC2tqgb6yTOSeXTU9XOWmr9BrBZ8xmNF_l_xblaQgc72Hph_CQRUcuH2zTD/pubchart?oid=1376490555&amp;format=interactive"></iframe>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Fechas Resultados -->
+            <div class="row align-items-start">
+                <div class="card mb-4">
+                    <div class="card-header">
+                        Resultados Fechas Viaje y Graduación
+                    </div>
+                    <div class="card-body">
+                        <!-- Viaje -->
+                        <iframe width="504" height="288" seamless frameborder="0" scrolling="no" src="https://docs.google.com/spreadsheets/d/e/2PACX-1vSXOKKymy8l8DT_kWOpoWC2tqgb6yTOSeXTU9XOWmr9BrBZ8xmNF_l_xblaQgc72Hph_CQRUcuH2zTD/pubchart?oid=1669687169&amp;format=interactive"></iframe>
+
+                        <!-- Graduación -->
+                        <iframe width="504" height="288" seamless frameborder="0" scrolling="no" src="https://docs.google.com/spreadsheets/d/e/2PACX-1vSXOKKymy8l8DT_kWOpoWC2tqgb6yTOSeXTU9XOWmr9BrBZ8xmNF_l_xblaQgc72Hph_CQRUcuH2zTD/pubchart?oid=1173539930&amp;format=interactive"></iframe>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Feedback Halloween Resultados -->
+            <!--
+            <div class="row align-items-start">
+                <div class="card mb-4">
+                    <div class="card-header">
+                        Resultados Feedback Halloween
+                    </div>
+                    <div class="card-body">
+                        <p>Decidimos ya no publicar los resultados por las controversias generadas. Una disculpa por las afectaciones que les hayamos podido haber causado.</p>
+                    </div>
+                </div>
+            </div>
+            -->
+        </main>
+    </div>
+
+    <script>
+        function update_res() {
+            var invitados = Number(document.getElementById("otros_invitados").value);
+            if (document.getElementById("otros_invitados") == "") {
+                invitados = 0;
+            }
+
+            document.getElementById("otros_invitados_res").innerText = format_currency((375787.46-77500-2500*invitados)/33);
+        }
+
+        function format_currency(value) {
+            //Currency formatter
+            const options = { style: 'currency', currency: 'MXN' };
+            const formatter = new Intl.NumberFormat('es-MX', options);
+
+            return formatter.format(value);
+        }
+    </script>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+</body>
+</html>

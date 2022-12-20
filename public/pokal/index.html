@@ -1,0 +1,524 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Pokal</title>
+
+    <!-- Required meta tags -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+
+    <!-- include only the Firebase features as you need -->
+    <script src="https://www.gstatic.com/firebasejs/9.8.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.8.1/firebase-firestore-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.8.1/firebase-auth-compat.js"></script>
+
+    <script>
+        const firebaseConfig = {
+            apiKey: "AIzaSyCM3RGa8Zl59QCsKtcmhBkPK7H1JL_LeUQ",
+            authDomain: "g23-csm.firebaseapp.com",
+            projectId: "g23-csm",
+            storageBucket: "g23-csm.appspot.com",
+            messagingSenderId: "735574331856",
+            appId: "1:735574331856:web:6f826790f622f2c57869d5"
+        };
+
+        // Initialize Firebase
+        const firebaseApp = firebase.initializeApp(firebaseConfig);
+    </script>
+</head>
+<body>
+    <div class="container py-5 text-center align-items-center  justify-content-center">
+        <main>
+            <!-- Tabla Varonil -->
+            <h1>Tabla Varonil</h1>
+            <table class="table" id="posiciones">
+                <thead>
+                <tr>
+                    <th scope="col">Pos.</th>
+                    <th scope="col">Equipo</th>
+                    <th scope="col">P</th>
+                    <th scope="col">V</th>
+                    <th scope="col">E</th>
+                    <th scope="col">D</th>
+                    <th scope="col">GF</th>
+                    <th scope="col">GC</th>
+                    <th scope="col">DF</th>
+                    <th scope="col">PTS</th>
+                </tr>
+                </thead>
+                <tbody id="posiciones_body">
+                </tbody>
+            </table>
+
+            <!-- Tabla Femenil -->
+            <h1>Tabla Femenil</h1>
+            <table class="table" id="posiciones_fem">
+                <thead>
+                <tr>
+                    <th scope="col">Pos.</th>
+                    <th scope="col">Equipo</th>
+                    <th scope="col">P</th>
+                    <th scope="col">V</th>
+                    <th scope="col">E</th>
+                    <th scope="col">D</th>
+                    <th scope="col">GF</th>
+                    <th scope="col">GC</th>
+                    <th scope="col">DF</th>
+                    <th scope="col">PTS</th>
+                </tr>
+                </thead>
+                <tbody id="posiciones_fem_body">
+                </tbody>
+            </table>
+
+            <!-- Calendario -->
+            <h1>Calendario</h1>
+            <table class="table align-middle" id="calendario">
+                <thead>
+                <tr id="calendario_header">
+                    <th scope="col">Fecha</th>
+                    <th scope="col">Horario</th>
+                    <th scope="col">Equipo 1</th>
+                    <th scope="col" colspan="2">vs.</th>
+                    <th scope="col">Equipo 2</th>
+                    <th scope="col">Arbitraje</th>
+                    <th scope="col">Cancha</th>
+                    <th scope="col">Rama</th>
+                </tr>
+                </thead>
+                <tbody id="calendario_body">
+            </table>
+
+            <!-- Edit Modal -->
+            <div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="editModalLabel">Modificar Partido</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+                        </div>
+                        <div class="modal-body">
+                            <form>
+                                <div class="mb-3" style="display: none">
+                                    <input type="text" class="form-control" id="match_id">
+                                </div>
+                                <div class="mb-3">
+                                    <label for="date" class="form-label">Fecha</label>
+                                    <input type="date" class="form-control" id="date">
+                                </div>
+                                <div class="mb-3">
+                                    <label for="time" class="form-label">Horario</label>
+                                    <input type="text" class="form-control" id="time">
+                                </div>
+                                <div class="mb-3">
+                                    <label for="e1" class="form-label">Equipo 1</label>
+                                    <input type="text" class="form-control" id="e1">
+                                </div>
+                                <div class="mb-3">
+                                    <label for="e1g" class="form-label">Equipo 1 - Goles</label>
+                                    <input type="text" class="form-control" id="e1g">
+                                </div>
+                                <div class="mb-3">
+                                    <label for="e2" class="form-label">Equipo 2</label>
+                                    <input type="text" class="form-control" id="e2">
+                                </div>
+                                <div class="mb-3">
+                                    <label for="e2g" class="form-label">Equipo 2 - Goles</label>
+                                    <input type="text" class="form-control" id="e2g">
+                                </div>
+                                <div class="mb-3">
+                                    <label for="arbitraje" class="form-label">Arbitraje</label>
+                                    <input type="text" class="form-control" id="arbitraje">
+                                </div>
+                                <div class="mb-3">
+                                    <label for="cancha" class="form-label">Cancha</label>
+                                    <select class="form-select" aria-label="Cancha" id="cancha">
+                                        <option value="Natural">Natural</option>
+                                        <option value="Sintética" selected>Sintética</option>
+                                    </select>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="rama" class="form-label">Rama</label>
+                                    <select class="form-select" aria-label="Rama" id="rama">
+                                        <option selected>Seleccion una opción</option>
+                                        <option value="Varonil">Varonil</option>
+                                        <option value="Femenil">Femenil</option>
+                                    </select>
+                                </div>
+
+                            </form>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                            <button type="button" class="btn btn-primary" onclick="guardarPartido()">Guardar Cambios</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <script>
+                var modal = document.getElementById('editModal')
+                modal.addEventListener('show.bs.modal', function (event) {
+                    // Button that triggered the modal
+                    var button = event.relatedTarget
+                    // Extract info from data-bs-* attributes
+                    var arbitraje_v = button.getAttribute('arbitraje')
+                    var cancha_v = button.getAttribute('cancha')
+                    var e1goles_v = button.getAttribute('e1goles')
+                    var e2goles_v = button.getAttribute('e2goles')
+                    var equipo1_v = button.getAttribute('equipo1')
+                    var equipo2_v = button.getAttribute('equipo2')
+                    var fecha_v = button.getAttribute('fecha')
+                    var horario_v = button.getAttribute('horario')
+                    var rama_v = button.getAttribute('rama')
+                    var match_id_v = button.getAttribute('match_id')
+
+                    // If necessary, you could initiate an AJAX request here
+                    // and then do the updating in a callback.
+                    //
+                    // Update the modal's content.
+                    var fecha_f = document.getElementById("date");
+                    fecha_f.valueAsDate = new Date(fecha_v);
+
+                    var time_f = document.getElementById("time");
+                    time_f.value = horario_v;
+
+                    var e1_f = document.getElementById("e1");
+                    e1_f.value = equipo1_v;
+
+                    var e2_f = document.getElementById("e2");
+                    e2_f.value = equipo2_v;
+
+                    var arbitraje_f = document.getElementById("arbitraje");
+                    arbitraje_f.value = arbitraje_v;
+
+                    var cancha_f = document.getElementById("cancha");
+                    cancha_f.value = cancha_v;
+
+                    var rama_f = document.getElementById("rama");
+                    rama_f.value = rama_v;
+
+                    var e1g_f = document.getElementById("e1g");
+                    e1g_f.value = e1goles_v;
+
+                    var e2g_f = document.getElementById("e2g");
+                    e2g_f.value = e2goles_v;
+
+                    var match_id_f = document.getElementById("match_id");
+                    match_id_f.value = match_id_v;
+                })
+            </script>
+            <script>
+                function guardarPartido() {
+                    var db = firebaseApp.firestore();
+
+                    var datePre = new Date(document.getElementById("date").value);
+                    const date = datePre.getUTCDate();
+                    datePre.setHours(0);
+                    datePre.setDate(date)
+                    var fecha_ = firebase.firestore.Timestamp.fromDate(datePre);
+
+                    var time_ = document.getElementById("time").value;
+                    var e1_ = document.getElementById("e1").value;
+                    var e2_ = document.getElementById("e2").value;
+                    var arbitraje_ = document.getElementById("arbitraje").value;
+                    var cancha_ = document.getElementById("cancha").value;
+                    var rama_ = document.getElementById("rama").value;
+
+                    var e1g_f = document.getElementById("e1g").value;
+                    var e2g_f = document.getElementById("e2g").value;
+                    var match_id_f = document.getElementById("match_id").value;
+
+                    // Add a new document with a generated id.
+                    db.collection("partidos").doc(match_id_f).set({
+                        fecha: fecha_,
+                        horario: time_,
+                        equipo1: e1_,
+                        equipo2: e2_,
+                        arbitraje: arbitraje_,
+                        cancha: cancha_,
+                        rama: rama_,
+                        e1goles: e1g_f,
+                        e2goles: e2g_f
+                    })
+                        .then((docRef) => {
+                            console.log("Document written with ID: ", docRef.id);
+
+                            location.reload();
+                        })
+                        .catch((error) => {
+                            console.error("Error adding document: ", error);
+                        });
+                }
+            </script>
+
+        </main>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            var db = firebaseApp.firestore();
+            const auth = firebaseApp.auth();
+
+            //Varonil
+            var equipos = [];
+
+            db.collection("equipos")
+                .where("categoría", "==", "Varonil")
+                .get()
+                .then((querySnapshot) => {
+                    querySnapshot.forEach((doc) => {
+                        // doc.data() is never undefined for query doc snapshots
+                        console.log(doc.id, " => ", doc.data());
+
+                        var equipo = doc.data();
+                        equipo.diferencia = equipo.favor - equipo.contra;
+
+                        equipos.push(equipo);
+                    });
+
+                    equipos.sort(function(a, b) {
+                        if (a.puntos != b.puntos) {
+                            return b.puntos - a.puntos;
+                        } else {
+                            if (a.diferencia != b.diferencia) {
+                                return b.diferencia - a.diferencia;
+                            } else {
+                                return b.favor - a.favor;
+                            }
+                        }
+                    });
+
+                    var i = 1;
+
+                    equipos.forEach(function(equipo) {
+                        equipo.posicion = i;
+
+                        const tbody = document.getElementById("posiciones_body");
+
+                        let team_row = document.createElement("tr");
+
+                        let pos = document.createElement("th");
+                        pos.innerText = equipo.posicion;
+                        pos.scope = "row";
+
+                        let team = document.createElement("td");
+                        team.innerText = equipo.nombre;
+
+                        let p = document.createElement("td");
+                        p.innerText = equipo.jugados;
+
+                        let v = document.createElement("td");
+                        v.innerText = equipo.ganados;
+
+                        let e = document.createElement("td");
+                        e.innerText = equipo.empatados;
+
+                        let d = document.createElement("td");
+                        d.innerText = equipo.perdidos;
+
+                        let gf = document.createElement("td");
+                        gf.innerText = equipo.favor;
+
+                        let gc = document.createElement("td");
+                        gc.innerText = equipo.contra;
+
+                        let df = document.createElement("td");
+                        df.innerText = equipo.diferencia;
+
+                        let pts = document.createElement("td");
+                        pts.innerText = equipo.puntos;
+
+                        team_row.append(pos, team, p, v, e, d, gf, gc, df, pts);
+
+                        tbody.append(team_row);
+
+                        i++;
+                    });
+                })
+                .catch((error) => {
+                    console.log("Error getting documents: ", error);
+                });
+
+            //Femenil
+            var equipos_fem = [];
+
+            db.collection("equipos")
+                .where("categoría", "==", "Femenil")
+                .get()
+                .then((querySnapshot) => {
+                    querySnapshot.forEach((doc) => {
+                        // doc.data() is never undefined for query doc snapshots
+                        console.log(doc.id, " => ", doc.data());
+
+                        var equipo = doc.data();
+                        equipo.diferencia = equipo.favor - equipo.contra;
+
+                        equipos_fem.push(equipo);
+                    });
+
+                    equipos_fem.sort(function(a, b) {
+                        if (a.puntos != b.puntos) {
+                            return b.puntos - a.puntos;
+                        } else {
+                            if (a.diferencia != b.diferencia) {
+                                return b.diferencia - a.diferencia;
+                            } else {
+                                return b.favor - a.favor;
+                            }
+                        }
+                    });
+
+                    var i = 1;
+
+                    equipos_fem.forEach(function(equipo) {
+                        equipo.posicion = i;
+
+                        const tbody = document.getElementById("posiciones_fem_body");
+
+                        let team_row = document.createElement("tr");
+
+                        let pos = document.createElement("th");
+                        pos.innerText = equipo.posicion;
+                        pos.scope = "row";
+
+                        let team = document.createElement("td");
+                        team.innerText = equipo.nombre;
+
+                        let p = document.createElement("td");
+                        p.innerText = equipo.jugados;
+
+                        let v = document.createElement("td");
+                        v.innerText = equipo.ganados;
+
+                        let e = document.createElement("td");
+                        e.innerText = equipo.empatados;
+
+                        let d = document.createElement("td");
+                        d.innerText = equipo.perdidos;
+
+                        let gf = document.createElement("td");
+                        gf.innerText = equipo.favor;
+
+                        let gc = document.createElement("td");
+                        gc.innerText = equipo.contra;
+
+                        let df = document.createElement("td");
+                        df.innerText = equipo.diferencia;
+
+                        let pts = document.createElement("td");
+                        pts.innerText = equipo.puntos;
+
+                        team_row.append(pos, team, p, v, e, d, gf, gc, df, pts);
+
+                        tbody.append(team_row);
+
+                        i++;
+                    });
+                })
+                .catch((error) => {
+                    console.log("Error getting documents: ", error);
+                });
+
+            //Calendario
+            var partidos = [];
+            var admin_email = "";
+
+            auth.onAuthStateChanged((user) => {
+                if (user) {
+                    // User is signed in, see docs for a list of available properties
+                    // https://firebase.google.com/docs/reference/js/firebase.User
+                    admin_email = user.email;
+                    console.log(admin_email);
+
+                    const header_row = document.getElementById("calendario_header");
+
+                    let edit_button = document.createElement("th");
+                    edit_button.scope = "col";
+                    edit_button.innerText = "Editar";
+
+                    //const edit_button_html = `<button type="button" class="btn btn-dark" data-bs-toggle="modal" data-bs-target="#variantModal" id_var="${variedad.id}" cantidad="${cantidad}" abierto="${open}" caducidad="${cad_string_button}">Editar</button>`;
+
+                    //edit_button.innerHTML = `<button type="button" class="btn btn-dark" data-bs-toggle="modal" data-bs-target="#variantModal" id_var="${variedad.id}" cantidad="${cantidad}" abierto="${open}" caducidad="${cad_string_button}">Editar</button>`;
+
+                    header_row.append(edit_button);
+                } else {
+                    // User is signed out
+                }
+            });
+
+            db.collection("partidos")
+                .get()
+                .then((querySnapshot) => {
+                    querySnapshot.forEach((doc) => {
+                        // doc.data() is never undefined for query doc snapshots
+                        console.log(doc.id, " => ", doc.data());
+
+                        var partido = doc.data();
+                        partido.date = partido.fecha.toDate();
+                        partido.id = doc.id;
+
+                        partidos.push(partido);
+                    });
+
+                    partidos.sort(function(a, b) {
+                        return a.date.getTime() - b.date.getTime();
+                    });
+
+                    partidos.forEach(function(partido) {
+                        const tbody = document.getElementById("calendario_body");
+
+                        let match_row = document.createElement("tr");
+
+                        let arbitraje = document.createElement("td");
+                        arbitraje.innerText = partido.arbitraje;
+
+                        let cancha = document.createElement("td");
+                        cancha.innerText = partido.cancha;
+
+                        let e1goles = document.createElement("td");
+                        e1goles.innerText = partido.e1goles;
+
+                        let e2goles = document.createElement("td");
+                        e2goles.innerText = partido.e2goles;
+
+                        let equipo1 = document.createElement("td");
+                        equipo1.innerText = partido.equipo1;
+
+                        let equipo2 = document.createElement("td");
+                        equipo2.innerText = partido.equipo2;
+
+                        let fecha = document.createElement("td");
+                        fecha.innerText = partido.date.toDateString();
+
+                        let horario = document.createElement("td");
+                        horario.innerText = partido.horario;
+
+                        let rama = document.createElement("td");
+                        rama.innerText = partido.rama;
+
+                        match_row.append(fecha, horario, equipo1, e1goles, e2goles, equipo2, arbitraje, cancha, rama);
+
+                        if (admin_email != "") {
+                            let edit_button = document.createElement("td");
+
+                            edit_button.innerHTML = `<button type="button" class="btn btn-dark" data-bs-toggle="modal" data-bs-target="#editModal" arbitraje="${arbitraje.innerText}" cancha="${cancha.innerText}" e1goles="${e1goles.innerText}" e2goles="${e2goles.innerText}" equipo1="${equipo1.innerText}" equipo2="${equipo2.innerText}" fecha="${partido.date}" horario="${horario.innerText}" rama="${rama.innerText}" match_id="${partido.id}">Editar</button>`;
+                            match_row.append(edit_button)
+                        }
+
+                        tbody.append(match_row);
+                    });
+                })
+                .catch((error) => {
+                    console.log("Error getting documents: ", error);
+                });
+
+        });
+
+
+
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+</body>
+</html>

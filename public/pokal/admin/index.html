@@ -1,0 +1,465 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Pokal Admin</title>
+
+    <!-- Required meta tags -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+
+    <!-- update the version number as needed -->
+    <script src="https://www.gstatic.com/firebasejs/9.8.1/firebase-app-compat.js"></script>
+    <!-- include only the Firebase features as you need -->
+    <script src="https://www.gstatic.com/firebasejs/9.8.1/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.8.1/firebase-firestore-compat.js"></script>
+
+    <script>
+        const firebaseApp = firebase.initializeApp({
+            apiKey: "AIzaSyCM3RGa8Zl59QCsKtcmhBkPK7H1JL_LeUQ",
+            authDomain: "g23-csm.firebaseapp.com",
+            projectId: "g23-csm",
+            storageBucket: "g23-csm.appspot.com",
+            messagingSenderId: "735574331856",
+            appId: "1:735574331856:web:6f826790f622f2c57869d5"
+        });
+    </script>
+
+    <style>
+        .error {
+            color: #cb2235;
+        }
+    </style>
+</head>
+<body>
+    <div class="container-sm py-5 text-center align-items-center d-flex justify-content-center">
+        <main>
+            <h1 class="pb-4">Pokal Admin</h1>
+
+            <div id="logged_in" style="display: none">
+                <div id="show_email" class="pb-4"></div>
+
+                <!-- Add Team -->
+                <p>
+                    <a class="btn btn-primary" data-bs-toggle="collapse" href="#new-team-collapse" role="button" aria-expanded="false" aria-controls="new-team-collapse">
+                        Agregar Equipo
+                    </a>
+                </p>
+                <div class="collapse" id="new-team-collapse">
+                    <div class="card card-body">
+                        <form id="new-team-form">
+                            <div class="mb-3">
+                                <label for="name" class="form-label">Nombre</label>
+                                <input type="text" class="form-control" id="name">
+                            </div>
+                            <div class="mb-3">
+                                <label for="cat" class="form-label">Categoría</label>
+                                <select class="form-select" aria-label="Categoría" id="cat">
+                                    <option selected>Seleccion una opción</option>
+                                    <option value="Femenil">Femenil</option>
+                                    <option value="Varonil">Varonil</option>
+                                </select>
+                            </div>
+                            <div class="mb-3">
+                                <label for="p" class="form-label">Partidos Jugados</label>
+                                <input type="number" class="form-control" id="p">
+                            </div>
+                            <div class="mb-3">
+                                <label for="v" class="form-label">Partidos Ganados</label>
+                                <input type="number" class="form-control" id="v">
+                            </div>
+                            <div class="mb-3">
+                                <label for="e" class="form-label">Partidos Empatados</label>
+                                <input type="number" class="form-control" id="e">
+                            </div>
+                            <div class="mb-3">
+                                <label for="d" class="form-label">Partidos Perdidos</label>
+                                <input type="number" class="form-control" id="d">
+                            </div>
+                            <div class="mb-3">
+                                <label for="gf" class="form-label">Goles A Favor</label>
+                                <input type="number" class="form-control" id="gf">
+                            </div>
+                            <div class="mb-3">
+                                <label for="gc" class="form-label">Goles En Contra</label>
+                                <input type="number" class="form-control" id="gc">
+                            </div>
+                            <div class="mb-3">
+                                <label for="pts" class="form-label">Puntos</label>
+                                <input type="number" class="form-control" id="pts">
+                            </div>
+                            <button type="button" class="btn btn-primary" onclick="addteam()">Agregar</button>
+                        </form>
+                    </div>
+                </div>
+                <script>
+                    function addteam() {
+                        var db = firebaseApp.firestore();
+
+                        var nombre_ = document.getElementById("name").value;
+                        var jugados_ = parseInt(document.getElementById("p").value);
+                        var ganados_ = parseInt(document.getElementById("v").value);
+                        var empatados_ = parseInt(document.getElementById("e").value);
+                        var perdidos_ = parseInt(document.getElementById("d").value);
+                        var favor_ = parseInt(document.getElementById("gf").value);
+                        var contra_ = parseInt(document.getElementById("gc").value);
+                        var puntos_ = parseInt(document.getElementById("pts").value);
+                        var categoría_ = document.getElementById("cat").value;
+
+                        db.collection("equipos").add({
+                            nombre: nombre_,
+                            categoría: categoría_,
+                            jugados: jugados_,
+                            ganados: ganados_,
+                            empatados: empatados_,
+                            perdidos: perdidos_,
+                            favor: favor_,
+                            contra: contra_,
+                            puntos: puntos_
+                        })
+                            .then((docRef) => {
+                                console.log("Document written with ID: ", docRef.id);
+
+                                document.getElementById("name").value = "";
+                                document.getElementById("p").value = "";
+                                document.getElementById("v").value = "";
+                                document.getElementById("e").value = "";
+                                document.getElementById("d").value = "";
+                                document.getElementById("gf").value = "";
+                                document.getElementById("gc").value = "";
+                                document.getElementById("pts").value = "";
+                            })
+                            .catch((error) => {
+                                console.error("Error adding document: ", error);
+                            });
+                    }
+                </script>
+
+                <!-- Edit Team -->
+                <p>
+                    <a class="btn btn-primary" data-bs-toggle="collapse" href="#edit-team-collapse" role="button" aria-expanded="false" aria-controls="edit-team-collapse">
+                        Editar Equipo
+                    </a>
+                </p>
+                <div class="collapse" id="edit-team-collapse">
+                    <div class="card card-body">
+                        <!-- Search Team Form -->
+                        <form id="edit-team-search-form">
+                            <div class="mb-3">
+                                <label for="name_edit_s" class="form-label">Nombre</label>
+                                <input type="text" class="form-control" id="name_edit_s">
+                            </div>
+                            <div class="mb-3">
+                                <label for="cat" class="form-label">Categoría</label>
+                                <select class="form-select" aria-label="Categoría" id="cat_edit_s">
+                                    <option selected>Seleccion una opción</option>
+                                    <option value="Femenil">Femenil</option>
+                                    <option value="Varonil">Varonil</option>
+                                </select>
+                            </div>
+
+                            <button type="button" class="btn btn-primary" onclick="searchteam()">Buscar</button>
+                        </form>
+
+                        <!-- Edit Team Form -->
+                        <form id="edit-team-form" style="display: none">
+                            <input type="text" style="display: none" id="doc_edit_id">
+                            <div class="mb-3">
+                                <label for="p_edit" class="form-label">Partidos Jugados</label>
+                                <input type="number" class="form-control" id="p_edit">
+                            </div>
+                            <div class="mb-3">
+                                <label for="v_edit" class="form-label">Partidos Ganados</label>
+                                <input type="number" class="form-control" id="v_edit">
+                            </div>
+                            <div class="mb-3">
+                                <label for="e_edit" class="form-label">Partidos Empatados</label>
+                                <input type="number" class="form-control" id="e_edit">
+                            </div>
+                            <div class="mb-3">
+                                <label for="d_edit" class="form-label">Partidos Perdidos</label>
+                                <input type="number" class="form-control" id="d_edit">
+                            </div>
+                            <div class="mb-3">
+                                <label for="gf_edit" class="form-label">Goles A Favor</label>
+                                <input type="number" class="form-control" id="gf_edit">
+                            </div>
+                            <div class="mb-3">
+                                <label for="gc_edit" class="form-label">Goles En Contra</label>
+                                <input type="number" class="form-control" id="gc_edit">
+                            </div>
+                            <div class="mb-3">
+                                <label for="pts_edit" class="form-label">Puntos</label>
+                                <input type="number" class="form-control" id="pts_edit">
+                            </div>
+                            <button type="button" class="btn btn-primary" onclick="saveteam()">Guardar</button>
+                        </form>
+                    </div>
+                </div>
+                <script>
+                    function searchteam() {
+                        const db = firebaseApp.firestore();
+
+                        const categoría = document.getElementById("cat_edit_s").value;
+                        const nombre = document.getElementById("name_edit_s").value;
+
+                        var equipos = [];
+
+                        db.collection("equipos")
+                            .where("categoría", "==", categoría)
+                            .where("nombre", "==", nombre)
+                            .get()
+                            .then((querySnapshot) => {
+                                querySnapshot.forEach((doc) => {
+                                    // doc.data() is never undefined for query doc snapshots
+                                    console.log(doc.id, " => ", doc.data());
+
+                                    var equipo = doc.data();
+                                    document.getElementById("doc_edit_id").value = doc.id;
+                                    document.getElementById("p_edit").value = equipo.jugados;
+                                    document.getElementById("v_edit").value = equipo.ganados;
+                                    document.getElementById("e_edit").value = equipo.empatados;
+                                    document.getElementById("d_edit").value = equipo.perdidos;
+                                    document.getElementById("gf_edit").value = equipo.favor;
+                                    document.getElementById("gc_edit").value = equipo.contra;
+                                    document.getElementById("pts_edit").value = equipo.puntos;
+
+                                    equipos.push(equipo);
+                                });
+
+                                if (equipos.length == 1) {
+                                    let equipo = equipos[0];
+
+                                    document.getElementById("edit-team-form").style.display = "block";
+                                }
+                            })
+                            .catch((error) => {
+                                console.log("Error getting documents: ", error);
+                                alert(error);
+                            });
+                    }
+
+                    function saveteam() {
+                        var db = firebaseApp.firestore();
+
+                        var doc_id = document.getElementById("doc_edit_id").value;
+
+                        var nombre_ = document.getElementById("name_edit_s").value;
+                        var jugados_ = parseInt(document.getElementById("p_edit").value);
+                        var ganados_ = parseInt(document.getElementById("v_edit").value);
+                        var empatados_ = parseInt(document.getElementById("e_edit").value);
+                        var perdidos_ = parseInt(document.getElementById("d_edit").value);
+                        var favor_ = parseInt(document.getElementById("gf_edit").value);
+                        var contra_ = parseInt(document.getElementById("gc_edit").value);
+                        var puntos_ = parseInt(document.getElementById("pts_edit").value);
+                        var categoría_ = document.getElementById("cat_edit_s").value;
+
+                        db.collection("equipos").doc(doc_id).set({
+                            nombre: nombre_,
+                            categoría: categoría_,
+                            jugados: jugados_,
+                            ganados: ganados_,
+                            empatados: empatados_,
+                            perdidos: perdidos_,
+                            favor: favor_,
+                            contra: contra_,
+                            puntos: puntos_
+                        })
+                            .then((docRef) => {
+                                console.log("Document written with ID: ", docRef.id);
+
+                                document.getElementById("name_edit_s").value = "";
+                                document.getElementById("p_edit").value = "";
+                                document.getElementById("v_edit").value = "";
+                                document.getElementById("e_edit").value = "";
+                                document.getElementById("d_edit").value = "";
+                                document.getElementById("gf_edit").value = "";
+                                document.getElementById("gc_edit").value = "";
+                                document.getElementById("pts_edit").value = "";
+                            })
+                            .catch((error) => {
+                                console.error("Error adding document: ", error);
+                            });
+                    }
+                </script>
+
+                <!-- Agregar Partido -->
+                <p>
+                    <a class="btn btn-primary" data-bs-toggle="collapse" href="#new-match" role="button" aria-expanded="false" aria-controls="new-match">
+                        Agregar Partido
+                    </a>
+                </p>
+                <div class="collapse" id="new-match">
+                    <div class="card card-body">
+                        <form id="new-match-form">
+                            <div class="mb-3">
+                                <label for="date" class="form-label">Fecha</label>
+                                <input type="date" class="form-control" id="date">
+                            </div>
+                            <div class="mb-3">
+                                <label for="time" class="form-label">Horario</label>
+                                <input type="text" class="form-control" id="time">
+                            </div>
+                            <div class="mb-3">
+                                <label for="e1" class="form-label">Equipo 1</label>
+                                <input type="text" class="form-control" id="e1">
+                            </div>
+                            <div class="mb-3">
+                                <label for="e2" class="form-label">Equipo 2</label>
+                                <input type="text" class="form-control" id="e2">
+                            </div>
+                            <div class="mb-3">
+                                <label for="arbitraje" class="form-label">Arbitraje</label>
+                                <input type="text" class="form-control" id="arbitraje">
+                            </div>
+                            <div class="mb-3">
+                                <label for="cancha" class="form-label">Cancha</label>
+                                <select class="form-select" aria-label="Cancha" id="cancha">
+                                    <option value="Natural">Natural</option>
+                                    <option value="Sintética" selected>Sintética</option>
+                                </select>
+                            </div>
+                            <div class="mb-3">
+                                <label for="rama" class="form-label">Rama</label>
+                                <select class="form-select" aria-label="Rama" id="rama">
+                                    <option selected>Seleccion una opción</option>
+                                    <option value="Varonil">Varonil</option>
+                                    <option value="Femenil">Femenil</option>
+                                </select>
+                            </div>
+
+                            <button type="button" class="btn btn-primary" onclick="addmatch()">Agregar</button>
+                        </form>
+                    </div>
+                </div>
+                <script>
+                    function addmatch() {
+                        var db = firebaseApp.firestore();
+
+                        var datePre = new Date(document.getElementById("date").value);
+                        const date = datePre.getUTCDate();
+                        datePre.setHours(0);
+                        datePre.setDate(date)
+                        var fecha_ = firebase.firestore.Timestamp.fromDate(datePre);
+
+                        var time_ = document.getElementById("time").value;
+                        var e1_ = document.getElementById("e1").value;
+                        var e2_ = document.getElementById("e2").value;
+                        var arbitraje_ = document.getElementById("arbitraje").value;
+                        var cancha_ = document.getElementById("cancha").value;
+                        var rama_ = document.getElementById("rama").value;
+
+                        // Add a new document with a generated id.
+                        db.collection("partidos").add({
+                            fecha: fecha_,
+                            horario: time_,
+                            equipo1: e1_,
+                            equipo2: e2_,
+                            arbitraje: arbitraje_,
+                            cancha: cancha_,
+                            rama: rama_,
+                            e1goles: 0,
+                            e2goles: 0
+                        })
+                            .then((docRef) => {
+                                console.log("Document written with ID: ", docRef.id);
+                            })
+                            .catch((error) => {
+                                console.error("Error adding document: ", error);
+                            });
+                    }
+                </script>
+
+                <!-- Cerrar sesión -->
+                <button type="button" class="btn btn-primary mb-3" onclick="logout()">Cerrar Sesión</button>
+            </div>
+
+
+            <div class="error" id="error_box"></div>
+
+            <form id="login-form">
+                <div class="mb-3">
+                    <label for="email" class="form-label">Email</label>
+                    <input type="email" class="form-control" id="email">
+
+                </div>
+                <div class="mb-3">
+                    <label for="password" class="form-label">Contraseña</label>
+                    <input type="password" class="form-control" id="password">
+                </div>
+                <button type="button" class="btn btn-primary" onclick="login()">Iniciar Sesión</button>
+            </form>
+        </main>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+
+        });
+
+        function login() {
+            var email = document.getElementById("email").value;
+            var password = document.getElementById("password").value;
+
+            const auth = firebaseApp.auth();
+
+            auth.setPersistence(firebase.auth.Auth.Persistence.LOCAL)
+                .then(() => {
+                    // Existing and future Auth states are now persisted in the current
+                    // session only. Closing the window would clear any existing state even
+                    // if a user forgets to sign out.
+                    // ...
+                    // New sign-in will be persisted with session persistence.
+                    return auth.signInWithEmailAndPassword(email, password);
+                })
+                .catch((error) => {
+                    // Handle Errors here.
+                    var errorCode = error.code;
+                    var errorMessage = error.message;
+
+                    document.getElementById("error_box").innerText = errorMessage;
+                });
+
+            auth.onAuthStateChanged((user) => {
+                if (user) {
+                    // User is signed in, see docs for a list of available properties
+                    // https://firebase.google.com/docs/reference/js/firebase.User
+                    var email1 = user.email;
+
+                    document.getElementById("show_email").innerText = "Bienvenido, " + email1;
+
+                    show();
+                    // ...
+                } else {
+                    // User is signed out
+                    hide();
+                }
+            });
+        }
+
+        function show() {
+            // successful login
+            document.getElementById("login-form").style.display = "none";
+            document.getElementById("logged_in").style.display = "initial";
+            document.getElementById("error_box").style.display = "none";
+
+            document.getElementById("email").value = "";
+            document.getElementById("password").value = "";
+            document.getElementById("error_box").innerText = "";
+        }
+
+        function hide() {
+            // successful logout
+            document.getElementById("login-form").style.display = "initial";
+            document.getElementById("logged_in").style.display = "none";
+            document.getElementById("error_box").style.display = "initial";
+        }
+
+        function logout() {
+            firebase.auth().signOut();
+        }
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+</body>
+</html>
