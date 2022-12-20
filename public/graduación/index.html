@@ -45,7 +45,8 @@
 <body>
 <div class="container-sm py-5 text-left align-items-center justify-content-start" id="main">
     <main>
-        <h1 class="pb-4">Votación Graduación</h1>
+        <h1>Votación Graduación</h1>
+        <h6 class="pb-4" id="date"></h6>
 
         <!-- Opciones -->
         <hr>
@@ -57,21 +58,21 @@
             <thead>
             <tr>
                 <th class="col-md-1"></th>
-                <th class="col-md-1">
+                <th class="col-md-3">
                     <a href="https://www.haciendadelosmorales.com" target="_blank">Hacienda de Los Morales</a><br><br>
-                    <img src="haciendamorales.png" height="175">
+                    <img src="haciendamorales.png" height="150">
                 </th>
-                <th class="col-md-1">
+                <th class="col-md-3">
                     <a href="https://www.haciendadesanfernando.com.mx" target="_blank">Hacienda de San Fernando</a><br><br>
-                    <img src="sanfernando.jpeg" height="175">
+                    <img src="sanfernando.jpeg" height="150">
                 </th>
-                <th class="col-md-1">
+                <th class="col-md-3">
                     <a href="https://ambrosia.mx/pages/eventos.html" target="_blank">Ambrosía</a><br><br>
-                    <img src="ambrosía.png" height="175">
+                    <img src="ambrosía.png" height="150">
                 </th>
-                <th class="col-md-1">
+                <th class="col-md-3">
                     <a href="https://ambrosia.mx/pages/eventos.html" target="_blank">Centro Libanés Unidad Alfredo "Fredy" Atala (Av. Toluca)</a><br><br>
-                    <img src="libanés.jpeg" height="175">
+                    <img src="libanés.jpeg" height="150">
                 </th>
             </tr>
             </thead>
@@ -374,9 +375,12 @@
     <script>
         document.addEventListener("DOMContentLoaded", (event) => {
             shuffle( document.querySelectorAll('#voto') )
+
+            document.getElementById("date").innerText = `Fecha actual: ${new Date().toLocaleString()}`
         });
 
         function submitForm() {
+            document.getElementById("date").innerText = `Fecha actual: ${new Date().toLocaleString()}`
             window.print();
         }
 
