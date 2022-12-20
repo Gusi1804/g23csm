@@ -8,18 +8,52 @@
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
     <link rel="stylesheet" href="https://s.pageclip.co/v1/pageclip.css" media="screen">
+
+    <link rel="stylesheet" href="https://use.typekit.net/wuv7lww.css">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/dom-to-image/2.6.0/dom-to-image.min.js"
+            integrity="sha256-c9vxcXyAG4paArQG3xk6DjyW/9aHxai2ef9RpMWO44A=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.3.5/jspdf.min.js"></script>
+
+    <style>
+        h1 {
+            font-family: pt-serif-pro,sans-serif;
+            font-weight: 600;
+            font-style: normal;
+        }
+
+        h2 {
+            font-family: pt-serif-pro,sans-serif;
+            font-weight: 600;
+            font-style: normal;
+        }
+
+        table {
+            font-family: pt-serif-pro,sans-serif;
+            font-weight: 400;
+            font-style: normal;
+        }
+
+        div {
+            font-family: pt-serif-pro,sans-serif;
+            font-weight: 400;
+            font-style: normal;
+        }
+    </style>
 </head>
 <body>
-<div class="container-sm py-5 text-left align-items-center justify-content-start">
+<div class="container-sm py-5 text-left align-items-center justify-content-start" id="main">
     <main>
         <h1 class="pb-4">Votación Graduación</h1>
 
         <!-- Opciones -->
+        <hr>
         <h2>Propuestas</h2>
         <div class="alert alert-dark" role="alert">
             Por favor revisa las cuatro propuestas detenidamente antes de pasar a la votación.
         </div>
-        <table class="table">
+        <table class="table pb-4">
             <thead>
             <tr>
                 <th class="col-md-1"></th>
@@ -232,10 +266,204 @@
             </tr>
             </tbody>
         </table>
+        <br>
+        <hr>
+
+        <h2>Encuesta para votación</h2>
+        <div class="alert alert-dark" role="alert">
+            Ahora es momento de seleccionar tu <i>venue</i> favorito, así como de registrar el número de boletos que te comprometes a adquirir. Antes de hacer esto, <b>por favor no olvides tomar en cuenta los siguientes puntos</b>:
+            <ul>
+                <li>Esta encuesta se puede llenar solo 1 vez por familia. En caso de querer hacer alguna corrección comunícate directamente con el comité de graduación.</li>
+                <li>Esta encuesta debe de ser llenada por los alumnos de la G23 JUNTO CON SUS PADRES/TUTORES. Esto es muy importante porque tú y tu familia estarán haciendo un compromiso de adquirir un cierto número de boletos, el cual será tomado en cuenta al firmar el contrato. Es menester que cumplas tu compromiso porque de lo contrario tendremos que pagar penalizaciones y todos nos veríamos afectados. Piensa bien a lo que te puedes comprometer antes de enviar el acuerdo.</li>
+                <li>En la medida de lo posible haz la mejor estimación de la cantidad de boletos que vas a necesitar. Como te podrás haber dado cuenta, entre mayor es el número de invitados, menor es el precio por boleto. PERO NO SOBREESTIMES, recuerda que te estás comprometiendo a liquidar el 100% del costo de ese número de boletos.</li>
+                <li>Estos precios están sujetos a cambios, principalmente si cambiara el número total de invitados definitivos (a comparación de los cotizados) o por los incrementos de precios del siguiente año. Toma en cuenta esto al tomar tu decisión.</li>
+                <li>La opción que será seleccionada será aquella que tenga el mayor número de votos. La opción ganadora será anunciada una vez que hayan votado los 31 integrantes de la generación o que una opción haya recibido el voto de al menos 16 personas.</li>
+            </ul>
+        </div>
+
+        <form action="https://send.pageclip.co/YLjebHa7H5DwiSJx5syUHtgF7CqKgR0n" class="pageclip-form" method="post" oninput="nameInput()" onsubmit="submitForm()">
+            <!-- Replace these inputs with your own. Make sure they have a "name" attribute! -->
+            <div class="mb-3">
+                <label for="email" class="form-label">Correo electrónico (email)*</label>
+                <input type="email" class="form-control" id="email" name="email" aria-describedby="emailHelp" required>
+                <div id="emailHelp" class="form-text">Cuando hayamos verificado tus datos recibirás una confirmación a este correo.</div>
+            </div>
+
+            <div class="mb-3">
+                <label for="name" class="form-label">Nombre completo del alumno*</label>
+                <input type="text" class="form-control" id="name" name="name" aria-describedby="nameHelp" oninput="nameInput()" required>
+                <div id="nameHelp" class="form-text">Formato: Nombre(s) Apellido Paterno Apellido Materno.</div>
+            </div>
+
+            <div class="form-check mb-3">
+                <input class="form-check-input" type="checkbox" id="flexCheckIndeterminate" name="adult" oninput="adultStatusChanged()" required checked>
+                <label class="form-check-label" for="flexCheckIndeterminate" id="adultLabel">
+                    Soy mayor de edad al momento de firmar este acuerdo y registrar mi voto.
+                </label>
+            </div>
+
+            <label for="signer2" class="form-label">¿Quién va a adquirir el compromiso de liquidar el total de boletos registrado en este formulario?*</label>
+            <div class="form-check">
+                <input class="form-check-input" type="radio" name="signer" id="signer1" oninput="signerChanged()">
+                <label class="form-check-label" for="signer1">
+                    Yo, el alumno.
+                </label>
+            </div>
+            <div class="form-check mb-3">
+                <input class="form-check-input" type="radio" name="signer" id="signer2" checked oninput="signerChanged()">
+                <label class="form-check-label" for="signer2">
+                    Mi padre/madre/tutor (obligatorio en caso de menores de edad)
+                </label>
+            </div>
+
+            <div id="minor-inputs">
+                <div class="mb-3">
+                    <label for="name-tutor" class="form-label">Nombre completo del padre/madre/tutor del alumno que adquirirá el compromiso de liquidar el total de boletos registrado en este formulario*</label>
+                    <input type="text" class="form-control" id="name-tutor" name="name-tutor" aria-describedby="nameHelp-ad" oninput="nameInput()" required>
+                    <div id="nameHelp-ad" class="form-text">Formato: Nombre(s) Apellido Paterno Apellido Materno.</div>
+                </div>
+            </div>
+
+            <div class="mb-3">
+                <label for="invitados_cena" class="form-label">Número de boletos a comprar para la cena*</label>
+                <input type="number" class="form-control" id="invitados_cena" name="invitados_cena" placeholder="" required aria-describedby="cenaHelp">
+                <div id="cenaHelp" class="form-text">No te incluyas a ti mismo (el alumno) en este número.</div>
+            </div>
+            <div class="mb-3">
+                <label for="invitados_after" class="form-label">Número de boletos a comprar para el after*</label>
+                <input type="number" class="form-control" id="invitados_after" name="invitados_after" placeholder="" required aria-describedby="afterHelp">
+                <div id="afterHelp" class="form-text">En caso de no querer adquirir boletos de after escribe 0.</div>
+            </div>
+            <label for="voto" class="form-label">¿Cuál es tu <i>venue</i> preferido para realizar la graduación de la G23?*</label>
+            <select class="form-select" aria-label="Venue favorito" id="voto" name="voto" aria-describedby="venueHelp">
+                <option selected>Abre el menú para seleccionar tu opción favorita</option>
+                <option value="Hacienda de Los Morales">Hacienda de Los Morales</option>
+                <option value="Hacienda de San Fernando">Hacienda de San Fernando</option>
+                <option value="Ambrosía">Ambrosía</option>
+                <option value="Ambrosía">Centro Libanés</option>
+            </select>
+            <div id="venueHelp" class="form-text mb-3">Recuerda analizar profundamente todas las prestaciones y características de cada <i>venue</i>, así como tener una reunión con tus padres antes de hacer una selección.</div>
+            <div class="mb-3">
+                <label for="comentarios" class="form-label">En caso de ser necesario, por favor escribe abajo cualquier comentario que quieras hacer llegar al Comité de Graduación de la G23.</label>
+                <textarea class="form-control" id="comentarios" rows="3"></textarea>
+            </div>
+
+            <input class="form-control" type="text" aria-label="statement" readonly hidden id="statement" name="statement">
+
+            <p>Por favor revisa la siguiente declaración y marca la casilla en caso de estar de acuerdo con ésta:</p>
+            <div class="form-check mb-3">
+                <input class="form-check-input" type="checkbox" id="accept" name="accept"required>
+                <label class="form-check-label" for="accept" id="acceptLabel">
+                    Soy mayor de edad al momento de firmar este acuerdo y registrar mi voto.
+                </label>
+            </div>
+
+            <div class="alert alert-dark" role="alert">
+                Al dar click en "Enviar" se abrirá una ventana para que imprimas este sitio web junto con tus respuestas. Se te recomienda que guardes este documento como PDF o lo imprimas para que tengas una constancia.
+            </div>
+
+            <!-- This button will have a loading spinner. Keep the inner span for best results. -->
+            <button type="submit" class="pageclip-form__submit btn btn-primary" onclick="submitForm()">
+                <span>Enviar</span>
+            </button>
+
+
+        </form>
     </main>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", (event) => {
+            shuffle( document.querySelectorAll('#voto') )
+        });
+
+        function submitForm() {
+            window.print();
+        }
+
+        function nameInput() {
+            //document.getElementById("adultLabel").innerText = `Yo, ${document.getElementById("name").value}, soy mayor de edad.`
+            let student_signer = document.getElementById("signer1").checked;
+            let adult_signer = document.getElementById("signer2").checked;
+
+            if (student_signer) {
+                document.getElementById("acceptLabel").innerHTML = `Yo, ${document.getElementById("name").value}, soy mayor de edad y bajo completa libertad me comprometo a adquirir ${document.getElementById("invitados_cena").value} boletos para la cena de la graduación de la Generación 2023 del Colegio Suizo de México Campus CDMX en la fecha tentativa establecida en la tabla de información, así como ${document.getElementById("invitados_after").value} boletos para el <i>after</i> de ese evento. El <i>venue</i> que seleccioné junto con mi familia es ${document.getElementById("voto").value}.`
+                document.getElementById("statement").value = `Yo, ${document.getElementById("name").value}, soy mayor de edad y bajo completa libertad me comprometo a adquirir ${document.getElementById("invitados_cena").value} boletos para la cena de la graduación de la Generación 2023 del Colegio Suizo de México Campus CDMX en la fecha tentativa establecida en la tabla de información, así como ${document.getElementById("invitados_after").value} boletos para el <i>after</i> de ese evento. El <i>venue</i> que seleccioné junto con mi familia es ${document.getElementById("voto").value}.`
+            } else if (adult_signer) {
+                document.getElementById("acceptLabel").innerHTML = `Yo, ${document.getElementById("name-tutor").value}, padre/madre/tutor(a) de ${document.getElementById("name").value}, bajo completa libertad me comprometo a adquirir ${document.getElementById("invitados_cena").value} boletos para la cena de la graduación de la Generación 2023 del Colegio Suizo de México Campus CDMX en la fecha tentativa establecida en la tabla de información, así como ${document.getElementById("invitados_after").value} boletos para el <i>after</i> de ese evento. El <i>venue</i> que seleccioné junto con mi hijo/a es ${document.getElementById("voto").value}.`
+                document.getElementById("statement").value = `Yo, ${document.getElementById("name-tutor").value}, padre/madre/tutor(a) de ${document.getElementById("name").value}, bajo completa libertad me comprometo a adquirir ${document.getElementById("invitados_cena").value} boletos para la cena de la graduación de la Generación 2023 del Colegio Suizo de México Campus CDMX en la fecha tentativa establecida en la tabla de información, así como ${document.getElementById("invitados_after").value} boletos para el <i>after</i> de ese evento. El <i>venue</i> que seleccioné junto con mi hijo/a es ${document.getElementById("voto").value}.`
+            }
+        }
+
+        function adultStatusChanged() {
+            let adult = document.getElementById("flexCheckIndeterminate").checked;
+            let student_signer = document.getElementById("signer1").checked;
+            let adult_signer = document.getElementById("signer2").checked;
+
+            if (!adult) {
+                document.getElementById("signer1").disabled = true;
+                document.getElementById("signer2").checked = true;
+
+                document.getElementById("minor-inputs").innerHTML = `<div class="mb-3">
+                <label for="name-tutor" class="form-label">Nombre completo del padre/madre/tutor del alumno que adquirirá el compromiso de liquidar el total de boletos registrado en este formulario*</label>
+                <input type="text" class="form-control" id="name-tutor" name="name-tutor" aria-describedby="nameHelp-ad" oninput="nameInput()" required>
+                <div id="nameHelp-ad" class="form-text">Formato: Nombre(s) Apellido Paterno Apellido Materno.</div>
+            </div>`
+            } else {
+                document.getElementById("signer1").disabled = false;
+                if (adult_signer) {
+                    document.getElementById("minor-inputs").innerHTML = `<div class="mb-3">
+                <label for="name-tutor" class="form-label">Nombre completo del padre/madre/tutor del alumno que adquirirá el compromiso de liquidar el total de boletos registrado en este formulario*</label>
+                <input type="text" class="form-control" id="name-tutor" name="name-tutor" aria-describedby="nameHelp-ad" oninput="nameInput()" required>
+                <div id="nameHelp-ad" class="form-text">Formato: Nombre(s) Apellido Paterno Apellido Materno.</div>`
+                } else if (student_signer && adult) {
+                    document.getElementById("minor-inputs").innerHTML = "";
+                }
+            }
+        }
+
+        function signerChanged() {
+            let student_signer = document.getElementById("signer1").checked;
+            let adult_signer = document.getElementById("signer2").checked;
+            let adult = document.getElementById("flexCheckIndeterminate").checked;
+
+            if (adult_signer) {
+                document.getElementById("minor-inputs").innerHTML = `<div class="mb-3">
+                <label for="name-tutor" class="form-label">Nombre completo del padre/madre/tutor del alumno que adquirirá el compromiso de liquidar el total de boletos registrado en este formulario*</label>
+                <input type="text" class="form-control" id="name-tutor" name="name-tutor" aria-describedby="nameHelp-ad" oninput="nameInput()" required>
+                <div id="nameHelp-ad" class="form-text">Formato: Nombre(s) Apellido Paterno Apellido Materno.</div>`
+            } else if (student_signer && adult) {
+                document.getElementById("minor-inputs").innerHTML = "";
+            }
+        }
+
+        function shuffle(elems) {
+            allElems = (function(){
+                var ret = [], l = elems.length;
+                while (l--) { ret[ret.length] = elems[l]; }
+                return ret;
+            })();
+
+            var shuffled = (function(){
+                var l = allElems.length, ret = [];
+                while (l--) {
+                    var random = Math.floor(Math.random() * allElems.length),
+                        randEl = allElems[random].cloneNode(true);
+                    allElems.splice(random, 1);
+                    ret[ret.length] = randEl;
+                }
+                return ret;
+            })(), l = elems.length;
+
+            while (l--) {
+                elems[l].parentNode.insertBefore(shuffled[l], elems[l].nextSibling);
+                elems[l].parentNode.removeChild(elems[l]);
+            }
+        }
+    </script>
 </div>
 
 <script src="https://s.pageclip.co/v1/pageclip.js" charset="utf-8"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js" integrity="sha512-GsLlZN/3F2ErC5ifS5QtgpiJtWd43JWSuIgh7mbzZ8zBps+dvLusV+eNQATqgA/HdeKFVgA5v3S/cIrLF7QnIg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 </body>
 </html>
