@@ -369,7 +369,7 @@
             <div class="form-check mb-3">
                 <input class="form-check-input" type="radio" name="signer" id="signer2" checked oninput="signerChanged()">
                 <label class="form-check-label" for="signer2">
-                    Mi padre/madre/tutor (obligatorio en caso de menores de edad)
+                    Mi padre/madre/tutor (obligatorio en caso de menores de edad) – <b>Fuertemente Recomendado</b>
                 </label>
             </div>
 
@@ -382,7 +382,7 @@
             </div>
 
             <div class="mb-3">
-                <label for="invitados_cena" class="form-label">Número de boletos a comprar para la cena*</label>
+                <label for="invitados_cena" class="form-label">Número de boletos a comprar para la cena (incluye after)*</label>
                 <input type="number" class="form-control" id="invitados_cena" name="invitados_cena" placeholder="" required aria-describedby="cenaHelp">
                 <div id="cenaHelp" class="form-text">No te incluyas a ti mismo (el alumno) en este número.</div>
             </div>
@@ -404,7 +404,8 @@
             <div id="venueHelp" class="form-text mb-3">Recuerda analizar profundamente todas las prestaciones y características de cada <i>venue</i>, así como tener una reunión con tus padres antes de hacer una selección.</div>
             <div class="mb-3">
                 <label for="comentarios" class="form-label">En caso de ser necesario, por favor escribe abajo cualquier comentario que quieras hacer llegar al Comité de Graduación de la G23.</label>
-                <textarea class="form-control" id="comentarios" rows="3"></textarea>
+                <textarea class="form-control" id="comentarios" rows="3" aria-describedby="commentsHelp"></textarea>
+                <div id="commentsHelp" class="form-text">Campo opcional</div>
             </div>
 
             <input class="form-control" type="text" aria-label="statement" readonly hidden id="statement" name="statement">
@@ -507,6 +508,7 @@
                 voto: document.getElementById("voto").value,
                 comentarios: document.getElementById("comentarios").value,
                 accept: document.getElementById("accept").checked,
+                statement: document.getElementById("statement").value,
                 timestamp: firebase.firestore.FieldValue.serverTimestamp()
             })
                 .then((docRef) => {
@@ -588,27 +590,7 @@
         }
 
         function shuffle(elems) {
-            allElems = (function(){
-                var ret = [], l = elems.length;
-                while (l--) { ret[ret.length] = elems[l]; }
-                return ret;
-            })();
 
-            var shuffled = (function(){
-                var l = allElems.length, ret = [];
-                while (l--) {
-                    var random = Math.floor(Math.random() * allElems.length),
-                        randEl = allElems[random].cloneNode(true);
-                    allElems.splice(random, 1);
-                    ret[ret.length] = randEl;
-                }
-                return ret;
-            })(), l = elems.length;
-
-            while (l--) {
-                elems[l].parentNode.insertBefore(shuffled[l], elems[l].nextSibling);
-                elems[l].parentNode.removeChild(elems[l]);
-            }
         }
     </script>
 </div>
