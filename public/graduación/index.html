@@ -16,6 +16,10 @@
             integrity="sha256-c9vxcXyAG4paArQG3xk6DjyW/9aHxai2ef9RpMWO44A=" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.3.5/jspdf.min.js"></script>
 
+    <!-- Firebase -->
+    <script src="https://www.gstatic.com/firebasejs/9.8.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.8.1/firebase-firestore-compat.js"></script>
+
     <style>
         h1 {
             font-family: pt-serif-pro,sans-serif;
@@ -41,6 +45,20 @@
             font-style: normal;
         }
     </style>
+
+    <script>
+        const firebaseConfig = {
+            apiKey: "AIzaSyCM3RGa8Zl59QCsKtcmhBkPK7H1JL_LeUQ",
+            authDomain: "g23-csm.firebaseapp.com",
+            projectId: "g23-csm",
+            storageBucket: "g23-csm.appspot.com",
+            messagingSenderId: "735574331856",
+            appId: "1:735574331856:web:6f826790f622f2c57869d5"
+        };
+
+        // Initialize Firebase
+        const firebaseApp = firebase.initializeApp(firebaseConfig);
+    </script>
 
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.2/font/bootstrap-icons.css">
 </head>
@@ -97,7 +115,7 @@
                     -->
                 </tr>
                 <tr>
-                    <th>Fecha y Horario cotizado</th>
+                    <th>Fecha y Horario cotizados</th>
                     <td>Viernes 9 de junio de 2023 de 21:00 – 3:00</td>
                     <td>Viernes 9 de junio de 2023 de 20:00 – 3:00</td>
                 </tr>
@@ -183,6 +201,9 @@
                             <li>1 cerveza nacional</li>
                             <li>Café americano y descafeinado</li>
                         </ul></td>
+                    <td>
+                        En la cena se incluye un menú de 4 tiempos y tornafiestas. El menú detallado aún está por definir.
+                    </td>
                 </tr>
                 <tr>
                     <th>Personas / mesa</th>
@@ -334,8 +355,8 @@
 
             <div id="minor-inputs">
                 <div class="mb-3">
-                    <label for="name-tutor" class="form-label">Nombre completo del padre/madre/tutor del alumno que adquirirá el compromiso de liquidar el total de boletos registrado en este formulario*</label>
-                    <input type="text" class="form-control" id="name-tutor" name="name-tutor" aria-describedby="nameHelp-ad" oninput="nameInput()" required>
+                    <label for="name_tutor" class="form-label">Nombre completo del padre/madre/tutor del alumno que adquirirá el compromiso de liquidar el total de boletos registrado en este formulario*</label>
+                    <input type="text" class="form-control" id="name_tutor" name="name_tutor" aria-describedby="nameHelp-ad" oninput="nameInput()" required>
                     <div id="nameHelp-ad" class="form-text">Formato: Nombre(s) Apellido Paterno Apellido Materno.</div>
                 </div>
             </div>
@@ -346,7 +367,7 @@
                 <div id="cenaHelp" class="form-text">No te incluyas a ti mismo (el alumno) en este número.</div>
             </div>
             <div class="mb-3">
-                <label for="invitados_after" class="form-label">Número de boletos a comprar para el after*</label>
+                <label for="invitados_after" class="form-label">Número de boletos a comprar para acceso ÚNICAMENTE al after (no a la cena)*</label>
                 <input type="number" class="form-control" id="invitados_after" name="invitados_after" placeholder="" required aria-describedby="afterHelp">
                 <div id="afterHelp" class="form-text">En caso de no querer adquirir boletos de after escribe 0.</div>
             </div>
@@ -370,7 +391,7 @@
 
             <p>Por favor revisa la siguiente declaración y marca la casilla en caso de estar de acuerdo con ésta:</p>
             <div class="form-check mb-3">
-                <input class="form-check-input" type="checkbox" id="accept" name="accept"required>
+                <input class="form-check-input" type="checkbox" id="accept" name="accept" required>
                 <label class="form-check-label" for="accept" id="acceptLabel">
                     Soy mayor de edad al momento de firmar este acuerdo y registrar mi voto.
                 </label>
@@ -398,6 +419,42 @@
         });
 
         function submitForm() {
+            var db = firebaseApp.firestore();
+
+            let student_signer = document.getElementById("signer1").checked;
+            let adult_signer = document.getElementById("signer2").checked;
+
+            // Add a new document with a generated id.
+            db.collection("votos").add({
+                email: document.getElementById("email").value,
+                name: document.getElementById("name").value,
+                adult: document.getElementById("adult").checked,
+                signer: "",
+                name_tutor: document.getElementById("name_tutor").value,
+                invitados_cena: Number(document.getElementById("invitados_cena").value),
+                invitados_after: Number(document.getElementById("invitados_after").value),
+                voto: document.getElementById("voto").value,
+                comentarios: document.getElementById("comentarios").value,
+                accept: document.getElementById("accept").checked
+            })
+                .then((docRef) => {
+                    switch (document.getElementById("voto").value) {
+                        case "Hacienda de Los Morales":
+                            db.collection('votos').doc('counts').update({
+                                morales: firebase.firestore.FieldValue.increment(1)
+                            });
+                            break;
+                        case "Hacienda de San Fernando":
+                            db.collection('votos').doc('counts').update({
+                                fernando: firebase.firestore.FieldValue.increment(1)
+                            });
+                            break;
+                    }
+                })
+                .catch((error) => {
+                    console.error("Error adding document: ", error);
+                });
+
             document.getElementById("date").innerText = `Fecha actual: ${new Date().toLocaleString()}`
             window.print();
         }
