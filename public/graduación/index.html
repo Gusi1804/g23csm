@@ -70,6 +70,14 @@
         const firebaseApp = firebase.initializeApp(firebaseConfig);
     </script>
 
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+    <script type="text/javascript">
+        (function() {
+            // https://dashboard.emailjs.com/admin/account
+            emailjs.init('0lB__J0umMpoXi8LV');
+        })();
+    </script>
+
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.2/font/bootstrap-icons.css">
 </head>
 <body>
@@ -431,6 +439,8 @@
 
 
         </form>
+
+       <!-- <button type="button" class="btn btn-secondary" onclick="email()">Email</button> -->
     </main>
 
     <script>
@@ -485,17 +495,44 @@
             });
         });
 
+        /*
+        function email() {
+            emailjs.send("service_tcq84v5","template_xmzfx6b",{
+                to_name: document.getElementById("name").value,
+                cena: document.getElementById("invitados_cena").value,
+                after: document.getElementById("invitados_after").value,
+                voto: document.getElementById("voto").value,
+                acuerdo: document.getElementById("statement").value,
+                to_email: document.getElementById("email").value,
+            });
+        }
+         */
+
         function submitForm() {
             let student_signer = document.getElementById("signer1").checked;
             let adult_signer = document.getElementById("signer2").checked;
 
             var signer = "";
+            var signer_name = ""
 
             if (student_signer && !adult_signer) {
                 signer = "student"
+                signer_name = document.getElementById("name").value;
             } else if (!student_signer && adult_signer) {
                 signer = "parent"
+                signer_name = document.getElementById("name_tutor").value;
             }
+
+            emailjs.send("service_tcq84v5","template_xmzfx6b",{
+                to_name: document.getElementById("name").value,
+                cena: document.getElementById("invitados_cena").value,
+                after: document.getElementById("invitados_after").value,
+                voto: document.getElementById("voto").value,
+                acuerdo: document.getElementById("statement").value,
+                to_email: document.getElementById("email").value,
+                mensaje: document.getElementById("comentarios").value,
+                signer_name: signer_name,
+            });
 
             // Add a new document with a generated id.
             db.collection("votos").add({
@@ -541,10 +578,10 @@
 
             if (student_signer) {
                 document.getElementById("acceptLabel").innerHTML = `Yo, ${document.getElementById("name").value}, soy mayor de edad y bajo completa libertad me comprometo a adquirir ${document.getElementById("invitados_cena").value} boletos para la cena de la graduación de la Generación 2023 del Colegio Suizo de México Campus CDMX en la fecha tentativa establecida en la tabla de información, así como ${document.getElementById("invitados_after").value} boletos para el <i>after</i> de ese evento. El <i>venue</i> que seleccioné junto con mi familia es ${document.getElementById("voto").value}.`
-                document.getElementById("statement").value = `Yo, ${document.getElementById("name").value}, soy mayor de edad y bajo completa libertad me comprometo a adquirir ${document.getElementById("invitados_cena").value} boletos para la cena de la graduación de la Generación 2023 del Colegio Suizo de México Campus CDMX en la fecha tentativa establecida en la tabla de información, así como ${document.getElementById("invitados_after").value} boletos para el <i>after</i> de ese evento. El <i>venue</i> que seleccioné junto con mi familia es ${document.getElementById("voto").value}.`
+                document.getElementById("statement").value = `Yo, ${document.getElementById("name").value}, soy mayor de edad y bajo completa libertad me comprometo a adquirir ${document.getElementById("invitados_cena").value} boletos para la cena de la graduación de la Generación 2023 del Colegio Suizo de México Campus CDMX en la fecha tentativa establecida en la tabla de información, así como ${document.getElementById("invitados_after").value} boletos para el after de ese evento. El venue que seleccioné junto con mi familia es ${document.getElementById("voto").value}.`
             } else if (adult_signer) {
                 document.getElementById("acceptLabel").innerHTML = `Yo, ${document.getElementById("name_tutor").value}, padre/madre/tutor(a) de ${document.getElementById("name").value}, bajo completa libertad me comprometo a adquirir ${document.getElementById("invitados_cena").value} boletos para la cena de la graduación de la Generación 2023 del Colegio Suizo de México Campus CDMX en la fecha tentativa establecida en la tabla de información, así como ${document.getElementById("invitados_after").value} boletos para el <i>after</i> de ese evento. El <i>venue</i> que seleccioné junto con mi hijo/a es ${document.getElementById("voto").value}.`
-                document.getElementById("statement").value = `Yo, ${document.getElementById("name_tutor").value}, padre/madre/tutor(a) de ${document.getElementById("name").value}, bajo completa libertad me comprometo a adquirir ${document.getElementById("invitados_cena").value} boletos para la cena de la graduación de la Generación 2023 del Colegio Suizo de México Campus CDMX en la fecha tentativa establecida en la tabla de información, así como ${document.getElementById("invitados_after").value} boletos para el <i>after</i> de ese evento. El <i>venue</i> que seleccioné junto con mi hijo/a es ${document.getElementById("voto").value}.`
+                document.getElementById("statement").value = `Yo, ${document.getElementById("name_tutor").value}, padre/madre/tutor(a) de ${document.getElementById("name").value}, bajo completa libertad me comprometo a adquirir ${document.getElementById("invitados_cena").value} boletos para la cena de la graduación de la Generación 2023 del Colegio Suizo de México Campus CDMX en la fecha tentativa establecida en la tabla de información, así como ${document.getElementById("invitados_after").value} boletos para el after de ese evento. El venue que seleccioné junto con mi hijo/a es ${document.getElementById("voto").value}.`
             }
         }
 
