@@ -20,6 +20,9 @@
     <script src="https://www.gstatic.com/firebasejs/9.8.1/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.8.1/firebase-firestore-compat.js"></script>
 
+    <!-- Charts -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
     <style>
         h1 {
             font-family: pt-serif-pro,sans-serif;
@@ -44,6 +47,13 @@
             font-weight: 400;
             font-style: normal;
         }
+
+        canvas {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
     </style>
 
     <script>
@@ -63,7 +73,7 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.2/font/bootstrap-icons.css">
 </head>
 <body>
-<div class="container-sm py-5 text-left align-items-center justify-content-start" id="main">
+<div class="container-sm  py-5 text-left align-items-center justify-content-start" id="main">
     <main>
         <h1>Votación Graduación</h1>
         <h6 class="pb-4" id="date"></h6>
@@ -71,6 +81,10 @@
         <div class="alert alert-info d-flex align-items-center" role="alert">
             <i class="bi bi-info-circle pe-3"></i>
             <div>Se recomienda visualizar esta página en una computadora.</div>
+        </div>
+
+        <div class="container container-sm chart-container d-flex align-items-center" style="position: relative; height:50vh;">
+            <canvas id="myChart"></canvas>
         </div>
 
         <!-- Opciones -->
@@ -113,6 +127,11 @@
                     <td><a href="https://goo.gl/maps/SXcA5XyHFzT5VgfR6" target="_blank">Periférico Sur 3395, Col. Jardines del Pedregal, C.P 14120, CDMX</a></td>
                     <td><a href="https://goo.gl/maps/SZ1E5ZgpiK7ZQAgx7" target="_blank">Av. Glaciar No. 500, Col. Olivar de los Padres, Alcaldía Álvaro Obregón, C.P. 01780, CDMX</a></td>
                     -->
+                </tr>
+                <tr>
+                    <th>Votos</th>
+                    <td id="morales_votos">Cargando...</td>
+                    <td id="fernando_votos">Cargando...</td>
                 </tr>
                 <tr>
                     <th>Fecha y Horario cotizados</th>
@@ -294,6 +313,7 @@
                         <li>Pago Sindicato de la Música: $4,800 / 6 hrs</li>
                         <li>Servicio de Fotógrafo</li>
                         <li>Servicio de Video</li>
+                        <li><b>Elegir la Hacienda de los Morales implica un gran trabajo para el comité, ya que ellos solo proporcionan los alimentos y lo demás lo tendríamos que organizar nosotros mismos.</b></li>
                     </ul></td>
                     <td>Falta considerar en el precio mencionado:<ul>
                         <li>Servicio de Fotógrafo</li>
@@ -333,8 +353,8 @@
             </div>
 
             <div class="form-check mb-3">
-                <input class="form-check-input" type="checkbox" id="flexCheckIndeterminate" name="adult" oninput="adultStatusChanged()" required checked>
-                <label class="form-check-label" for="flexCheckIndeterminate" id="adultLabel">
+                <input class="form-check-input" type="checkbox" id="adult" name="adult" oninput="adultStatusChanged()" required checked>
+                <label class="form-check-label" for="adult" id="adultLabel">
                     Soy mayor de edad al momento de firmar este acuerdo y registrar mi voto.
                 </label>
             </div>
@@ -412,30 +432,82 @@
     </main>
 
     <script>
+        var db = firebaseApp.firestore();
+
         document.addEventListener("DOMContentLoaded", (event) => {
             shuffle( document.querySelectorAll('#voto') )
 
-            document.getElementById("date").innerText = `Fecha actual: ${new Date().toLocaleString()}`
+            document.getElementById("date").innerText = `Fecha actual: ${new Date().toLocaleString()}`;
+
+            db.collection("votos").doc("counts").get().then((doc) => {
+                if (doc.exists) {
+                    //console.log("Document data:", doc.data());
+
+                    let fernando = doc.data().fernando;
+                    let morales = doc.data().morales;
+
+                    document.getElementById("fernando_votos").innerText = String(fernando);
+                    document.getElementById("morales_votos").innerText = String(morales);
+
+                    const ctx = document.getElementById('myChart');
+
+                    new Chart(ctx, {
+                        type: 'pie',
+                        data: {
+                            labels: ['Hacienda de Los Morales', 'Hacienda de San Fernando'],
+                            datasets: [{
+                                label: '# de votos',
+                                data: [morales, fernando],
+                                borderWidth: 1
+                            }]
+                        },
+                        options: {
+                            responsive: true,
+                            plugins: {
+                                legend: {
+                                    position: 'top',
+                                },
+                                title: {
+                                    display: true,
+                                    text: 'Estado actual de las votaciones'
+                                }
+                            }
+                        }
+                    });
+                } else {
+                    // doc.data() will be undefined in this case
+                    console.log("No such document!");
+                }
+            }).catch((error) => {
+                console.log("Error getting document:", error);
+            });
         });
 
         function submitForm() {
-            var db = firebaseApp.firestore();
-
             let student_signer = document.getElementById("signer1").checked;
             let adult_signer = document.getElementById("signer2").checked;
+
+            var signer = "";
+
+            if (student_signer && !adult_signer) {
+                signer = "student"
+            } else if (!student_signer && adult_signer) {
+                signer = "parent"
+            }
 
             // Add a new document with a generated id.
             db.collection("votos").add({
                 email: document.getElementById("email").value,
                 name: document.getElementById("name").value,
                 adult: document.getElementById("adult").checked,
-                signer: "",
+                signer: signer,
                 name_tutor: document.getElementById("name_tutor").value,
                 invitados_cena: Number(document.getElementById("invitados_cena").value),
                 invitados_after: Number(document.getElementById("invitados_after").value),
                 voto: document.getElementById("voto").value,
                 comentarios: document.getElementById("comentarios").value,
-                accept: document.getElementById("accept").checked
+                accept: document.getElementById("accept").checked,
+                timestamp: firebase.firestore.FieldValue.serverTimestamp()
             })
                 .then((docRef) => {
                     switch (document.getElementById("voto").value) {
@@ -468,8 +540,8 @@
                 document.getElementById("acceptLabel").innerHTML = `Yo, ${document.getElementById("name").value}, soy mayor de edad y bajo completa libertad me comprometo a adquirir ${document.getElementById("invitados_cena").value} boletos para la cena de la graduación de la Generación 2023 del Colegio Suizo de México Campus CDMX en la fecha tentativa establecida en la tabla de información, así como ${document.getElementById("invitados_after").value} boletos para el <i>after</i> de ese evento. El <i>venue</i> que seleccioné junto con mi familia es ${document.getElementById("voto").value}.`
                 document.getElementById("statement").value = `Yo, ${document.getElementById("name").value}, soy mayor de edad y bajo completa libertad me comprometo a adquirir ${document.getElementById("invitados_cena").value} boletos para la cena de la graduación de la Generación 2023 del Colegio Suizo de México Campus CDMX en la fecha tentativa establecida en la tabla de información, así como ${document.getElementById("invitados_after").value} boletos para el <i>after</i> de ese evento. El <i>venue</i> que seleccioné junto con mi familia es ${document.getElementById("voto").value}.`
             } else if (adult_signer) {
-                document.getElementById("acceptLabel").innerHTML = `Yo, ${document.getElementById("name-tutor").value}, padre/madre/tutor(a) de ${document.getElementById("name").value}, bajo completa libertad me comprometo a adquirir ${document.getElementById("invitados_cena").value} boletos para la cena de la graduación de la Generación 2023 del Colegio Suizo de México Campus CDMX en la fecha tentativa establecida en la tabla de información, así como ${document.getElementById("invitados_after").value} boletos para el <i>after</i> de ese evento. El <i>venue</i> que seleccioné junto con mi hijo/a es ${document.getElementById("voto").value}.`
-                document.getElementById("statement").value = `Yo, ${document.getElementById("name-tutor").value}, padre/madre/tutor(a) de ${document.getElementById("name").value}, bajo completa libertad me comprometo a adquirir ${document.getElementById("invitados_cena").value} boletos para la cena de la graduación de la Generación 2023 del Colegio Suizo de México Campus CDMX en la fecha tentativa establecida en la tabla de información, así como ${document.getElementById("invitados_after").value} boletos para el <i>after</i> de ese evento. El <i>venue</i> que seleccioné junto con mi hijo/a es ${document.getElementById("voto").value}.`
+                document.getElementById("acceptLabel").innerHTML = `Yo, ${document.getElementById("name_tutor").value}, padre/madre/tutor(a) de ${document.getElementById("name").value}, bajo completa libertad me comprometo a adquirir ${document.getElementById("invitados_cena").value} boletos para la cena de la graduación de la Generación 2023 del Colegio Suizo de México Campus CDMX en la fecha tentativa establecida en la tabla de información, así como ${document.getElementById("invitados_after").value} boletos para el <i>after</i> de ese evento. El <i>venue</i> que seleccioné junto con mi hijo/a es ${document.getElementById("voto").value}.`
+                document.getElementById("statement").value = `Yo, ${document.getElementById("name_tutor").value}, padre/madre/tutor(a) de ${document.getElementById("name").value}, bajo completa libertad me comprometo a adquirir ${document.getElementById("invitados_cena").value} boletos para la cena de la graduación de la Generación 2023 del Colegio Suizo de México Campus CDMX en la fecha tentativa establecida en la tabla de información, así como ${document.getElementById("invitados_after").value} boletos para el <i>after</i> de ese evento. El <i>venue</i> que seleccioné junto con mi hijo/a es ${document.getElementById("voto").value}.`
             }
         }
 
