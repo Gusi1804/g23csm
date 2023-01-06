@@ -91,9 +91,13 @@
             <div>Se recomienda visualizar esta página en una computadora.</div>
         </div>
 
-        <div class="container container-sm chart-container d-flex align-items-center" style="position: relative; height:50vh;">
+        <div class="container container-sm chart-container d-flex align-items-center pb-4" style="position: relative; height:50vh;">
             <canvas id="myChart"></canvas>
         </div>
+
+        <hr>
+        <h4><b>Número de Invitados</b></h4>
+        <div id="invitados_counters"></div>
 
         <!-- Opciones -->
         <hr>
@@ -459,9 +463,13 @@
 
                     let fernando = doc.data().fernando;
                     let morales = doc.data().morales;
+                    let cena = doc.data().cena;
+                    let after = doc.data().after;
 
                     document.getElementById("fernando_votos").innerText = String(fernando);
                     document.getElementById("morales_votos").innerText = String(morales);
+
+                    document.getElementById("invitados_counters").innerHTML = `<ul><li>G23: 31</li><li>Cena: ${String(cena)}</li><li>After: ${String(after)}</li><li><b>Total: ${String(31 + cena + after)}</b></li></ul>`;
 
                     const ctx = document.getElementById('myChart');
 
@@ -525,6 +533,11 @@
                 signer_name = document.getElementById("name_tutor").value;
             }
 
+            var mensaje = "–"
+            if (document.getElementById("comentarios").value != "") {
+                mensaje = document.getElementById("comentarios").value;
+            }
+
             emailjs.send("service_tcq84v5","template_xmzfx6b",{
                 to_name: document.getElementById("name").value,
                 cena: document.getElementById("invitados_cena").value,
@@ -532,7 +545,7 @@
                 voto: document.getElementById("voto").value,
                 acuerdo: document.getElementById("statement").value,
                 to_email: document.getElementById("email").value,
-                mensaje: document.getElementById("comentarios").value,
+                mensaje: mensaje,
                 signer_name: signer_name,
                 fecha: new Date().toLocaleString()
             });
@@ -556,12 +569,16 @@
                     switch (document.getElementById("voto").value) {
                         case "Hacienda de Los Morales":
                             db.collection('votos').doc('counts').update({
-                                morales: firebase.firestore.FieldValue.increment(1)
+                                morales: firebase.firestore.FieldValue.increment(1),
+                                cena: firebase.firestore.FieldValue.increment(invitados_cena),
+                                after: firebase.firestore.FieldValue.increment(invitados_after)
                             });
                             break;
                         case "Hacienda de San Fernando":
                             db.collection('votos').doc('counts').update({
-                                fernando: firebase.firestore.FieldValue.increment(1)
+                                fernando: firebase.firestore.FieldValue.increment(1),
+                                cena: firebase.firestore.FieldValue.increment(invitados_cena),
+                                after: firebase.firestore.FieldValue.increment(invitados_after)
                             });
                             break;
                     }
