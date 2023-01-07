@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Votos Graduación</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://s.pageclip.co/v1/pageclip.css" media="screen">
+
+    <link rel="stylesheet" href="https://use.typekit.net/wuv7lww.css">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/dom-to-image/2.6.0/dom-to-image.min.js"
+            integrity="sha256-c9vxcXyAG4paArQG3xk6DjyW/9aHxai2ef9RpMWO44A=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.3.5/jspdf.min.js"></script>
+
+    <!-- Firebase -->
+    <script src="https://www.gstatic.com/firebasejs/9.8.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.8.1/firebase-firestore-compat.js"></script>
+
+    <!-- Charts -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <style>
+        h1 {
+            font-family: pt-serif-pro,sans-serif;
+            font-weight: 600;
+            font-style: normal;
+        }
+
+        h2 {
+            font-family: pt-serif-pro,sans-serif;
+            font-weight: 600;
+            font-style: normal;
+        }
+
+        table {
+            font-family: pt-serif-pro,sans-serif;
+            font-weight: 400;
+            font-style: normal;
+        }
+
+        div {
+            font-family: pt-serif-pro,sans-serif;
+            font-weight: 400;
+            font-style: normal;
+        }
+
+        canvas {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+    </style>
+
+    <script>
+        const firebaseConfig = {
+            apiKey: "AIzaSyCM3RGa8Zl59QCsKtcmhBkPK7H1JL_LeUQ",
+            authDomain: "g23-csm.firebaseapp.com",
+            projectId: "g23-csm",
+            storageBucket: "g23-csm.appspot.com",
+            messagingSenderId: "735574331856",
+            appId: "1:735574331856:web:6f826790f622f2c57869d5"
+        };
+
+        // Initialize Firebase
+        const firebaseApp = firebase.initializeApp(firebaseConfig);
+    </script>
+
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+    <script type="text/javascript">
+        (function() {
+            // https://dashboard.emailjs.com/admin/account
+            emailjs.init('0lB__J0umMpoXi8LV');
+        })();
+    </script>
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.2/font/bootstrap-icons.css">
+</head>
+<body>
+<div class="container-sm  py-5 text-left align-items-center justify-content-start" id="main">
+    <main>
+        <h1>Registro de votos individuales para la graduación</h1>
+        <h6 class="pb-4">(anonimizados)</h6>
+
+        <div class="table-responsive pb-4">
+            <table class="table table-hover table-sm">
+                <thead>
+                    <tr>
+                        <th>Fecha</th>
+                        <th>Nombre</th>
+                        <th>Voto</th>
+                        <th>Invitados cena</th>
+                        <th>Invitados after</th>
+                    </tr>
+                </thead>
+                <tbody id="tbody">
+                </tbody>
+            </table>
+        </div>
+    </main>
+
+    <script>
+        var db = firebaseApp.firestore();
+
+        var qd = {};
+        if (location.search) location.search.substr(1).split("&").forEach(function(item) {
+            var s = item.split("="),
+                k = s[0],
+                v = s[1] && decodeURIComponent(s[1]); //  null-coalescing / short-circuit
+            //(k in qd) ? qd[k].push(v) : qd[k] = [v]
+            (qd[k] = qd[k] || []).push(v) // null-coalescing / short-circuit
+        })
+
+        var password = qd.pass;
+
+        document.addEventListener("DOMContentLoaded", (event) => {
+            db.collection("votos").orderBy("timestamp").get().then((querySnapshot) => {
+                querySnapshot.forEach((doc) => {
+                    // doc.data() is never undefined for query doc snapshots
+                    //console.log(doc.id, " => ", doc.data());
+                    if (doc.id != "counts") {
+                        //console.log(doc.id, " => ", doc.data());
+                        let item = doc.data();
+                        let row = document.createElement("tr");
+
+                        let fecha = document.createElement("td");
+                        fecha.innerText = `${item.timestamp.toDate().toLocaleDateString()}, ${item.timestamp.toDate().toLocaleTimeString()}`;
+                        let nombre = document.createElement("td");
+                        if (password != undefined) {
+                            if (password[0] == "admin") {
+                                nombre.innerText = item.name;
+                            } else {
+                                nombre.innerText = "******";
+                            }
+                        } else {
+                            nombre.innerText = "******";
+                        }
+                        let voto = document.createElement("td");
+                        voto.innerText = item.voto;
+                        let cena = document.createElement("td");
+                        cena.innerText = String(item.invitados_cena);
+                        let after = document.createElement("td");
+                        after.innerText = String(item.invitados_after);
+
+                        row.append(fecha, nombre, voto, cena, after);
+                        document.getElementById("tbody").append(row);
+                    }
+                });
+            });
+        });
+    </script>
+</div>
+
+</body>
+</html>
