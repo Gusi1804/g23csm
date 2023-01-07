@@ -570,15 +570,15 @@
                         case "Hacienda de Los Morales":
                             db.collection('votos').doc('counts').update({
                                 morales: firebase.firestore.FieldValue.increment(1),
-                                cena: firebase.firestore.FieldValue.increment(invitados_cena),
-                                after: firebase.firestore.FieldValue.increment(invitados_after)
+                                cena: firebase.firestore.FieldValue.increment(Number(document.getElementById("invitados_cena").value)),
+                                after: firebase.firestore.FieldValue.increment(Number(document.getElementById("invitados_after").value))
                             });
                             break;
                         case "Hacienda de San Fernando":
                             db.collection('votos').doc('counts').update({
                                 fernando: firebase.firestore.FieldValue.increment(1),
-                                cena: firebase.firestore.FieldValue.increment(invitados_cena),
-                                after: firebase.firestore.FieldValue.increment(invitados_after)
+                                cena: firebase.firestore.FieldValue.increment(Number(document.getElementById("invitados_cena").value)),
+                                after: firebase.firestore.FieldValue.increment(Number(document.getElementById("invitados_after").value))
                             });
                             break;
                     }
