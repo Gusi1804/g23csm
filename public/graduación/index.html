@@ -513,7 +513,7 @@
 
 
             <!-- This button will have a loading spinner. Keep the inner span for best results. -->
-            <button type="submit" class="pageclip-form__submit btn btn-primary">
+            <button type="submit" class="pageclip-form__submit btn btn-primary" onclick="submitForm()">
                 <span>Enviar</span>
             </button>
 
@@ -689,7 +689,7 @@
         }
 
         function adultStatusChanged() {
-            let adult = document.getElementById("flexCheckIndeterminate").checked;
+            let adult = document.getElementById("adult").checked;
             let student_signer = document.getElementById("signer1").checked;
             let adult_signer = document.getElementById("signer2").checked;
 
@@ -698,16 +698,16 @@
                 document.getElementById("signer2").checked = true;
 
                 document.getElementById("minor-inputs").innerHTML = `<div class="mb-3">
-                <label for="name-tutor" class="form-label">Nombre completo del padre/madre/tutor del alumno que adquirirá el compromiso de liquidar el total de boletos registrado en este formulario*</label>
-                <input type="text" class="form-control" id="name-tutor" name="name-tutor" aria-describedby="nameHelp-ad" oninput="nameInput()" required>
+                <label for="name_tutor" class="form-label">Nombre completo del padre/madre/tutor del alumno que adquirirá el compromiso de liquidar el total de boletos registrado en este formulario*</label>
+                <input type="text" class="form-control" id="name_tutor" name="name_tutor" aria-describedby="nameHelp-ad" oninput="nameInput()" required>
                 <div id="nameHelp-ad" class="form-text">Formato: Nombre(s) Apellido Paterno Apellido Materno.</div>
             </div>`
             } else {
                 document.getElementById("signer1").disabled = false;
                 if (adult_signer) {
                     document.getElementById("minor-inputs").innerHTML = `<div class="mb-3">
-                <label for="name-tutor" class="form-label">Nombre completo del padre/madre/tutor del alumno que adquirirá el compromiso de liquidar el total de boletos registrado en este formulario*</label>
-                <input type="text" class="form-control" id="name-tutor" name="name-tutor" aria-describedby="nameHelp-ad" oninput="nameInput()" required>
+                <label for="name_tutor" class="form-label">Nombre completo del padre/madre/tutor del alumno que adquirirá el compromiso de liquidar el total de boletos registrado en este formulario*</label>
+                <input type="text" class="form-control" id="name_tutor" name="name_tutor" aria-describedby="nameHelp-ad" oninput="nameInput()" required>
                 <div id="nameHelp-ad" class="form-text">Formato: Nombre(s) Apellido Paterno Apellido Materno.</div>`
                 } else if (student_signer && adult) {
                     document.getElementById("minor-inputs").innerHTML = "";
@@ -718,12 +718,12 @@
         function signerChanged() {
             let student_signer = document.getElementById("signer1").checked;
             let adult_signer = document.getElementById("signer2").checked;
-            let adult = document.getElementById("flexCheckIndeterminate").checked;
+            let adult = document.getElementById("adult").checked;
 
             if (adult_signer) {
                 document.getElementById("minor-inputs").innerHTML = `<div class="mb-3">
-                <label for="name-tutor" class="form-label">Nombre completo del padre/madre/tutor del alumno que adquirirá el compromiso de liquidar el total de boletos registrado en este formulario*</label>
-                <input type="text" class="form-control" id="name-tutor" name="name-tutor" aria-describedby="nameHelp-ad" oninput="nameInput()" required>
+                <label for="name_tutor" class="form-label">Nombre completo del padre/madre/tutor del alumno que adquirirá el compromiso de liquidar el total de boletos registrado en este formulario*</label>
+                <input type="text" class="form-control" id="name_tutor" name="name_tutor" aria-describedby="nameHelp-ad" oninput="nameInput()" required>
                 <div id="nameHelp-ad" class="form-text">Formato: Nombre(s) Apellido Paterno Apellido Materno.</div>`
             } else if (student_signer && adult) {
                 document.getElementById("minor-inputs").innerHTML = "";
