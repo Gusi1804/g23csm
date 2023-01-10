@@ -626,13 +626,18 @@
                 fecha: new Date().toLocaleString()
             });
 
+            var name_tutor = "";
+            if (document.getElementById("name_tutor").value != null && document.getElementById("name_tutor").value != undefined && document.getElementById("name_tutor").value == "") {
+                name_tutor = document.getElementById("name_tutor").value;
+            }
+
             // Add a new document with a generated id.
             db.collection("votos").add({
                 email: document.getElementById("email").value,
                 name: document.getElementById("name").value,
                 adult: document.getElementById("adult").checked,
                 signer: signer,
-                name_tutor: document.getElementById("name_tutor").value,
+                name_tutor: name_tutor,
                 invitados_cena: Number(document.getElementById("invitados_cena").value),
                 invitados_after: Number(document.getElementById("invitados_after").value),
                 voto: document.getElementById("voto").value,
