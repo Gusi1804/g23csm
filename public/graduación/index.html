@@ -633,6 +633,8 @@
                     name_tutor = document.getElementById("name_tutor").value;
                 }
 
+
+
                 // Add a new document with a generated id.
                 db.collection("votos").add({
                     email: document.getElementById("email").value,
@@ -672,6 +674,52 @@
                                 });
                                 break;
                         }
+
+                        // lookup old votes and delete them
+                        var index = 1;
+                        db.collection("votos").where("email", "==", document.getElementById("email").value)
+                            .get()
+                            .then((querySnapshot) => {
+                                querySnapshot.forEach((doc) => {
+                                    // doc.data() is never undefined for query doc snapshots
+                                    //console.log(doc.id, " => ", doc.data());
+                                    if (querySnapshot.size > 1 && index < querySnapshot.size) {
+                                        db.collection("votos").doc(doc.id).delete().then(() => {
+                                            console.log("Document successfully deleted!");
+                                            let old = doc.data();
+                                            switch (old.voto) {
+                                                case "Hacienda de Los Morales":
+                                                    db.collection('votos').doc('counts').update({
+                                                        morales: firebase.firestore.FieldValue.increment(-1),
+                                                        cena: firebase.firestore.FieldValue.increment(-1 * old.invitados_cena),
+                                                        after: firebase.firestore.FieldValue.increment(-1 * old.invitados_after)
+                                                    });
+                                                    break;
+                                                case "Hacienda de San Fernando":
+                                                    db.collection('votos').doc('counts').update({
+                                                        fernando: firebase.firestore.FieldValue.increment(-1),
+                                                        cena: firebase.firestore.FieldValue.increment(-1 * old.invitados_cena),
+                                                        after: firebase.firestore.FieldValue.increment(-1 * old.invitados_after)
+                                                    });
+                                                    break;
+                                                case "Hotel Hilton Reforma":
+                                                    db.collection('votos').doc('counts').update({
+                                                        hilton: firebase.firestore.FieldValue.increment(-1),
+                                                        cena: firebase.firestore.FieldValue.increment(-1 * old.invitados_cena),
+                                                        after: firebase.firestore.FieldValue.increment(-1 * old.invitados_after)
+                                                    });
+                                                    break;
+                                            }
+                                        }).catch((error) => {
+                                            console.error("Error removing document: ", error);
+                                        });
+                                    }
+                                    index += 1;
+                                });
+                            })
+                            .catch((error) => {
+                                console.log("Error getting documents: ", error);
+                            });
                     })
                     .catch((error) => {
                         console.error("Error adding document: ", error);
