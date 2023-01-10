@@ -109,14 +109,18 @@
             <table class="table table-hover table-sm">
                 <thead>
                 <tr>
-                    <th class="col-md-2"></th>
-                    <th class="col-md-6">
+                    <th class="col-md-3"></th>
+                    <th class="col-md-3">
                         <a href="https://www.haciendadelosmorales.com" target="_blank">Hacienda de Los Morales</a><br><br>
                         <img src="haciendamorales.png" height="150">
                     </th>
-                    <th class="col-md-6">
+                    <th class="col-md-3">
                         <a href="https://www.haciendadesanfernando.com.mx" target="_blank">Hacienda de San Fernando</a><br><br>
                         <img src="sanfernando.jpeg" height="150">
+                    </th>
+                    <th class="col-md-3">
+                        <a href="https://www.hiltonhotels.com/es_XM/mexico/hilton-mexico-city-reforma/" target="_blank">Hotel Hilton Reforma</a><br><br>
+                        <img src="hilton.png" height="150">
                     </th>
                     <!--
                     <th class="col-md-3">
@@ -135,6 +139,7 @@
                     <th>Dirección</th>
                     <td><a href="https://www.google.com/maps/place/Hacienda+de+los+Morales/@19.4343448,-99.2092771,17z/data=!3m1!4b1!4m5!3m4!1s0x0:0x1b803634341b80a9!8m2!3d19.4343448!4d-99.2092771" target="_blank">Vázquez de Mella 525, Col. del Bosque, Alcaldía Miguel Hidalgo, C.P. 11510, CDMX</a></td>
                     <td><a href="https://goo.gl/maps/3DYVuW7VCAVXkjzK6" target="_blank">Avenida San Fernando 106, Col. Tlalpan, Alcaldía Tlalpan, C.P. 14000, CDMX</a></td>
+                    <td><a href="https://goo.gl/maps/AXK4rBsSydtvkWSA6">Av. Juárez 70, Col. Centro, Alcaldía Cuauhtémoc, C.P. 06010, CDMX</a></td>
                     <!--
                     <td><a href="https://goo.gl/maps/SXcA5XyHFzT5VgfR6" target="_blank">Periférico Sur 3395, Col. Jardines del Pedregal, C.P 14120, CDMX</a></td>
                     <td><a href="https://goo.gl/maps/SZ1E5ZgpiK7ZQAgx7" target="_blank">Av. Glaciar No. 500, Col. Olivar de los Padres, Alcaldía Álvaro Obregón, C.P. 01780, CDMX</a></td>
@@ -144,10 +149,12 @@
                     <th>Votos</th>
                     <td id="morales_votos">Cargando...</td>
                     <td id="fernando_votos">Cargando...</td>
+                    <td id="hilton_votos">Cargando...</td>
                 </tr>
                 <tr>
                     <th>Fecha y Horario cotizados</th>
                     <td>Viernes 9 de junio de 2023 de 21:00 – 3:00</td>
+                    <td>Viernes 9 de junio de 2023 de 20:00 – 3:00</td>
                     <td>Viernes 9 de junio de 2023 de 20:00 – 3:00</td>
                 </tr>
                 <tr>
@@ -160,6 +167,9 @@
                         <li>Cena: 200, 250, 300 y 350</li>
                         <li>After: 50</li>
                     </ul></td>
+                    <td><ul>
+                        <li>Cena: 300</li>
+                    </ul></td>
                 </tr>
                 <tr>
                     <th>Límite(s) de Pago y montos</th>
@@ -171,7 +181,12 @@
                     </td>
                     <td>
                         <ul>
-                            <li>Para Reservar: 31 boletos (lím. 2ª sem. de enero)</li>
+                            <li>Para Reservar: 31 boletos (lím. 2ª sem. de enero – <b>12.01.23</b>)</li>
+                        </ul>
+                    </td>
+                    <td>
+                        <ul>
+                            <li>Cotización válida hasta el 18.01.23</li>
                         </ul>
                     </td>
                     <!--
@@ -191,11 +206,13 @@
                     <th>Máximo de Personas</th>
                     <td>400</td>
                     <td>400</td>
+                    <td>1,500</td>
                 </tr>
                 <tr>
                     <th>Valet Parking</th>
                     <td>SÍ, sin costo (solo propinas voluntarias)</td>
                     <td>SÍ, costo: $100.00 / vehículo</td>
+                    <td>SÍ, costo: $10.00 USD / vehículo</td>
                 </tr>
                 <tr>
                     <th>Precios ESTIMADOS / persona (2022)<br><small>El próximo año serán más altos</small></th>
@@ -212,6 +229,13 @@
                         <li>300 PX: $1,390.00</li>
                         <li>350 PX: $1,330.00</li>
                     </ul><b>After:</b> $750.00</td>
+                    <td><b>Opción A (servicios detallados más abajo)</b><ul>
+                        <li>Cena: $1,925.00</li>
+                        <li>After: sin información</li>
+                    </ul><b>Opción B (incluye todo menos lo marcado con "solo A")</b><ul>
+                        <li>Cena: $1,770.00</li>
+                        <li>After: sin información</li>
+                    </ul></td>
                 </tr>
                 <tr>
                     <th>Menú</th>
@@ -235,11 +259,19 @@
                     <td>
                         En la cena se incluye un menú de 4 tiempos y tornafiestas. El menú detallado aún está por definir.
                     </td>
+                    <td>
+                        En la cena se incluye un menú de 4 tiempos y tornafiestas con cerveza. El menú detallado aún está por definir.
+                        <ul>
+                            <li>Servicio Ilimitado de refrescos, agua mineral, agua quina, café americano y jugos</li>
+                            <li>Servicio limitado de Café Americano</li>
+                        </ul>
+                    </td>
                 </tr>
                 <tr>
                     <th>Personas / mesa</th>
                     <td>10</td>
                     <td>10</td>
+                    <td>10 o 12</td>
                 </tr>
                 <tr>
                     <th>Alcohol / Descorche</th>
@@ -247,6 +279,7 @@
                         Límite de botellas por familia: NO<br>
                         Entrega de botellas por familia: el día del evento</td>
                     <td>No se cobra descorche. Cada familia puede llegar con sus botellas el día del evento.</td>
+                    <td>No se cobra descorche.</td>
                 </tr>
                 <tr>
                     <th>Música Cotizada</th>
@@ -255,6 +288,10 @@
                         <li>DJ: Rhythm & Beat</li>
                         <li>Sax en la cena</li>
                         <li>Mariachi</li>
+                    </ul></td>
+                    <td><ul>
+                        <li>Grupo Musical de 45 X 15 minutos + DJ</li>
+                        <li>1 hora de Mariachi ó Banda Sinaloense</li>
                     </ul></td>
                 </tr>
                 <tr>
@@ -277,6 +314,17 @@
                             papel"</li>
                         <li>Performance "Pirata del Caribe"</li>
                     </ul></td>
+                    <td><ul>
+                        <li>Vajilla, Mantelería y Cristalería Importada</li>
+                        <li>Arreglo floral</li>
+                        <li>Cabinas Fotográficas (3 horas)</li>
+                        <li>Pantalla Gigante (Interacción de redes sociales durante el evento, en tiempo real)</li>
+                        <li>Iluminación Arquitectónica</li>
+                        <li>Alfombra roja con tela sublimada, unifilas de lujo y reflectores. (Incluye Glam Cam)</li>
+                        <li>Arreglo floral natural por mesa (no flores exóticas)</li>
+                        <li>Diplomas simbólicos</li>
+                        <li>Mesas iluminadas</li>
+                    </ul></td>
                 </tr>
                 <tr>
                     <th>Amenidades</th>
@@ -293,21 +341,40 @@
                         <li>Pantuflas para graduadas y tarros para graduados.</li>
                         <li>Photo wall.</li>
                     </ul></td>
+                    <td><ul>
+                        <li>Carritos de Shots</li>
+                        <li>Cocktail de bienvenida (Margaritas, martinis, mojitos)</li>
+                        <li>Pantuflas para las graduadas 20 % de lo contratado</li>
+                        <li>Menús impresos, Reservados de Mesa</li>
+                        <li>1 Foto Panorámica por graduado</li>
+                        <li>Sesión de fotos temática para graduados</li>
+                    </ul><b>Solo en Opción A:</b><ul>
+                        <li>Una botella por mesa (Ron (Bacardi) <b>O</b> Tequila (José Cuervo Especial) <b>O</b> Vodka (Smirnoff) <b>O</b> Vino Tinto (Peromatto)).</li>
+                        <li>1 Sudadera por graduado <b>O</b> un Termo grabado <b>O</b> una Corona The Royal Crowns</li>
+                        <li>Video Cloud con la cobertura del evento</li>
+                        <li>Misa</li>
+                    </ul></td>
                 </tr>
                 <tr>
                     <th>Planta de Electricidad de Emergencia</th>
                     <td>NO</td>
                     <td>SÍ</td>
+                    <td>Sin información</td>
                 </tr>
                 <tr>
                     <th>Restricciones COVID (por ahora)</th>
                     <td>NO</td>
                     <td>NO, en caso de cierres se puede reprogramar sin costo.</td>
+                    <td>NO</td>
                 </tr>
                 <tr>
                     <th>Invitaciones / pases</th>
                     <td>NO incluidos; nosotros nos tenemos que encargar de eso.</td>
                     <td>Digitales; control del proveedor</td>
+                    <td><ul>
+                        <li>A: Boletos e Invitaciones 1 por cada 4 boletos contratados</li>
+                        <li>B: Boletos digitales</li>
+                    </ul></td>
                 </tr>
                 <tr>
                     <th>Elementos adicionales incluidos en el precio cotizado</th>
@@ -316,6 +383,7 @@
                         <li>2 edecanes / 2 horas para asignación de mesas</li>
                         <li>2 personas de seguridad para control de boletos y de personas (*ESTIMADO)</li>
                     </ul></td>
+                    <td>Ver montaje y amenidades</td>
                     <td>Ver montaje y amenidades</td>
                 </tr>
                 <tr>
@@ -332,6 +400,11 @@
                         <li>Servicio de Video</li>
                     </ul>Es muy posible que llueva y que no podamos estar en las áreas exteriores.
                     </td>
+                    <td><ul>
+                        <li><b>No visitamos este salón personalmente</b>, por lo que no tenemos la misma cantidad de información que para las otras dos opciones.</li>
+                        <li>Por ejemplo, no tenemos información acerca del precio de los boletos para el after, proceso de entrega de alcohol para descorche, montos mínimos para anticipo, etc.</li>
+                        <li>Por este mismo motivo puede que parte de la información proporcionada no sea del todo correcta o esté incompleta.</li>
+                    </ul></td>
                 </tr>
                 </tbody>
             </table>
@@ -409,6 +482,7 @@
                 <option selected>Abre el menú para seleccionar tu opción favorita</option>
                 <option value="Hacienda de Los Morales">Hacienda de Los Morales</option>
                 <option value="Hacienda de San Fernando">Hacienda de San Fernando</option>
+                <option value="Hotel Hilton Reforma">Hotel Hilton Reforma</option>
                 <!--
                 <option value="Ambrosía">Ambrosía</option>
                 <option value="Centro Libanés">Centro Libanés</option>
@@ -463,11 +537,13 @@
 
                     let fernando = doc.data().fernando;
                     let morales = doc.data().morales;
+                    let hilton = doc.data().hilton;
                     let cena = doc.data().cena;
                     let after = doc.data().after;
 
                     document.getElementById("fernando_votos").innerText = String(fernando);
                     document.getElementById("morales_votos").innerText = String(morales);
+                    document.getElementById("hilton_votos").innerText = String(hilton);
 
                     document.getElementById("invitados_counters").innerHTML = `<ul><li>G23: 31</li><li>Cena: ${String(cena)}</li><li>After: ${String(after)}</li><li><b>Total: ${String(31 + cena + after)}</b></li></ul>`;
 
@@ -476,10 +552,10 @@
                     new Chart(ctx, {
                         type: 'pie',
                         data: {
-                            labels: ['Hacienda de Los Morales', 'Hacienda de San Fernando'],
+                            labels: ['Hacienda de Los Morales', 'Hacienda de San Fernando', "Hotel Hilton Reforma"],
                             datasets: [{
                                 label: '# de votos',
-                                data: [morales, fernando],
+                                data: [morales, fernando, hilton],
                                 borderWidth: 1
                             }]
                         },
@@ -577,6 +653,13 @@
                         case "Hacienda de San Fernando":
                             db.collection('votos').doc('counts').update({
                                 fernando: firebase.firestore.FieldValue.increment(1),
+                                cena: firebase.firestore.FieldValue.increment(Number(document.getElementById("invitados_cena").value)),
+                                after: firebase.firestore.FieldValue.increment(Number(document.getElementById("invitados_after").value))
+                            });
+                            break;
+                        case "Hotel Hilton Reforma":
+                            db.collection('votos').doc('counts').update({
+                                hilton: firebase.firestore.FieldValue.increment(1),
                                 cena: firebase.firestore.FieldValue.increment(Number(document.getElementById("invitados_cena").value)),
                                 after: firebase.firestore.FieldValue.increment(Number(document.getElementById("invitados_after").value))
                             });
