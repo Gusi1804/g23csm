@@ -614,66 +614,69 @@
                 mensaje = document.getElementById("comentarios").value;
             }
 
-            emailjs.send("service_tcq84v5","template_xmzfx6b",{
-                to_name: document.getElementById("name").value,
-                cena: document.getElementById("invitados_cena").value,
-                after: document.getElementById("invitados_after").value,
-                voto: document.getElementById("voto").value,
-                acuerdo: document.getElementById("statement").value,
-                to_email: document.getElementById("email").value,
-                mensaje: mensaje,
-                signer_name: signer_name,
-                fecha: new Date().toLocaleString()
-            });
-
-            var name_tutor = "";
-            if (document.getElementById("name_tutor") != null) {
-                name_tutor = document.getElementById("name_tutor").value;
-            }
-
-            // Add a new document with a generated id.
-            db.collection("votos").add({
-                email: document.getElementById("email").value,
-                name: document.getElementById("name").value,
-                adult: document.getElementById("adult").checked,
-                signer: signer,
-                name_tutor: name_tutor,
-                invitados_cena: Number(document.getElementById("invitados_cena").value),
-                invitados_after: Number(document.getElementById("invitados_after").value),
-                voto: document.getElementById("voto").value,
-                comentarios: document.getElementById("comentarios").value,
-                accept: document.getElementById("accept").checked,
-                statement: document.getElementById("statement").value,
-                timestamp: firebase.firestore.FieldValue.serverTimestamp()
-            })
-                .then((docRef) => {
-                    switch (document.getElementById("voto").value) {
-                        case "Hacienda de Los Morales":
-                            db.collection('votos').doc('counts').update({
-                                morales: firebase.firestore.FieldValue.increment(1),
-                                cena: firebase.firestore.FieldValue.increment(Number(document.getElementById("invitados_cena").value)),
-                                after: firebase.firestore.FieldValue.increment(Number(document.getElementById("invitados_after").value))
-                            });
-                            break;
-                        case "Hacienda de San Fernando":
-                            db.collection('votos').doc('counts').update({
-                                fernando: firebase.firestore.FieldValue.increment(1),
-                                cena: firebase.firestore.FieldValue.increment(Number(document.getElementById("invitados_cena").value)),
-                                after: firebase.firestore.FieldValue.increment(Number(document.getElementById("invitados_after").value))
-                            });
-                            break;
-                        case "Hotel Hilton Reforma":
-                            db.collection('votos').doc('counts').update({
-                                hilton: firebase.firestore.FieldValue.increment(1),
-                                cena: firebase.firestore.FieldValue.increment(Number(document.getElementById("invitados_cena").value)),
-                                after: firebase.firestore.FieldValue.increment(Number(document.getElementById("invitados_after").value))
-                            });
-                            break;
-                    }
-                })
-                .catch((error) => {
-                    console.error("Error adding document: ", error);
+            // only add data if everything is okay
+            if ((student_signer || adult_signer) && signer_name != "" && document.getElementById("email").value != "" && document.getElementById("name").value != "" && document.getElementById("invitados_cena").value != "" && document.getElementById("invitados_after").value != "" && document.getElementById("voto").value != undefined && document.getElementById("accept").checked) {
+                emailjs.send("service_tcq84v5", "template_xmzfx6b", {
+                    to_name: document.getElementById("name").value,
+                    cena: document.getElementById("invitados_cena").value,
+                    after: document.getElementById("invitados_after").value,
+                    voto: document.getElementById("voto").value,
+                    acuerdo: document.getElementById("statement").value,
+                    to_email: document.getElementById("email").value,
+                    mensaje: mensaje,
+                    signer_name: signer_name,
+                    fecha: new Date().toLocaleString()
                 });
+
+                var name_tutor = "";
+                if (document.getElementById("name_tutor") != null) {
+                    name_tutor = document.getElementById("name_tutor").value;
+                }
+
+                // Add a new document with a generated id.
+                db.collection("votos").add({
+                    email: document.getElementById("email").value,
+                    name: document.getElementById("name").value,
+                    adult: document.getElementById("adult").checked,
+                    signer: signer,
+                    name_tutor: name_tutor,
+                    invitados_cena: Number(document.getElementById("invitados_cena").value),
+                    invitados_after: Number(document.getElementById("invitados_after").value),
+                    voto: document.getElementById("voto").value,
+                    comentarios: document.getElementById("comentarios").value,
+                    accept: document.getElementById("accept").checked,
+                    statement: document.getElementById("statement").value,
+                    timestamp: firebase.firestore.FieldValue.serverTimestamp()
+                })
+                    .then((docRef) => {
+                        switch (document.getElementById("voto").value) {
+                            case "Hacienda de Los Morales":
+                                db.collection('votos').doc('counts').update({
+                                    morales: firebase.firestore.FieldValue.increment(1),
+                                    cena: firebase.firestore.FieldValue.increment(Number(document.getElementById("invitados_cena").value)),
+                                    after: firebase.firestore.FieldValue.increment(Number(document.getElementById("invitados_after").value))
+                                });
+                                break;
+                            case "Hacienda de San Fernando":
+                                db.collection('votos').doc('counts').update({
+                                    fernando: firebase.firestore.FieldValue.increment(1),
+                                    cena: firebase.firestore.FieldValue.increment(Number(document.getElementById("invitados_cena").value)),
+                                    after: firebase.firestore.FieldValue.increment(Number(document.getElementById("invitados_after").value))
+                                });
+                                break;
+                            case "Hotel Hilton Reforma":
+                                db.collection('votos').doc('counts').update({
+                                    hilton: firebase.firestore.FieldValue.increment(1),
+                                    cena: firebase.firestore.FieldValue.increment(Number(document.getElementById("invitados_cena").value)),
+                                    after: firebase.firestore.FieldValue.increment(Number(document.getElementById("invitados_after").value))
+                                });
+                                break;
+                        }
+                    })
+                    .catch((error) => {
+                        console.error("Error adding document: ", error);
+                    });
+            }
 
             document.getElementById("date").innerText = `Fecha actual: ${new Date().toLocaleString()}`
             //window.print();
