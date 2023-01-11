@@ -181,7 +181,7 @@
                     }
                 });
 
-                document.getElementById("counts").innerHTML = `<ul><li><b>Votos Totales: ${votos_count}</b></li><li>Hacienda de Los Morales: ${morales}</li><li>Hacienda de San Fernando: ${fernando}</li><li>Hotel Hilton Reforma: ${hilton}</li><br><li>Cena: ${cena_count}</li><li>After: ${after_count}</li></ul>`;
+                document.getElementById("counts").innerHTML = `<ul><li><b>Votos Totales: ${votos_count}</b></li><li>Hacienda de Los Morales: ${morales}</li><li>Hacienda de San Fernando: ${fernando}</li><li>Hotel Hilton Reforma: ${hilton}</li><br><li><b>Invitados totales: ${cena_count + after_count}</b></li><li>Cena: ${cena_count}</li><li>After: ${after_count}</li></ul>`;
             });
         });
     </script>
