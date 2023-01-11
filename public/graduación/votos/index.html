@@ -86,6 +86,8 @@
         <h1>Registro de votos individuales para la graduación</h1>
         <h6 class="pb-4">(anonimizados)</h6>
 
+        <div id="counts"></div>
+
         <div class="table-responsive pb-4">
             <table class="table table-hover table-sm">
                 <thead>
@@ -95,6 +97,7 @@
                         <th>Voto</th>
                         <th>Invitados cena</th>
                         <th>Invitados after</th>
+                        <th>Email</th>
                     </tr>
                 </thead>
                 <tbody id="tbody">
@@ -117,6 +120,14 @@
 
         var password = qd.pass;
 
+        var cena_count = 0;
+        var after_count = 0;
+        var votos_count = 0;
+
+        var fernando = 0;
+        var morales = 0;
+        var hilton = 0;
+
         document.addEventListener("DOMContentLoaded", (event) => {
             db.collection("votos").orderBy("timestamp").get().then((querySnapshot) => {
                 querySnapshot.forEach((doc) => {
@@ -130,26 +141,47 @@
                         let fecha = document.createElement("td");
                         fecha.innerText = `${item.timestamp.toDate().toLocaleDateString()}, ${item.timestamp.toDate().toLocaleTimeString()}`;
                         let nombre = document.createElement("td");
+                        let email = document.createElement("td");
                         if (password != undefined) {
                             if (password[0] == "admin") {
                                 nombre.innerText = item.name;
+                                email.innerText = item.email;
                             } else {
                                 nombre.innerText = "******";
+                                email.innerText = "******";
                             }
                         } else {
                             nombre.innerText = "******";
+                            email.innerText = "******";
                         }
                         let voto = document.createElement("td");
                         voto.innerText = item.voto;
                         let cena = document.createElement("td");
                         cena.innerText = String(item.invitados_cena);
+                        cena_count += item.invitados_cena;
                         let after = document.createElement("td");
                         after.innerText = String(item.invitados_after);
+                        after_count += item.invitados_after;
 
-                        row.append(fecha, nombre, voto, cena, after);
+                        votos_count += 1;
+                        switch(item.voto) {
+                            case "Hacienda de Los Morales":
+                                morales += 1;
+                                break;
+                            case "Hacienda de San Fernando":
+                                fernando += 1;
+                                break;
+                            case "Hotel Hilton Reforma":
+                                hilton += 1;
+                                break;
+                        }
+
+                        row.append(fecha, nombre, voto, cena, after, email);
                         document.getElementById("tbody").append(row);
                     }
                 });
+
+                document.getElementById("counts").innerHTML = `<ul><li><b>Votos Totales: ${votos_count}</b></li><li>Hacienda de Los Morales: ${morales}</li><li>Hacienda de San Fernando: ${fernando}</li><li>Hotel Hilton Reforma: ${hilton}</li><br><li>Cena: ${cena_count}</li><li>After: ${after_count}</li></ul>`;
             });
         });
     </script>
