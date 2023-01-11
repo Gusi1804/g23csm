@@ -97,7 +97,9 @@
                         <th>Voto</th>
                         <th>Invitados cena</th>
                         <th>Invitados after</th>
+                        <th>Comentarios</th>
                         <th>Email</th>
+                        <th>ID</th>
                     </tr>
                 </thead>
                 <tbody id="tbody">
@@ -142,17 +144,25 @@
                         fecha.innerText = `${item.timestamp.toDate().toLocaleDateString()}, ${item.timestamp.toDate().toLocaleTimeString()}`;
                         let nombre = document.createElement("td");
                         let email = document.createElement("td");
+                        let msg = document.createElement("td");
+                        let id_el = document.createElement("td");
                         if (password != undefined) {
                             if (password[0] == "admin") {
                                 nombre.innerText = item.name;
                                 email.innerText = item.email;
+                                msg.innerText = item.comentarios;
+                                id_el.innerText = doc.id;
                             } else {
                                 nombre.innerText = "******";
                                 email.innerText = "******";
+                                msg.innerText = "******";
+                                id_el.innerText = "******";
                             }
                         } else {
                             nombre.innerText = "******";
                             email.innerText = "******";
+                            msg.innerText = "******";
+                            id_el.innerText = "******";
                         }
                         let voto = document.createElement("td");
                         voto.innerText = item.voto;
@@ -176,7 +186,7 @@
                                 break;
                         }
 
-                        row.append(fecha, nombre, voto, cena, after, email);
+                        row.append(fecha, nombre, voto, cena, after, msg, email, id_el);
                         document.getElementById("tbody").append(row);
                     }
                 });
