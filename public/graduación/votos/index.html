@@ -131,7 +131,7 @@
         var hilton = 0;
 
         document.addEventListener("DOMContentLoaded", (event) => {
-            db.collection("votos").orderBy("timestamp").get().then((querySnapshot) => {
+            db.collection("votos").orderBy("name").get().then((querySnapshot) => {
                 querySnapshot.forEach((doc) => {
                     // doc.data() is never undefined for query doc snapshots
                     //console.log(doc.id, " => ", doc.data());
@@ -146,12 +146,20 @@
                         let email = document.createElement("td");
                         let msg = document.createElement("td");
                         let id_el = document.createElement("td");
+                        let voto = document.createElement("td");
+                        voto.innerText = item.voto;
                         if (password != undefined) {
                             if (password[0] == "admin") {
                                 nombre.innerText = item.name;
                                 email.innerText = item.email;
                                 msg.innerText = item.comentarios;
                                 id_el.innerText = doc.id;
+                            } else if (password[0] == "invitados") {
+                                nombre.innerText = item.name;
+                                voto.innerText = "******";
+                                email.innerText = "******";
+                                msg.innerText = "******";
+                                id_el.innerText = "******";
                             } else {
                                 nombre.innerText = "******";
                                 email.innerText = "******";
@@ -164,8 +172,7 @@
                             msg.innerText = "******";
                             id_el.innerText = "******";
                         }
-                        let voto = document.createElement("td");
-                        voto.innerText = item.voto;
+
                         let cena = document.createElement("td");
                         cena.innerText = String(item.invitados_cena);
                         cena_count += item.invitados_cena;
