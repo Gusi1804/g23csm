@@ -175,6 +175,7 @@
                 .get()
                 .then((querySnapshot) => {
                     document.getElementById('tbody').innerHTML = "";
+                    document.getElementById('totales').innerHTML = "";
                     querySnapshot.forEach((doc) => {
                         console.log(doc.id, " => ", doc.data());
                         let pago = doc.data();
@@ -216,6 +217,7 @@
                         .get()
                         .then((querySnapshot) => {
                             document.getElementById('tbody_cal').innerHTML = "";
+                            document.getElementById('totales_cal').innerHTML = "";
                             querySnapshot.forEach((doc) => {
                                 // doc.data() is never undefined for query doc snapshots
                                 console.log(doc.id, " => ", doc.data());
