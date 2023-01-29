@@ -103,6 +103,7 @@
                         </thead>
                         <tbody id="tbody_cal">
                         </tbody>
+                        <tbody id="totales_cal"></tbody>
                     </table>
                 </div>
 
@@ -120,6 +121,7 @@
                         </thead>
                         <tbody id="tbody">
                         </tbody>
+                        <tbody id="totales"></tbody>
                     </table>
                 </div>
 
@@ -199,6 +201,17 @@
                         done = true;
                     });
 
+                    let totals_row = document.createElement('tr');
+                    let empty = document.createElement('th');
+                    empty.innerText = "Total"
+                    let cant_tot = document.createElement('th');
+                    cant_tot.innerText = paid;
+                    let monto_tot = document.createElement('th');
+                    monto_tot.innerText = format_currency(paid * 1450);
+                    totals_row.append(empty, cant_tot, monto_tot, document.createElement('th'), document.createElement('th'));
+
+                    document.getElementById('totales').append(totals_row);
+
                     db.collection("votos").where("email", "==", email)
                         .get()
                         .then((querySnapshot) => {
@@ -259,9 +272,19 @@
                                 let p3_3 = document.createElement('td');
                                 p3_3.innerText = format_currency(p3 * 1450);
 
+                                let totals_row = document.createElement('tr');
+                                let empty = document.createElement('th');
+                                empty.innerText = "Total"
+                                let cant_tot = document.createElement('th');
+                                cant_tot.innerText = p1 + p2 + p3;
+                                let monto_tot = document.createElement('th');
+                                monto_tot.innerText = format_currency((p1 + p2 + p3) * 1450);
+                                totals_row.append(empty, cant_tot, monto_tot);
+
                                 p3_row.append(p3_1, p3_2, p3_3);
 
                                 document.getElementById('tbody_cal').append(p1_row, p2_row, p3_row);
+                                document.getElementById('totales_cal').append(totals_row);
 
                                 let alert = document.getElementById('alert');
                                 let alert_text = document.getElementById('alert_text');
