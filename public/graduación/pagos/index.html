@@ -132,7 +132,7 @@
             <div class="error" id="error_box"></div>
 
             <div class="container text-center align-items-center justify-content-center" id="login-form" style="display: none">
-                <form onsubmit="login()" action="javascript:void(0);">
+                <form class="pb-3" onsubmit="login()" action="javascript:void(0);">
                     <div class="row">
                         <div class="col-5">
                             <input type="email" class="form-control" id="email" placeholder="Email">
@@ -146,6 +146,7 @@
                     </div>
                 </form>
                 <div class="col-12" id="captcha_container"></div>
+                <hr>
                 <div class="container">
                     <button class="btn btn-outline-danger" onclick="restorePass()">Recuperar mi contraseña</button>
                 </div>
