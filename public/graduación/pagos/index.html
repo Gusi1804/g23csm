@@ -172,6 +172,7 @@
             db.collection("pagos-grad").where("email", "==", email)
                 .get()
                 .then((querySnapshot) => {
+                    document.getElementById('tbody').innerHTML = "";
                     querySnapshot.forEach((doc) => {
                         console.log(doc.id, " => ", doc.data());
                         let pago = doc.data();
@@ -201,6 +202,7 @@
                     db.collection("votos").where("email", "==", email)
                         .get()
                         .then((querySnapshot) => {
+                            document.getElementById('tbody_cal').innerHTML = "";
                             querySnapshot.forEach((doc) => {
                                 // doc.data() is never undefined for query doc snapshots
                                 console.log(doc.id, " => ", doc.data());
@@ -455,6 +457,7 @@
                                 .then(function(userCredential) {
                                     // User successfully signed in with the second factor phone number.
                                     console.log(userCredential);
+                                    checkLogInStatus();
                                 });
                         } else {
                             // Unsupported second factor.
@@ -465,7 +468,7 @@
                     }
                 });
 
-            checkLogInStatus();
+
         }
 
         function show() {
