@@ -490,7 +490,7 @@
         }
 
         function restorePass() {
-            firebaseApp.auth().sendPasswordResetEmail(email)
+            firebaseApp.auth().sendPasswordResetEmail(document.getElementById('email').value)
                 .then(() => {
                     // Password reset email sent!
                     // ..
