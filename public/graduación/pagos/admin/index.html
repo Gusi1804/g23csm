@@ -434,6 +434,11 @@
             document.getElementById("error_box").style.display = "initial";
             document.getElementById("spinner").style.display = "none";
         }
+
+        function logout() {
+            firebase.auth().signOut();
+            location.reload();
+        }
     </script>
 </body>
 </html>
