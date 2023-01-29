@@ -163,8 +163,7 @@
                         <label for="receptor" class="col-sm-2 col-form-label">Receptor</label>
                         <div class="col-sm-10">
                             <select class="form-select" aria-label="Nombre Receptor" id="receptor">
-                                <option selected>Selecciona una opción</option>
-                                <option>Gustavo Garfias</option>
+                                <option selected>Gustavo Garfias</option>
                                 <option>Lucía Vega</option>
                                 <option>Georgina Schiaffino</option>
                             </select>
@@ -238,6 +237,11 @@
                     .then((docRef) => {
                         console.log("Document written with ID: ", docRef.id);
                         alert('¡El pago fue registrado exitosamente!');
+
+                        db.collection('pagos-grad').doc('counts').update({
+                            boletos: firebase.firestore.FieldValue.increment(cant),
+                            dinero: firebase.firestore.FieldValue.increment(monto),
+                        });
 
                         emailjs.send("service_tcq84v5","template_xc78ags",{
                             to_name: pagador,
