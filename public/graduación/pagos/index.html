@@ -1,0 +1,484 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Pagos Graduación</title>
+
+    <!-- Required meta tags -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+
+    <!-- update the version number as needed -->
+    <script src="https://www.gstatic.com/firebasejs/9.8.1/firebase-app-compat.js"></script>
+    <!-- include only the Firebase features as you need -->
+    <script src="https://www.gstatic.com/firebasejs/9.8.1/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.8.1/firebase-firestore-compat.js"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <link rel="stylesheet" href="https://use.typekit.net/wuv7lww.css">
+
+    <style>
+        h1 {
+            font-family: pt-serif-pro,sans-serif;
+            font-weight: 600;
+            font-style: normal;
+        }
+
+        h2 {
+            font-family: pt-serif-pro,sans-serif;
+            font-weight: 600;
+            font-style: normal;
+        }
+
+        table {
+            font-family: pt-serif-pro,sans-serif;
+            font-weight: 400;
+            font-style: normal;
+        }
+
+        div {
+            font-family: pt-serif-pro,sans-serif;
+            font-weight: 400;
+            font-style: normal;
+        }
+
+        canvas {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+    </style>
+
+    <script>
+        const firebaseConfig = {
+            apiKey: "AIzaSyCM3RGa8Zl59QCsKtcmhBkPK7H1JL_LeUQ",
+            authDomain: "g23-csm.firebaseapp.com",
+            projectId: "g23-csm",
+            storageBucket: "g23-csm.appspot.com",
+            messagingSenderId: "735574331856",
+            appId: "1:735574331856:web:6f826790f622f2c57869d5"
+        };
+
+        // Initialize Firebase
+        const firebaseApp = firebase.initializeApp(firebaseConfig);
+    </script>
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css">
+</head>
+<body>
+    <div class="container-sm py-5 text-center align-items-center  justify-content-center">
+        <main>
+            <h1 class="pb-4">Pagos Graduación</h1>
+
+            <!-- Loading spinner -->
+            <div class="container align-items-center text-center" id="spinner">
+                <strong>Cargando...</strong><br><br>
+                <div class="spinner-border ms-auto" role="status" aria-hidden="true"></div>
+            </div>
+
+            <div id="logged_in" style="display: none" class="table-responsive">
+                <div id="show_email" class="pb-4"></div>
+
+                <div class="alert d-flex align-items-center" role="alert" id="alert">
+                    <i class="bi bi-info-circle pe-3"></i>
+                    <div id="alert_text"></div>
+                </div>
+
+                <hr>
+                <div id="boletos"></div>
+                <hr>
+
+                <h3>Calendario de Pagos</h3>
+                <div class="table-responsive pb-4">
+                    <table class="table table-hover table-sm">
+                        <thead>
+                        <tr>
+                            <th>Fecha Límite de Pago</th>
+                            <th>Cantidad de Boletos a Pagar</th>
+                            <th>Monto a Pagar</th>
+                        </tr>
+                        </thead>
+                        <tbody id="tbody_cal">
+                        </tbody>
+                    </table>
+                </div>
+
+                <h3>Pagos Realizados</h3>
+                <div class="table-responsive pb-4">
+                    <table class="table table-hover table-sm">
+                        <thead>
+                        <tr>
+                            <th>Fecha de Pago</th>
+                            <th>Cantidad de Boletos Pagados</th>
+                            <th>Monto Pagado</th>
+                            <th>Pagado por</th>
+                            <th>Recibido por</th>
+                        </tr>
+                        </thead>
+                        <tbody id="tbody">
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- Cerrar sesión -->
+                <div class="container">
+                    <button type="button" class="btn btn-outline-danger mb-3" onclick="logout()">Cerrar Sesión</button>
+                </div>
+            </div>
+
+            <div class="error" id="error_box"></div>
+
+            <div class="container text-center align-items-center justify-content-center" id="login-form" style="display: none">
+                <form onsubmit="login()" action="javascript:void(0);">
+                    <div class="row">
+                        <div class="col-5">
+                            <input type="email" class="form-control" id="email" placeholder="Email">
+                        </div>
+                        <div class="col-5">
+                            <input type="password" class="form-control" id="password" placeholder="Contraseña">
+                        </div>
+                        <div class="col-sm">
+                            <button type="submit" class="btn btn-primary">Iniciar Sesión</button>
+                        </div>
+                    </div>
+                </form>
+                <div class="col-12" id="captcha_container"></div>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            checkLogInStatus();
+        });
+
+        var email = "";
+
+        function loadData() {
+            var db = firebaseApp.firestore();
+
+            //let email = document.getElementById("show_email").value;
+
+            var paid = 0;
+
+            db.collection("pagos-grad").where("email", "==", email)
+                .get()
+                .then((querySnapshot) => {
+                    querySnapshot.forEach((doc) => {
+                        console.log(doc.id, " => ", doc.data());
+                        let pago = doc.data();
+
+                        let row = document.createElement('tr');
+
+                        let fecha = document.createElement('td');
+                        fecha.innerText = `${pago.fecha.toDate().toLocaleDateString()}, ${pago.fecha.toDate().toLocaleTimeString()}`;
+                        let cant = document.createElement('td');
+                        cant.innerText = pago.cant;
+                        let monto = document.createElement('td');
+                        monto.innerText = format_currency(pago.monto);
+                        let pagador = document.createElement('td');
+                        pagador.innerText = pago.pagador;
+                        let receptor = document.createElement('td');
+                        receptor.innerText = pago.receptor;
+
+                        paid += pago.cant;
+
+                        row.append(fecha, cant, monto, pagador, receptor);
+                        document.getElementById('tbody').append(row);
+                    });
+
+                    db.collection("votos").where("email", "==", email)
+                        .get()
+                        .then((querySnapshot) => {
+                            querySnapshot.forEach((doc) => {
+                                // doc.data() is never undefined for query doc snapshots
+                                console.log(doc.id, " => ", doc.data());
+                                let voto = doc.data();
+
+                                let boletos = voto.invitados_cena;
+
+                                document.getElementById('boletos').innerHTML = `<b>Te recordamos que comprometiste a pagar ${boletos} boletos.</b><br>Ya has pagado ${paid} boletos.`;
+
+                                let p1 = Math.floor((boletos - 1) / 3) + 1;
+                                var p2 = Math.floor((boletos - 2) / 3) + 1;
+                                var p3 = Math.floor((boletos - 3) / 3) + 1;
+
+                                const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+
+                                let p1_row = document.createElement('tr');
+                                let p1_date = new Date('17 Feb 2023 20:30:00 GMT');
+
+                                let p1_1 = document.createElement('td');
+                                p1_1.innerText = `${p1_date.toLocaleDateString(undefined, options)} a las ${p1_date.toLocaleTimeString()}`;
+                                let p1_2 = document.createElement('td');
+                                p1_2.innerText = p1;
+                                let p1_3 = document.createElement('td');
+                                p1_3.innerText = format_currency(p1 * 1450);
+
+                                p1_row.append(p1_1, p1_2, p1_3);
+
+                                let p2_row = document.createElement('tr');
+                                let p2_date = new Date('17 Mar 2023 20:30:00 GMT');
+
+                                let p2_1 = document.createElement('td');
+                                p2_1.innerText = `${p2_date.toLocaleDateString(undefined, options)} a las ${p2_date.toLocaleTimeString()}`;
+                                let p2_2 = document.createElement('td');
+                                p2_2.innerText = p2;
+                                let p2_3 = document.createElement('td');
+                                p2_3.innerText = format_currency(p2 * 1450);
+
+                                p2_row.append(p2_1, p2_2, p2_3);
+
+                                let p3_row = document.createElement('tr');
+                                let p3_date = new Date('17 Apr 2023 20:30:00 GMT');
+
+                                let p3_1 = document.createElement('td');
+                                p3_1.innerText = `${p3_date.toLocaleDateString(undefined, options)} a las ${p3_date.toLocaleTimeString()}`;
+                                let p3_2 = document.createElement('td');
+                                p3_2.innerText = p3;
+                                let p3_3 = document.createElement('td');
+                                p3_3.innerText = format_currency(p3 * 1450);
+
+                                p3_row.append(p3_1, p3_2, p3_3);
+
+                                document.getElementById('tbody_cal').append(p1_row, p2_row, p3_row);
+
+                                let alert = document.getElementById('alert');
+                                let alert_text = document.getElementById('alert_text');
+
+                                if (new Date() < p1_date) {
+                                    // before 1st payment
+                                    let difference = p1_date.getTime() - new Date().getTime();
+                                    let TotalDays = Math.ceil(difference / (1000 * 3600 * 24));
+
+                                    if (paid >= p1) {
+                                        alert.classList.add('alert-success');
+                                        alert_text.innerText = 'Has realizado el pago de este periodo, ¡muchas gracias!';
+                                    } else if (TotalDays <= 5) {
+                                        alert.classList.add('alert-warning');
+                                        alert_text.innerText = `Estás al corriente con tus pagos, ¡pero solo te quedan ${TotalDays} días para realizar el siguiente!`;
+                                    } else {
+                                        alert.classList.add('alert-success');
+                                        alert_text.innerText = `¡Aún estás a tiempo para realizar tu siguiente pago, te quedan ${TotalDays} días!`;
+                                    }
+                                } else if (new Date() < p2_date) {
+                                    // before 2nd payment
+                                    let difference = p2_date.getTime() - new Date().getTime();
+                                    let TotalDays = Math.ceil(difference / (1000 * 3600 * 24));
+
+                                    if (paid >= p1 + p2) {
+                                        alert.classList.add('alert-success');
+                                        alert_text.innerText = 'Has realizado el pago de este periodo, ¡muchas gracias!';
+                                    } else if (paid >= p1) {
+                                        alert.classList.add('alert-success');
+                                        alert_text.innerText = '¡Estás al corriente, gracias! Aún estás a tiempo para realizar tu siguiente pago.';
+                                    } else if (TotalDays <= 5) {
+                                        alert.classList.add('alert-warning');
+                                        alert_text.innerText = `Estás al corriente con tus pagos, ¡pero solo te quedan ${TotalDays} días para realizar el siguiente!`;
+                                    } else {
+                                        alert.classList.add('alert-warning');
+                                        alert_text.innerText = 'Estás atrasad@ con tus pagos 😱. Por favor ponte en contacto con el Comité de Graduación lo más pronto posible para ponerte al corriente.';
+                                    }
+
+                                } else if (new Date() < p3_date) {
+                                    // before 3rd payment
+                                    let difference = p3_date.getTime() - new Date().getTime();
+                                    let TotalDays = Math.ceil(difference / (1000 * 3600 * 24));
+
+                                    if (paid >= p1 + p2 + p3) {
+                                        alert.classList.add('alert-success');
+                                        alert_text.innerText = 'Has realizado el pago de este periodo, ¡muchas gracias!';
+                                    } else if (paid >= p1 + p2) {
+                                        alert.classList.add('alert-success');
+                                        alert_text.innerText = '¡Estás al corriente, gracias! Aún estás a tiempo para realizar tu siguiente pago, te quedan ${TotalDays} días.';
+                                    } else if (TotalDays <= 5) {
+                                        alert.classList.add('alert-warning');
+                                        alert_text.innerText = `Estás al corriente con tus pagos, ¡pero solo te quedan ${TotalDays} días para realizar el siguiente!`;
+                                    } else {
+                                        alert.classList.add('alert-danger');
+                                        alert_text.innerText = 'Estás atrasad@ con tus pagos 😱. Por favor ponte en contacto con el Comité de Graduación lo más pronto posible para ponerte al corriente.';
+                                    }
+
+                                } else {
+                                    // after 3rd payment
+                                    if (paid >= p1 + p2 + p3) {
+                                        alert.classList.add('alert-success');
+                                        alert_text.innerText = '¡Has finalizado de pagar todos tus boletos! Muchas gracias.';
+                                    } else if (TotalDays <= 5) {
+                                        alert.classList.add('alert-warning');
+                                        alert_text.innerText = `Estás al corriente con tus pagos, ¡pero solo te quedan ${TotalDays} días para realizar el siguiente!`;
+                                    } else {
+                                        alert.classList.add('alert-danger');
+                                        alert_text.innerText = 'Estás atrasad@ con tus pagos 😱. Por favor ponte en contacto con el Comité de Graduación lo más pronto posible para ponerte al corriente.';
+                                    }
+
+                                }
+                            });
+
+                            show();
+                        })
+                        .catch((error) => {
+                            console.log("Error getting documents: ", error);
+                        });
+
+                    show();
+                });
+
+
+        }
+
+        function format_currency(value) {
+            //Currency formatter
+            const options = { style: 'currency', currency: 'MXN' };
+            const formatter = new Intl.NumberFormat('es-MX', options);
+
+            return formatter.format(value);
+        }
+
+        function checkLogInStatus() {
+            const auth = firebaseApp.auth();
+
+            auth.onAuthStateChanged((user) => {
+                if (user) {
+                    // User is signed in, see docs for a list of available properties
+                    // https://firebase.google.com/docs/reference/js/firebase.User
+                    var email1 = user.email;
+
+                    document.getElementById("show_email").innerText = "Bienvenido, " + email1;
+
+                    email = email1;
+
+                    loadData();
+                    //show();
+
+                    // ...
+                } else {
+                    // User is signed out
+                    hide();
+                }
+            });
+        }
+
+        function login() {
+            var email = document.getElementById("email").value;
+            var password = document.getElementById("password").value;
+
+            const auth = firebaseApp.auth();
+
+            /*
+            auth.setPersistence(firebase.auth.Auth.Persistence.LOCAL)
+                .then(() => {
+                    // Existing and future Auth states are now persisted in the current
+                    // session only. Closing the window would clear any existing state even
+                    // if a user forgets to sign out.
+                    // ...
+                    // New sign-in will be persisted with session persistence.
+                    //return auth.signInWithEmailAndPassword(email, password);
+
+                })
+                .catch((error) => {
+                    // Handle Errors here.
+                    var errorCode = error.code;
+                    var errorMessage = error.message;
+
+                    document.getElementById("error_box").innerText = errorMessage;
+                });
+             */
+
+            var resolver;
+            var verification_id_global;
+
+            auth.signInWithEmailAndPassword(email, password)
+                .then(function(userCredential) {
+                    // User is not enrolled with a second factor and is successfully signed in.
+                    // ...
+                    checkLogInStatus();
+                })
+                .catch(function(error) {
+                    if (error.code == 'auth/multi-factor-auth-required') {
+                        resolver = error.resolver;
+                        // Ask user which second factor to use.
+                        console.log(resolver.hints);
+                        if (resolver.hints[0].factorId ===
+                            firebase.auth.PhoneMultiFactorGenerator.FACTOR_ID) {
+                            var phoneInfoOptions = {
+                                multiFactorHint: resolver.hints[0],
+                                session: resolver.session
+                            };
+                            var phoneAuthProvider = new firebase.auth.PhoneAuthProvider();
+
+                            const container = document.getElementById("captcha_container");
+                            var recaptchaVerifier = new firebase.auth.RecaptchaVerifier(container);
+
+                            // Send SMS verification code
+                            return phoneAuthProvider.verifyPhoneNumber(phoneInfoOptions, recaptchaVerifier)
+                                .then(async function (verificationId) {
+                                    // Ask user for the SMS verification code.
+                                    verification_id_global = verificationId;
+                                    const field = document.createElement("div");
+                                    field.innerHTML = `
+                                    <form onsubmit="smsCodeEntered()" action="javascript:void(0);">
+                                        <div class="row pt-5">
+                                            <div class="col-4">
+                                                <input type="number" class="form-control" id="smsVerCode" placeholder="Código de Verificación SMS">
+                                            </div>
+                                            <div class="col-2">
+                                                <button type="submit" class="btn btn-primary">Verificar</button>
+                                            </div>
+                                        </div>
+                                    </form>`;
+                                    container.innerHTML = "";
+                                    container.append(field);
+
+
+                                    await until(_ => codeEntered == true);
+
+                                    const verificationCode = document.getElementById("smsVerCode").value;
+                                    var cred = firebase.auth.PhoneAuthProvider.credential(
+                                        verificationId, verificationCode);
+                                    var multiFactorAssertion =
+                                        firebase.auth.PhoneMultiFactorGenerator.assertion(cred);
+                                    // Complete sign-in.
+                                    return resolver.resolveSignIn(multiFactorAssertion);
+                                })
+                                .then(function(userCredential) {
+                                    // User successfully signed in with the second factor phone number.
+                                    console.log(userCredential);
+                                });
+                        } else {
+                            // Unsupported second factor.
+                        }
+                    } else if (error.code == 'auth/wrong-password') {
+                        // Handle other errors such as wrong password.
+                        alert("Contraseña incorrecta, intenta de nuevo.");
+                    }
+                });
+
+            checkLogInStatus();
+        }
+
+        function show() {
+            // successful login
+            document.getElementById("login-form").style.display = "none";
+            document.getElementById("logged_in").style.display = "initial";
+            document.getElementById("error_box").style.display = "none";
+
+            document.getElementById("email").value = "";
+            document.getElementById("password").value = "";
+            document.getElementById("error_box").innerText = "";
+
+            document.getElementById("spinner").style.display = "none";
+        }
+        function hide() {
+            // successful logout
+            document.getElementById("login-form").style.display = "initial";
+            document.getElementById("logged_in").style.display = "none";
+            document.getElementById("error_box").style.display = "initial";
+            document.getElementById("spinner").style.display = "none";
+        }
+    </script>
+</body>
+</html>
