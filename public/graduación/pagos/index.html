@@ -167,6 +167,7 @@
             //let email = document.getElementById("show_email").value;
 
             var paid = 0;
+            var done = false;
 
             db.collection("pagos-grad").where("email", "==", email)
                 .get()
@@ -191,7 +192,10 @@
                         paid += pago.cant;
 
                         row.append(fecha, cant, monto, pagador, receptor);
-                        document.getElementById('tbody').append(row);
+                        if (!done) {
+                            document.getElementById('tbody').append(row);
+                        }
+                        done = true;
                     });
 
                     db.collection("votos").where("email", "==", email)
