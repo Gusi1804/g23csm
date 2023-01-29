@@ -174,6 +174,70 @@
                     </div>
                 </form>
                 <hr>
+                <h3>Buscar Pagos</h3>
+                <form class="mb-3" onsubmit="buscar()" action="javascript:void(0);">
+                    <div class="mb-3 row">
+                        <label for="search_email" class="col-sm-2 col-form-label">Email del Pagador</label>
+                        <div class="col-sm-10">
+                            <select class="form-select" aria-label="Email Pagador" id="search_email">
+                                <option selected>Selecciona una opción</option>
+                                <option value="alberto.ospino@csm.edu.mx">alberto.ospino@csm.edu.mx</option>
+                                <option value="ana.aguilar@csm.edu.mx">ana.aguilar@csm.edu.mx</option>
+                                <option value="andres.muedano@csm.edu.mx">andres.muedano@csm.edu.mx</option>
+                                <option value="bianca.barcia@csm.edu.mx">bianca.barcia@csm.edu.mx</option>
+                                <option value="carlos.carreon@csm.edu.mx">carlos.carreon@csm.edu.mx</option>
+                                <option value="carlos.egry@csm.edu.mx">carlos.egry@csm.edu.mx</option>
+                                <option value="camila.lopez@csm.edu.mx">camila.lopez@csm.edu.mx</option>
+                                <option value="daniel.campa@csm.edu.mx">daniel.campa@csm.edu.mx</option>
+                                <option value="dominique.olvera@csm.edu.mx">dominique.olvera@csm.edu.mx</option>
+                                <option value="eduardo.giles@csm.edu.mx">eduardo.giles@csm.edu.mx</option>
+                                <option value="emilia.christlieb@csm.edu.mx">emilia.christlieb@csm.edu.mx</option>
+                                <option value="georgina.schiaffino@csm.edu.mx">georgina.schiaffino@csm.edu.mx</option>
+                                <option value="gustavo.garfias@csm.edu.mx">gustavo.garfias@csm.edu.mx</option>
+                                <option value="guillermo.bulnes@csm.edu.mx">guillermo.bulnes@csm.edu.mx</option>
+                                <option value="hector.thomassiny@csm.edu.mx">hector.thomassiny@csm.edu.mx</option>
+                                <option value="ian.saturno@csm.edu.mx">ian.saturno@csm.edu.mx</option>
+                                <option value="iann.diaz@csm.edu.mx">iann.diaz@csm.edu.mx</option>
+                                <option value="julian.gonzalez@csm.edu.mx">julian.gonzalez@csm.edu.mx</option>
+                                <option value="joel.butzberger@csm.edu.mx">joel.butzberger@csm.edu.mx</option>
+                                <option value="kebia.urdapilleta@csm.edu.mx">kebia.urdapilleta@csm.edu.mx</option>
+                                <option value="konstanze.ponisch@csm.edu.mx">konstanze.ponisch@csm.edu.mx</option>
+                                <option value="lucia.vega@csm.edu.mx">lucia.vega@csm.edu.mx</option>
+                                <option value="luis.sarzo@csm.edu.mx">luis.sarzo@csm.edu.mx</option>
+                                <option value="miguel.arenas@csm.edu.mx">miguel.arenas@csm.edu.mx</option>
+                                <option value="paola.rodriguez@csm.edu.mx">paola.rodriguez@csm.edu.mx</option>
+                                <option value="paulina.ruiz@csm.edu.mx">paulina.ruiz@csm.edu.mx</option>
+                                <option value="regina.vazquez@csm.edu.mx">regina.vazquez@csm.edu.mx</option>
+                                <option value="rene.ramirez@csm.edu.mx">rene.ramirez@csm.edu.mx</option>
+                                <option value="sofia.ibarra@csm.edu.mx">sofia.ibarra@csm.edu.mx</option>
+                                <option value="sofia.zamora@csm.edu.mx">sofia.zamora@csm.edu.mx</option>
+                                <option value="victoria.aguilar@csm.edu.mx">victoria.aguilar@csm.edu.mx</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-sm">
+                        <button type="submit" class="btn btn-primary">Buscar Pagos</button>
+                    </div>
+                </form>
+                <div id="search_results"></div>
+                <div class="table-responsive pb-4">
+                    <table class="table table-hover table-sm">
+                        <thead>
+                        <tr>
+                            <th>Fecha de Pago</th>
+                            <th>Cantidad de Boletos Pagados</th>
+                            <th>Monto Pagado</th>
+                            <th>Pagado por</th>
+                            <th>Recibido por</th>
+                        </tr>
+                        </thead>
+                        <tbody id="tbody">
+                        </tbody>
+                        <tbody id="totales"></tbody>
+                    </table>
+                </div>
+                <hr>
+
 
                 <!-- Cerrar sesión -->
                 <div class="container">
@@ -198,7 +262,6 @@
                     </div>
                 </form>
                 <div class="col-12" id="captcha_container"></div>
-
             </div>
         </main>
     </div>
@@ -214,8 +277,10 @@
 
         var email = "";
 
+        var db = firebaseApp.firestore();
+
         function pagar() {
-            var db = firebaseApp.firestore();
+
 
             let email_pagador = document.getElementById('email_pagador').value;
             let fecha = changeTimeZone(new Date(document.getElementById('fecha').value), 'America/Mexico_City');
@@ -256,6 +321,87 @@
                         console.error("Error adding document: ", error);
                     });
             }
+        }
+
+        function buscar() {
+            let search_email = document.getElementById('search_email').value;
+
+            var paid = 0;
+
+            document.getElementById('tbody').innerHTML = "";
+            document.getElementById('totales').innerHTML = "";
+
+            db.collection("pagos-grad").where("email", "==", search_email)
+                .get()
+                .then((querySnapshot) => {
+                    querySnapshot.forEach((doc) => {
+                        // doc.data() is never undefined for query doc snapshots
+                        console.log(doc.id, " => ", doc.data());
+
+                        let pago = doc.data();
+
+                        let row = document.createElement('tr');
+
+                        let fecha = document.createElement('td');
+                        fecha.innerText = `${pago.fecha.toDate().toLocaleDateString()}, ${pago.fecha.toDate().toLocaleTimeString()}`;
+                        let cant = document.createElement('td');
+                        cant.innerText = pago.cant;
+                        let monto = document.createElement('td');
+                        monto.innerText = format_currency(pago.monto);
+                        let pagador = document.createElement('td');
+                        pagador.innerText = pago.pagador;
+                        let receptor = document.createElement('td');
+                        receptor.innerText = pago.receptor;
+
+                        paid += pago.cant;
+
+                        row.append(fecha, cant, monto, pagador, receptor);
+                        document.getElementById('tbody').append(row);
+                    });
+
+                    let totals_row = document.createElement('tr');
+                    let empty = document.createElement('th');
+                    empty.innerText = "Total"
+                    let cant_tot = document.createElement('th');
+                    cant_tot.innerText = paid;
+                    let monto_tot = document.createElement('th');
+                    monto_tot.innerText = format_currency(paid * 1450);
+                    totals_row.append(empty, cant_tot, monto_tot, document.createElement('th'), document.createElement('th'));
+
+                    document.getElementById('totales').append(totals_row);
+
+                    db.collection("votos").where("email", "==", search_email)
+                        .get()
+                        .then((querySnapshot) => {
+                            querySnapshot.forEach((doc) => {
+                                // doc.data() is never undefined for query doc snapshots
+                                console.log(doc.id, " => ", doc.data());
+                                let voto = doc.data();
+
+                                let boletos = voto.invitados_cena;
+
+                                let name = capitalizeFirstLetter(search_email.split('@')[0].split('.')[0]);
+                                let last_name = capitalizeFirstLetter(search_email.split('@')[0].split('.')[1]);
+
+                                document.getElementById('search_results').innerHTML = `<b>${name} ${last_name} ha pagado ${paid} de ${boletos} boletos que se compremetió a adquirir.</b>`;
+                            });
+                        })
+                        .catch((error) => {
+                            console.log("Error getting documents: ", error);
+                        });
+                })
+                .catch((error) => {
+                    console.log("Error getting documents: ", error);
+                });
+
+        }
+
+        function capitalizeFirstLetter(str) {
+
+            // converting first letter to uppercase
+            const capitalized = str.charAt(0).toUpperCase() + str.slice(1);
+
+            return capitalized;
         }
 
         function updateMonto() {
