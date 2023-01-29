@@ -439,6 +439,21 @@
             firebase.auth().signOut();
             location.reload();
         }
+
+        function restorePass() {
+            firebaseApp.auth().sendPasswordResetEmail(email)
+                .then(() => {
+                    // Password reset email sent!
+                    // ..
+                    alert('Un correo electrónico con instrucciones para recuperar tu contraseña fue enviado en caso de que tu email sea correcto.');
+                })
+                .catch((error) => {
+                    var errorCode = error.code;
+                    var errorMessage = error.message;
+                    // ..
+                    alert(`No se pudo restablecer tu contraseña, por favor verifica que hayas escrito tu email correctamente.\n${errorMessage}`);
+                });
+        }
     </script>
 </body>
 </html>
