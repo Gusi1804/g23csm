@@ -117,6 +117,7 @@
                             <th>Monto Pagado</th>
                             <th>Pagado por</th>
                             <th>Recibido por</th>
+                            <th>Folio</th>
                         </tr>
                         </thead>
                         <tbody id="tbody">
@@ -192,10 +193,12 @@
                         pagador.innerText = pago.pagador;
                         let receptor = document.createElement('td');
                         receptor.innerText = pago.receptor;
+                        let folio = document.createElement('td');
+                        folio.innerText = pago.folio;
 
                         paid += pago.cant;
 
-                        row.append(fecha, cant, monto, pagador, receptor);
+                        row.append(fecha, cant, monto, pagador, receptor, folio);
                         if (!done) {
                             document.getElementById('tbody').append(row);
                         }

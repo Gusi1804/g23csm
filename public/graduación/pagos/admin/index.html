@@ -142,6 +142,12 @@
                         </div>
                     </div>
                     <div class="mb-3 row">
+                        <label for="pagador" class="col-sm-2 col-form-label">Folio Recibo</label>
+                        <div class="col-sm-10">
+                            <input type="text" id="folio" class="form-control">
+                        </div>
+                    </div>
+                    <div class="mb-3 row">
                         <label for="cant" class="col-sm-2 col-form-label"># Boletos Pagados</label>
                         <div class="col-sm-10">
                             <input type="number" id="cant" class="form-control" oninput="updateMonto()">
@@ -229,6 +235,7 @@
                             <th>Monto Pagado</th>
                             <th>Pagado por</th>
                             <th>Recibido por</th>
+                            <th>Folio</th>
                         </tr>
                         </thead>
                         <tbody id="tbody">
@@ -288,8 +295,9 @@
             let monto = Number(document.getElementById('monto').value);
             let pagador = document.getElementById('pagador').value;
             let receptor = document.getElementById('receptor').value;
+            let folio = document.getElementById('folio').value;
 
-            if (confirm(`Por favor confirma que los datos del pago sean correctos:\nPagador: ${email_pagador}\nCantidad: ${cant}\nMonto: ${monto}\nFecha y hora: ${fecha.toLocaleString()}`)) {
+            if (confirm(`Por favor confirma que los datos del pago sean correctos:\nPagador: ${email_pagador}\nCantidad: ${cant}\nMonto: ${monto}\nFecha y hora: ${fecha.toLocaleString()}\nFolio: ${folio}`)) {
                 //console.log('confirmed')
                 // Add a new document with a generated id.
                 db.collection("pagos-grad").add({
@@ -298,7 +306,8 @@
                     cant: cant,
                     monto: monto,
                     pagador: pagador,
-                    receptor: receptor
+                    receptor: receptor,
+                    folio: folio
                 })
                     .then((docRef) => {
                         console.log("Document written with ID: ", docRef.id);
@@ -352,10 +361,12 @@
                         pagador.innerText = pago.pagador;
                         let receptor = document.createElement('td');
                         receptor.innerText = pago.receptor;
+                        let folio = document.createElement('td');
+                        folio.innerText = pago.folio;
 
                         paid += pago.cant;
 
-                        row.append(fecha, cant, monto, pagador, receptor);
+                        row.append(fecha, cant, monto, pagador, receptor, folio);
                         document.getElementById('tbody').append(row);
                     });
 

@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Contrato de Mandato de Pago para pagos por transferencia</title>
+
+  <!-- Required meta tags -->
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+
+  <style>
+
+    div {
+      font-family: pt-serif-pro,sans-serif;
+      font-weight: 400;
+      font-style: normal;
+    }
+
+    canvas {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+    }
+
+    .fancy {
+      font-family: pt-serif-pro,sans-serif;
+      font-weight: 400;
+      font-style: normal;
+    }
+
+    .official {
+      font-family: "Times New Roman";
+      font-weight: 400;
+      font-style: normal;
+    }
+  </style>
+
+  <link rel="stylesheet" href="https://use.typekit.net/wuv7lww.css">
+
+  <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+  <script type="text/javascript">
+    $("#btnPrint").live("click", function () {
+      var divContents = $("#dvContainer").html();
+      var printWindow = window.open('', '', 'height=400,width=800');
+      printWindow.document.write('<html><head><title>DIV Contents</title>');
+      printWindow.document.write('</head><body >');
+      printWindow.document.write(divContents);
+      printWindow.document.write('</body></html>');
+      printWindow.document.close();
+      printWindow.print();
+    });
+  </script>
+</head>
+<body>
+  <div class="container-sm py-5 text-leading align-items-center  justify-content-left">
+    <main>
+      <h1 class="pb-4 fancy">Contrato de Mandato de Pago para pagos por transferencia</h1>
+
+      <p class="fancy">Por favor llena el siguiente formato para poder generar tu Contrato de Mandato de Pago. El fin de este contrato es establecer una relación vinculante entre tú, el/la mandante, y Gustavo Garfias, el mandatario, (el encargado de recibir las transferencias bancarias y hacer los pagos en tu nombre al proveedor de la graduación). Con este contrato se puede probar que las transferencias recibidas no son ingresos gravables, y de esta manera podemos evitar el pago de IVA (siempre y cuando no requieras un CFDI).</p>
+      <p>Nota: los datos solicitados son los datos estándar para que el contrato sea válido y no serán utilizados para ningún otro fin más que para establecer el Contrato de Mandato de Pago.</p>
+      <p>Definiciones importantes:</p>
+      <li>
+        <ul>Mandante: Es la persona que encarga a otra la realización de determinados actos; es decir, es quien otorga la representación. (en este caso la persona que hará las transferencias bancarias)</ul>
+        <ul>mandatario: Es la persona que debe cumplir las instrucciones dadas por el mandante; es decir, debe realizar el mandato, restringiendo su actuar a las instrucciones recibidas. (en este caso Gustavo Garfias, quien asume el compromiso de enviar los pagos recibidos por concepto de pagos de boletos para la Graduación de la G23 al proveedor de los servicios para la graduación).</ul>
+        <ul>Artículos del Código Civil Federal donde se especifican las condiciones de un Mandato: Art. 2546 a Art. 2604</ul>
+      </li>
+
+
+      <!-- <input type="button" value="Print Div Contents" id="btnPrint" /> -->
+
+      <hr>
+      <form class="pb-3 fancy" onsubmit="formato()" action="javascript:void(0);">
+        <!-- Graduado -->
+        <div class="mb-3 row">
+          <label for="grad" class="col-sm-2 col-form-label">Nombre completo del/la integrante de la G23 a nombre de quien se harán las transferencias)</label>
+          <div class="col-sm-10">
+            <select class="form-select" aria-label="Nombre del/la graduado/a" id="grad">
+              <option selected>Selecciona una opción</option>
+              <option>Alberto Enrique Ospino Mérida</option>
+              <option>Ana Sofia Aguilar Gómez Tagle</option>
+              <option>Andrés Muedano Sosa</option>
+              <option>Andrés Thomassiny Centeno</option>
+              <option>Bianca Alesandra Barcia Carro</option>
+              <option>Camila López González</option>
+              <option>Carlos Carreón Gómez</option>
+              <option>Daniel Campa Salgado</option>
+              <option>Dominique Olvera Huber</option>
+              <option>Eduardo Giles Ávila</option>
+              <option>Emilia Christlieb Wiener</option>
+              <option>Georgina Schiaffino Murrieta</option>
+              <option>Guillermo Bulnes Krueger</option>
+              <option>Gustavo Eduardo Garfias García</option>
+              <option>Ian Saturno Chiu</option>
+              <option>Joel Butzberger Yañez</option>
+              <option>Julián González Van Der Stoel</option>
+              <option>Kebia Urdapilleta Ávila</option>
+              <option>Konstanze Ponisch Vitagliano</option>
+              <option>lann Francisco Díaz de León Santos Coy</option>
+              <option>Lucia Vega Mitianina</option>
+              <option>Luis Eduardo Sarzo Saldaña</option>
+              <option>Miguel Angel Arenas Chávez</option>
+              <option>Paola Rodríguez Zavaleta</option>
+              <option>Patrick Egry Rasetti</option>
+              <option>Paulina Ruiz Del Moral Fernández</option>
+              <option>Regina Vázquez Ibarra</option>
+              <option>René Alejandro Ramírez Gutiérrez</option>
+              <option>Sofía Ibarra Cobos</option>
+              <option>Sofía Zamora Cobo</option>
+              <option>Victoria Aguilar Vilchis</option>
+            </select>
+          </div>
+        </div>
+        <!-- Día y mes -->
+        <div class="mb-3 row">
+          <label for="day" class="col-sm-2 col-form-label">Día</label>
+          <div class="col-sm-4">
+            <input type="number" id="day" class="form-control" aria-describedby="dayHelp" required>
+            <div id="dayHelp" class="form-text">Ingresa el día en formato numérico: D (p. ej. 1, 3, 4, 10, 28).</div>
+          </div>
+          <label for="month" class="col-sm-2 col-form-label">Mes</label>
+          <div class="col-sm-4">
+            <select class="form-select" aria-label="Mes" id="month">
+              <option>Enero</option>
+              <option>Febrero</option>
+              <option>Marzo</option>
+              <option>Abril</option>
+              <option>Mayo</option>
+              <option>Junio</option>
+              <option>Julio</option>
+              <option>Agosto</option>
+              <option>Septiembre</option>
+              <option>Octubre</option>
+              <option>Noviembre</option>
+              <option>Diciembre</option>
+            </select>
+          </div>
+        </div>
+        <!-- Nombre completo y género -->
+        <div class="mb-3 row">
+          <label for="name" class="col-sm-2 col-form-label">Nombre completo del/la mandante (la persona que hará las transferencias)</label>
+          <div class="col-sm-4">
+            <input type="text" id="name" class="form-control" aria-describedby="nameHelp" required>
+            <div id="nameHelp" class="form-text">Nombre completo en formato: Nombre(s) Apellido Paterno Apellido Paterno (p. ej. Pedro Alfonso López Vega).</div>
+          </div>
+          <label for="gender" class="col-sm-2 col-form-label">Género legal del/la mandante (la persona que hará las transferencias)</label>
+          <div class="col-sm-4">
+            <select class="form-select" aria-label="Mes" id="gender">
+              <option>Femenino</option>
+              <option>Masculino</option>
+            </select>
+          </div>
+        </div>
+        <!-- Edad y nacionalidad -->
+        <div class="mb-3 row">
+          <label for="age" class="col-sm-2 col-form-label">Edad del/la mandante</label>
+          <div class="col-sm-4">
+            <input type="text" id="age" class="form-control" aria-describedby="ageHelp" required>
+            <div id="ageHelp" class="form-text">En formato numérico (p. ej. 18, 54).</div>
+          </div>
+          <label for="nationality" class="col-sm-2 col-form-label">Nacionalidad del/la mandante</label>
+          <div class="col-sm-4">
+            <input type="text" id="nationality" class="form-control" aria-describedby="natHelp" required>
+            <div id="natHelp" class="form-text">Debe estar en un formato que concuerde con el género del/la mandante. Responde a la pregunta: yo soy ... (p. ej. mexicano, española, etc.)</div>
+          </div>
+        </div>
+        <!-- Ciudad, estado y país de origen y residencia -->
+        <div class="mb-3 row">
+          <label for="origin" class="col-sm-2 col-form-label">Ciudad y estado (y país, en caso de no ser México) de origen del/la mandante</label>
+          <div class="col-sm-4">
+            <input type="text" id="origin" class="form-control" aria-describedby="originHelp" required>
+            <div id="originHelp" class="form-text">P. ej. "Tampico, Tamaulipas", "Alcaldía Miguel Hidalgo, Ciudad de México".</div>
+          </div>
+          <label for="residency" class="col-sm-2 col-form-label">Ciudad y estado (y país, en caso de no ser México) de residencia del/la mandante</label>
+          <div class="col-sm-4">
+            <input type="text" id="residency" class="form-control" aria-describedby="residencyHelp" required>
+            <div id="residencyHelp" class="form-text">P. ej. "Tampico, Tamaulipas", "Alcaldía Miguel Hidalgo, Ciudad de México"</div>
+          </div>
+        </div>
+        <!-- Estado civil -->
+        <div class="mb-3 row">
+          <label for="civil" class="col-sm-2 col-form-label">Estado civil del/la mandante</label>
+          <div class="col-sm-4">
+            <select class="form-select" aria-label="Mes" id="civil">
+              <option value="solter">Soltero/a</option>
+              <option value="casad">Casado/a</option>
+              <option value="divorciad">Divorciado/a</option>
+              <option value="en separación en proceso judicial">Separación en proceso judicial</option>
+              <option value="viud">Viudo/a</option>
+              <option value="en concubinato">Concubinato</option>
+            </select>
+          </div>
+          <label for="address" class="col-sm-2 col-form-label">Dirección legal del/la mandante</label>
+          <div class="col-sm-4">
+            <textarea id="address" class="form-control" aria-describedby="addressHelp" rows="4" cols="50" required></textarea>
+            <div id="addressHelp" class="form-text">P. ej. "la casa/el departamento marcado/a con el número (exterior) 1816 (y el número interior 671) de la Calle 18 de Marzo, Col. Albañiles de Altamira, Alcaldía Álvaro Obregón, Ciudad de México."</div>
+          </div>
+        </div>
+        <div class="col-sm">
+          <button type="submit" class="btn btn-primary">Generar Contrato</button>
+        </div>
+      </form>
+
+      <div style="visibility: hidden; text-align: justify; text-justify: inter-word;">
+        <div id="dvContainer" style="text-align: justify; text-justify: inter-word;"></div>
+      </div>
+    </main>
+  </div>
+
+<script>
+  function formato() {
+    let grad = document.getElementById('grad').value;
+    let day = document.getElementById('day').value;
+    let month = document.getElementById('month').value;
+    let name = document.getElementById('name').value;
+    let gender = document.getElementById('gender').value;
+
+    var gen_suff = ""
+    var art = ""
+    if (gender == "Femenino") {
+      gen_suff = "a"
+      art = "la"
+    } else {
+      gen_suff = "o"
+      art = "el"
+    }
+
+    let age = document.getElementById('age').value;
+    let nationality = document.getElementById('nationality').value;
+    let origin = document.getElementById('origin').value;
+    let residency = document.getElementById('residency').value;
+    var civil = "";
+    switch (document.getElementById('civil').value) {
+      case "en concubinato":
+        civil = "en concubinato";
+        break;
+      case "en separación en proceso judicial":
+        civil = "en separación en proceso judicial";
+        break;
+      default:
+        civil = document.getElementById('civil').value + gen_suff;
+        break;
+    };
+    let address = document.getElementById('address').value;
+
+    let tit = document.createElement('h1');
+    tit.innerHTML = "<b>CONTRATO DE MANDATO</b>"
+
+    let p1 = document.createElement('div');
+    p1.innerHTML = `<p>En la Alcaldía Benito Juárez, Ciudad de México, a los ${day} días del mes de ${month} del año 2023, comparecen los CC. ${name.toUpperCase()}, a quien en lo sucesivo se le denominará "${art.toUpperCase()} MANDANTE" y GUSTAVO EDUARDO GARFIAS GARCÍA, a quien en lo sucesivo se le denominará "EL MANDATARIO". ${capitalizeFirstLetter(art)} primer${gen_suff} de ${age} años de edad, ${nationality}, ${civil}, originari${gen_suff} de ${origin} y vecin${gen_suff} de ${residency} con domicilio en ${address} y el segundo de 18 años de edad, soltero, mexicano, originario y vecino de la Ciudad de México, Ciudad de México, con domicilio en el departamento marcado con el número exterior 126 y el número interior 314 de la Avenida Río Becerra, Col. Nápoles, Alcaldía Benito Juárez, Ciudad de México, manifestando ambos contratantes, sin adeudos fiscales y tener propalado un contrato de mandato general, no representativo, que sujetan al tenor de las siguientes declaraciones y cláusulas:</p>`;
+
+    let p2 = document.createElement('div');
+    p2.innerHTML = `<h3><b>DECLARACIONES</b></h3><ol><li>C. GUSTAVO EDUARDO GARFIAS GARCÍA es representante del COMITÉ DE TESORERÍA de la GENERACIÓN 2023 DEL COLEGIO SUIZO DE MÉXICO CAMPUS CDMX, a quien en lo sucesivo se le denominará "GENERACIÓN 2023". La "GENERACIÓN 2023" se encuentra compuesta por los 31 CC. Alberto Enrique Ospino Mérida, Ana Sofia Aguilar Gómez Tagle, Andrés Muedano Sosa, Andrés Thomassiny Centeno, Bianca Alesandra Barcia Carro, Camila López González, Carlos Carreón Gómez, Daniel Campa Salgado, Domique Olvera Huber, Eduado Giles Ávila, Emilia Christlieb Wiener, Georgina Schiaffino Murrieta, Guillermo Bulnes Krueger, Gustavo Eduardo Garfias García, Ian Saturno Chiu, Joel Butzberger Yañez, Julián González Van Der Stoel, Kebia Urdapilleta Ávila, Konstanze Ponisch Vitagliano, lann Francisco Díaz de León Santos Coy, Lucia Vega Mitianina, Luis Eduardo Sarzo Saldaña, Miguel Angel Arenas Chávez, Paola Rodríguez Zavaleta, Patrick Egry Rasetti, Paulina Ruiz Del Moral Fernández, Regina Vázquez Ibarra, René Alejandro Ramírez Gutiérrez, Sofía Ibarra Cobos, Sofía Zamora Cobo, Victoria Aguilar Vilchis, Alberto Enrique Ospino Mérida, Ana Sofia Aguilar Gómez Tagle, Andrés Muedano Sosa, Andrés Thomassiny Centeno, Bianca Alesandra Barcia Carro, Camila López González, Carlos Carreón Gómez, Daniel Campa Salgado, Domique Olvera Huber, Eduado Giles Ávila, Emilia Christlieb Wiener, Georgina Schiaffino Murrieta, Guillermo Bulnes Krueger, Gustavo Eduardo Garfias García, Ian Saturno Chiu, Joel Butzberger Yañez, Julián González Van Der Stoel, Kebia Urdapilleta Ávila, Konstanze Ponisch Vitagliano, lann Francisco Díaz de León Santos Coy, Lucia Vega Mitianina, Luis Eduardo Sarzo Saldaña, Miguel Angel Arenas Chávez, Paola Rodríguez Zavaleta, Patrick Egry Rasetti, Paulina Ruiz Del Moral Fernández, Regina Vázquez Ibarra, René Alejandro Ramírez Gutiérrez, Sofía Ibarra Cobos, Sofía Zamora Cobo y Victoria Aguilar Vilchis.</li></ol><br>Tomando en consideración lo anterior, las partes antes mencionadas han decidido celebrar un contrato de mandato de carácter general, no representativo, el cual quedará sujeto a las siguientes:`;
+
+    let p3 = document.createElement('div');
+    p3.innerHTML = `<h3><b>CLÁUSULAS</b></h3><p>Primera: ${capitalizeFirstLetter(art)} C. ${name.toUpperCase()} le encarga realizar los pagos para el evento de graduación de la "GENERACIÓN 2023" que se llevará a cabo en la Hacienda de San Fernando, con domicilio en Avenida San Fernando 106, Col. Tlalpan, Alcaldía Tlalpan, C.P. 14000, Ciudad de México y que se celebrará el 9 de junio de 2023 de las 19:00 hrs a las 3:00 hrs del 10 de junio de 2023, que en lo sucesivo se denominará "LA GRADUACIÓN", al C. GUSTAVO EDUARDO GARFIAS GARCÍA, estando este último de acuerdo en aceptar dicho encargo.</p>`;
+
+    let p4 = document.createElement('div');
+    p4.innerHTML = `<p>Segunda: Para los efectos del cumplimiento de este mandato, ${art} C. ${name.toUpperCase()} entregará los fondos monetarios necesarios en efectivo al mandatario o transferirá los fondos monetarios necesarios al mandatario a la siguiente cuenta bancaria a su nombre únicamente mediante transferencias electrónicas bancarias (SPEI):<br><ul><li>ClABE Interbancaria: 021180040685720075</li><li>Banco: HSBC</li><li>Titular de la cuenta: Gustavo Eduardo Garfias García</li></ul>`;
+
+    let p5 = document.createElement('div');
+    p5.innerHTML = `<p>Tercera: El mandatario, una vez que haya recibido los pagos en efectivo o las transferencias hará por cuenta de ${art} mandante el pago por concepto de la cantidad de boletos que ést${gen_suff} le ordene ya sea de forma verbal o escrita antes de realizar el pago en efectivo o la transferencia electrónica bancaria al mandatario para "LA GRADUACIÓN". El C. GUSTAVO EDUARDO GARFIAS GARCÍA se encargará de recibir el dinero de ${art} C. ${name.toUpperCase()} y posteriormente pagará al proveedor de los servicios para el evento mencionado anteriormente BANCHETTI EVENTOS Y MARKETING S.A. DE C.V., a quien en lo sucesivo se le denominará "BANCHETTI EVENTOS" en nombre de C. "${grad}". El mandatario recabará la documentación que ampare los mencionados pagos, y con estos documentos hará la comprobación de las compras y gastos realizada por cuenta y orden del mandatario. A más tardar 48 horas después de recibir un pago de ${art} mandante el mandatario entregará a ${art} mandante un recibo por su pago.</p>`;
+
+    let p6 = document.createElement('div');
+    p6.innerHTML = `<p>Cuarta: En cualquier momento ${art} mandante podrá exigir la devolución de las cantidades no erogadas por el mandatario.</p>`;
+
+    let p7 = document.createElement('div');
+    p7.innerHTML = `<p>Quinta: De conformidad con el artículo 2549 del Código Civil Federal, este contrato de mandato será gratuito, es decir no habrá retribución alguna por la ejecución de los encargos aquí descritos, salvo que hubiere pacto en contrario y con la aceptación de ambas partes.</p>`;
+
+    let p8 = document.createElement('div');
+    p8.innerHTML = `<p>Sexta: En lo que no se le hubieren dado instrucciones al mandatario, éste deberá siempre consultar a ${art} mandante. Si no fuere posible la consulta, devolverá el dinero.</p>`;
+
+    let p9 = document.createElement('div');
+    p9.innerHTML = `<p>Séptima: Para constancia de lo estipulado se firma el presente contrato en original y copia, ante los testigos Lucía Vega Mitianina de 18 años, soltera, mexicana, originaria de _____________. vecina de esta ciudad, y con domicilio en ___________________ y la C. Georgina Schiaffino Murrieta de 18 años, soltera, mexicana, originaria de _________— y vecina de _____________________, y con domicilio en _________________-, declarando conocer personalmente a las partes contratantes, constándoles que ambos son perfectamente capaces para contratar, y firmándose el original y la copia por todas las personas que en el mismo aparecen bajo diferentes caracteres.<br>Damos fe.</p>`;
+
+    let p10 = document.createElement('table');
+    let r1 = document.createElement('tr');
+
+    let s_line1 = document.createElement('td');
+    s_line1.innerText = "______________________________________";
+    let s_line2 = document.createElement('td');
+    s_line2.innerText = "______________________________________";
+    let s_line3 = document.createElement('td');
+    s_line3.innerText = "______________________________________";
+    let s_line4 = document.createElement('td');
+    s_line4.innerText = "______________________________________";
+    r1.append(s_line1, s_line2);
+    r1.style = "height: 80px; vertical-align: bottom;";
+
+
+    let r2 = document.createElement('tr');
+    let r3 = document.createElement('tr');
+    r3.style = "height: 80px; vertical-align: bottom;";
+    let r4 = document.createElement('tr');
+    let s1 = document.createElement('td');
+    s1.innerText = `${name}, ${capitalizeFirstLetter(art)} Mandante`;
+    let s2 = document.createElement('td');
+    s2.innerText = "Gustavo Eduardo Garfias García, El Mandatario";
+    let s3 = document.createElement('td');
+    s3.innerText = "Lucía Vega Mitianina, Testigo 1";
+    let s4 = document.createElement('td');
+    s4.innerText = "Georgina Schiaffino Murrieta, Testigo 2";
+    r2.append(s1,s2);
+
+    r3.append(s_line3, s_line4);
+    r4.append(s3,s4);
+
+    p10.append(r1,r2,r3,r4);
+
+    document.getElementById('dvContainer').append(tit, p1, p2, p3, p4, p5, p6, p7, p8, p9, p10);
+
+    var divContents = $("#dvContainer").html();
+    var printWindow = window.open('', '', 'height=400,width=800');
+    printWindow.document.write(`<html><head><title>CONTRATO DE MANDATO ${name.toUpperCase()}</title><style>div {text-align: justify;text-justify: inter-word;}; p {text-align: justify;text-justify: inter-word;}; h1 {text-align: justify;text-justify: inter-word;}; table {text-align: justify;text-justify: inter-word;};</style>`);
+    printWindow.document.write('</head><body >');
+    printWindow.document.write(divContents);
+    printWindow.document.write('</body></html>');
+    printWindow.document.close();
+    printWindow.print();
+
+  }
+
+  function capitalizeFirstLetter(str) {
+
+    // converting first letter to uppercase
+    const capitalized = str.charAt(0).toUpperCase() + str.slice(1);
+
+    return capitalized;
+  }
+</script>
+
+
+</body>
+</html>
