@@ -303,7 +303,10 @@
                                     let difference = p1_date.getTime() - new Date().getTime();
                                     let TotalDays = Math.ceil(difference / (1000 * 3600 * 24));
 
-                                    if (paid >= p1) {
+                                    if (paid >= p1 + p2 + p3) {
+                                        alert.classList.add('alert-success');
+                                        alert_text.innerHTML = '¡Has finalizado de realizar tus pagos!<br>Tu "código de reservación" es: ${code}<b></b>';
+                                    } else if (paid >= p1) {
                                         alert.classList.add('alert-success');
                                         alert_text.innerText = 'Has realizado el pago de este periodo, ¡muchas gracias!';
                                     } else if (TotalDays <= 5) {
@@ -318,7 +321,10 @@
                                     let difference = p2_date.getTime() - new Date().getTime();
                                     let TotalDays = Math.ceil(difference / (1000 * 3600 * 24));
 
-                                    if (paid >= p1 + p2) {
+                                    if (paid >= p1 + p2 + p3) {
+                                        alert.classList.add('alert-success');
+                                        alert_text.innerHTML = '¡Has finalizado de realizar tus pagos!<br>Tu "código de reservación" es: ${code}<b></b>';
+                                    } else if (paid >= p1 + p2) {
                                         alert.classList.add('alert-success');
                                         alert_text.innerText = 'Has realizado el pago de este periodo, ¡muchas gracias!';
                                     } else if (paid >= p1) {
