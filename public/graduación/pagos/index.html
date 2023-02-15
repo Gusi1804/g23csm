@@ -172,6 +172,8 @@
             var paid = 0;
             var done = false;
 
+            var code = "";
+
             db.collection("pagos-grad").where("email", "==", email)
                 .get()
                 .then((querySnapshot) => {
@@ -195,6 +197,8 @@
                         receptor.innerText = pago.receptor;
                         let folio = document.createElement('td');
                         folio.innerText = pago.folio;
+
+                        code = pago.folio;
 
                         paid += pago.cant;
 
@@ -335,7 +339,7 @@
 
                                     if (paid >= p1 + p2 + p3) {
                                         alert.classList.add('alert-success');
-                                        alert_text.innerText = 'Has realizado el pago de este periodo, ¡muchas gracias!';
+                                        alert_text.innerHTML = '¡Has finalizado de realizar tus pagos!<br>Tu "código de reservación" es: ${code}<b></b>';
                                     } else if (paid >= p1 + p2) {
                                         alert.classList.add('alert-success');
                                         alert_text.innerText = '¡Estás al corriente, gracias! Aún estás a tiempo para realizar tu siguiente pago, te quedan ${TotalDays} días.';
@@ -351,7 +355,7 @@
                                     // after 3rd payment
                                     if (paid >= p1 + p2 + p3) {
                                         alert.classList.add('alert-success');
-                                        alert_text.innerText = '¡Has finalizado de pagar todos tus boletos! Muchas gracias.';
+                                        alert_text.innerHTML = '¡Has finalizado de realizar tus pagos!<br>Tu "código de reservación" es: ${code}<b></b>';
                                     } else if (TotalDays <= 5) {
                                         alert.classList.add('alert-warning');
                                         alert_text.innerText = `Estás al corriente con tus pagos, ¡pero solo te quedan ${TotalDays} días para realizar el siguiente!`;
