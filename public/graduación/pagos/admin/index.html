@@ -345,6 +345,28 @@
                             monto: `${format_currency(monto)}`,
                             to_email: email_pagador,
                         });
+
+                        // Agregar pago a la lista de todos los pagos
+
+                        let row = document.createElement('tr');
+
+                        let fecha = document.createElement('td');
+                        fecha.innerText = `${fecha.toLocaleDateString()}, ${fecha.toLocaleTimeString()}`;
+                        let cant = document.createElement('td');
+                        cant.innerText = cant;
+                        let monto = document.createElement('td');
+                        monto.innerText = format_currency(monto);
+                        let pagador = document.createElement('td');
+                        pagador.innerText = pagador;
+                        let receptor = document.createElement('td');
+                        receptor.innerText = receptor;
+                        let folio = document.createElement('td');
+                        folio.innerText = folio;
+
+                        //paid += pago.cant;
+
+                        row.append(fecha, cant, monto, pagador, receptor, folio);
+                        document.getElementById('body_all').append(row);
                     })
                     .catch((error) => {
                         console.error("Error adding document: ", error);
