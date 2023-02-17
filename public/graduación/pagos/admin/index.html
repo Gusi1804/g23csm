@@ -252,7 +252,7 @@
                         <thead>
                         <tr>
                             <th>Fecha de Pago</th>
-                            <th>Cantidad de Boletos Pagados</th>
+                            <th># Boletos Pagados</th>
                             <th>Monto Pagado</th>
                             <th>Pagado por</th>
                             <th>Recibido por</th>
@@ -470,7 +470,7 @@
                         let monto = document.createElement('td');
                         monto.innerText = format_currency(pago.monto);
                         let pagador = document.createElement('td');
-                        pagador.innerText = pago.pagador;
+                        pagador.innerHTML = `${pago.pagador}<br>${pago.email}`;
                         let receptor = document.createElement('td');
                         receptor.innerText = pago.receptor;
                         let folio = document.createElement('td');
