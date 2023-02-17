@@ -430,7 +430,7 @@
         function loadAll() {
             document.getElementById('body_all').innerHTML = "";
 
-            db.collection("pagos-grad").orderBy('fecha', 'desc')
+            db.collection("pagos-grad").orderBy('fecha')
                 .get()
                 .then((querySnapshot) => {
                     querySnapshot.forEach((doc) => {
