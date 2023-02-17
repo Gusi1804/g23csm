@@ -245,7 +245,27 @@
                 </div>
                 <hr>
 
+                <h3 class="pb-3">Todos los Pagos</h3>
+                <button type="button" class="btn btn-primary" onclick="loadAll()">Cargar Todos los Pagos</button>
+                <div class="table-responsive pb-4">
+                    <table class="table table-hover table-sm">
+                        <thead>
+                        <tr>
+                            <th>Fecha de Pago</th>
+                            <th>Cantidad de Boletos Pagados</th>
+                            <th>Monto Pagado</th>
+                            <th>Pagado por</th>
+                            <th>Recibido por</th>
+                            <th>Folio</th>
+                        </tr>
+                        </thead>
+                        <tbody id="body_all">
+                        </tbody>
+                    </table>
+                </div>
 
+
+                <hr>
                 <!-- Cerrar sesión -->
                 <div class="container">
                     <button type="button" class="btn btn-outline-danger mb-3" onclick="logout()">Cerrar Sesión</button>
@@ -405,6 +425,77 @@
                     console.log("Error getting documents: ", error);
                 });
 
+        }
+
+        function loadAll() {
+            document.getElementById('body_all').innerHTML = "";
+
+            db.collection("pagos-grad").orderBy('fecha', 'desc')
+                .get()
+                .then((querySnapshot) => {
+                    querySnapshot.forEach((doc) => {
+                        // doc.data() is never undefined for query doc snapshots
+                        console.log(doc.id, " => ", doc.data());
+
+                        let pago = doc.data();
+
+                        let row = document.createElement('tr');
+
+                        let fecha = document.createElement('td');
+                        fecha.innerText = `${pago.fecha.toDate().toLocaleDateString()}, ${pago.fecha.toDate().toLocaleTimeString()}`;
+                        let cant = document.createElement('td');
+                        cant.innerText = pago.cant;
+                        let monto = document.createElement('td');
+                        monto.innerText = format_currency(pago.monto);
+                        let pagador = document.createElement('td');
+                        pagador.innerText = pago.pagador;
+                        let receptor = document.createElement('td');
+                        receptor.innerText = pago.receptor;
+                        let folio = document.createElement('td');
+                        folio.innerText = pago.folio;
+
+                        paid += pago.cant;
+
+                        row.append(fecha, cant, monto, pagador, receptor, folio);
+                        document.getElementById('body_all').append(row);
+                    });
+
+                    /*
+                    let totals_row = document.createElement('tr');
+                    let empty = document.createElement('th');
+                    empty.innerText = "Total"
+                    let cant_tot = document.createElement('th');
+                    cant_tot.innerText = paid;
+                    let monto_tot = document.createElement('th');
+                    monto_tot.innerText = format_currency(paid * 1450);
+                    totals_row.append(empty, cant_tot, monto_tot, document.createElement('th'), document.createElement('th'), document.createElement('th'));
+
+                    document.getElementById('totales').append(totals_row);
+
+                    db.collection("votos").where("email", "==", search_email)
+                        .get()
+                        .then((querySnapshot) => {
+                            querySnapshot.forEach((doc) => {
+                                // doc.data() is never undefined for query doc snapshots
+                                console.log(doc.id, " => ", doc.data());
+                                let voto = doc.data();
+
+                                let boletos = voto.invitados_cena;
+
+                                let name = capitalizeFirstLetter(search_email.split('@')[0].split('.')[0]);
+                                let last_name = capitalizeFirstLetter(search_email.split('@')[0].split('.')[1]);
+
+                                document.getElementById('search_results').innerHTML = `<b>${name} ${last_name} ha pagado ${paid} de ${boletos} boletos que se compremetió a adquirir.</b>`;
+                            });
+                        })
+                        .catch((error) => {
+                            console.log("Error getting documents: ", error);
+                        });
+                     */
+                })
+                .catch((error) => {
+                    console.log("Error getting documents: ", error);
+                });
         }
 
         function capitalizeFirstLetter(str) {
