@@ -261,6 +261,8 @@
                         </thead>
                         <tbody id="body_all">
                         </tbody>
+                        <tbody id="body_all_tot">
+                        </tbody>
                     </table>
                 </div>
 
@@ -452,6 +454,8 @@
         function loadAll() {
             document.getElementById('body_all').innerHTML = "";
 
+            var paid = 0;
+
             db.collection("pagos-grad").orderBy('fecha')
                 .get()
                 .then((querySnapshot) => {
@@ -491,7 +495,7 @@
                                     let folio = document.createElement('td');
                                     folio.innerText = pago.folio;
 
-                                    //paid += pago.cant;
+                                    paid += pago.cant;
 
                                     row.append(fecha, cant, monto, pagador, receptor, folio);
                                     document.getElementById('body_all').append(row);
@@ -504,7 +508,7 @@
 
                     });
 
-                    /*
+
                     let totals_row = document.createElement('tr');
                     let empty = document.createElement('th');
                     empty.innerText = "Total"
@@ -514,28 +518,7 @@
                     monto_tot.innerText = format_currency(paid * 1450);
                     totals_row.append(empty, cant_tot, monto_tot, document.createElement('th'), document.createElement('th'), document.createElement('th'));
 
-                    document.getElementById('totales').append(totals_row);
-
-                    db.collection("votos").where("email", "==", search_email)
-                        .get()
-                        .then((querySnapshot) => {
-                            querySnapshot.forEach((doc) => {
-                                // doc.data() is never undefined for query doc snapshots
-                                console.log(doc.id, " => ", doc.data());
-                                let voto = doc.data();
-
-                                let boletos = voto.invitados_cena;
-
-                                let name = capitalizeFirstLetter(search_email.split('@')[0].split('.')[0]);
-                                let last_name = capitalizeFirstLetter(search_email.split('@')[0].split('.')[1]);
-
-                                document.getElementById('search_results').innerHTML = `<b>${name} ${last_name} ha pagado ${paid} de ${boletos} boletos que se compremetió a adquirir.</b>`;
-                            });
-                        })
-                        .catch((error) => {
-                            console.log("Error getting documents: ", error);
-                        });
-                     */
+                    document.getElementById('body_all_tot').append(totals_row);
                 })
                 .catch((error) => {
                     console.log("Error getting documents: ", error);
