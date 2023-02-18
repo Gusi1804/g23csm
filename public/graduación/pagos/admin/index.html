@@ -335,7 +335,7 @@
                     <table class="table table-hover table-sm">
                         <thead>
                         <tr>
-                            <th>Email</th>
+                            <th>Nombre</th>
                             <th># Boletos Pagados</th>
                             <th>Monto Pagado</th>
                             <th>Status</th>
@@ -919,8 +919,11 @@
                                     let tot_row = document.createElement('th');
                                     tot_row.innerText = "TOTAL"
 
-                                    let email_r = document.createElement('td');
-                                    email_r.innerText = voto.email;
+                                    let name_r = document.createElement('td');
+                                    let name = capitalizeFirstLetter(voto.email.split('@')[0].split('.')[0]);
+                                    let last_name = capitalizeFirstLetter(voto.email.split('@')[0].split('.')[1]);
+
+                                    name_r.innerText = `${name} ${last_name}`;
 
                                     let paid_r = document.createElement('td');
                                     paid_r.innerText = `${paid} / ${p1 + p2 + p3}`;
@@ -931,7 +934,7 @@
                                     let status_r = document.createElement('td');
                                     status_r.innerHTML = status;
 
-                                    row.append(email_r, paid_r, monto_r, status_r);
+                                    row.append(name_r, paid_r, monto_r, status_r);
                                     document.getElementById('body_status').append(row);
 
                                     let totals_row = document.createElement('tr');
