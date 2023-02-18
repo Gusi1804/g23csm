@@ -74,6 +74,17 @@
             left: 50%;
             transform: translate(-50%, -50%);
         }
+
+        @media print {
+            .noPrint{
+                display:none;
+            }
+
+            .printable {
+                display : block;
+                font-family: Helvetica, Arial, sans-serif;
+            }
+        }
     </style>
 </head>
 <body>
@@ -89,268 +100,273 @@
             </div>
 
             <div id="logged_in" style="display: none" class="table-responsive">
-                <div id="show_email" class="pb-4"></div>
+                <div class="noPrint">
+                    <div id="show_email" class="pb-4"></div>
 
-                <hr>
-                <h3 class="mb-3">Registrar Pago</h3>
-                <form class="mb-3" onsubmit="pagar()" action="javascript:void(0);">
-                    <div class="mb-3 row">
-                        <label for="email_pagador" class="col-sm-2 col-form-label">Email del Pagador</label>
-                        <div class="col-sm-10">
-                            <select class="form-select" aria-label="Email Pagador" id="email_pagador">
-                                <option selected>Selecciona una opción</option>
-                                <option value="alberto.ospino@csm.edu.mx">alberto.ospino@csm.edu.mx</option>
-                                <option value="ana.aguilar@csm.edu.mx">ana.aguilar@csm.edu.mx</option>
-                                <option value="andres.muedano@csm.edu.mx">andres.muedano@csm.edu.mx</option>
-                                <option value="bianca.barcia@csm.edu.mx">bianca.barcia@csm.edu.mx</option>
-                                <option value="carlos.carreon@csm.edu.mx">carlos.carreon@csm.edu.mx</option>
-                                <option value="carlos.egry@csm.edu.mx">carlos.egry@csm.edu.mx</option>
-                                <option value="camila.lopez@csm.edu.mx">camila.lopez@csm.edu.mx</option>
-                                <option value="daniel.campa@csm.edu.mx">daniel.campa@csm.edu.mx</option>
-                                <option value="dominique.olvera@csm.edu.mx">dominique.olvera@csm.edu.mx</option>
-                                <option value="eduardo.giles@csm.edu.mx">eduardo.giles@csm.edu.mx</option>
-                                <option value="emilia.christlieb@csm.edu.mx">emilia.christlieb@csm.edu.mx</option>
-                                <option value="georgina.schiaffino@csm.edu.mx">georgina.schiaffino@csm.edu.mx</option>
-                                <option value="gustavo.garfias@csm.edu.mx">gustavo.garfias@csm.edu.mx</option>
-                                <option value="guillermo.bulnes@csm.edu.mx">guillermo.bulnes@csm.edu.mx</option>
-                                <option value="hector.thomassiny@csm.edu.mx">hector.thomassiny@csm.edu.mx</option>
-                                <option value="ian.saturno@csm.edu.mx">ian.saturno@csm.edu.mx</option>
-                                <option value="iann.diaz@csm.edu.mx">iann.diaz@csm.edu.mx</option>
-                                <option value="julian.gonzalez@csm.edu.mx">julian.gonzalez@csm.edu.mx</option>
-                                <option value="joel.butzberger@csm.edu.mx">joel.butzberger@csm.edu.mx</option>
-                                <option value="kebia.urdapilleta@csm.edu.mx">kebia.urdapilleta@csm.edu.mx</option>
-                                <option value="konstanze.ponisch@csm.edu.mx">konstanze.ponisch@csm.edu.mx</option>
-                                <option value="lucia.vega@csm.edu.mx">lucia.vega@csm.edu.mx</option>
-                                <option value="luis.sarzo@csm.edu.mx">luis.sarzo@csm.edu.mx</option>
-                                <option value="miguel.arenas@csm.edu.mx">miguel.arenas@csm.edu.mx</option>
-                                <option value="paola.rodriguez@csm.edu.mx">paola.rodriguez@csm.edu.mx</option>
-                                <option value="paulina.ruiz@csm.edu.mx">paulina.ruiz@csm.edu.mx</option>
-                                <option value="regina.vazquez@csm.edu.mx">regina.vazquez@csm.edu.mx</option>
-                                <option value="rene.ramirez@csm.edu.mx">rene.ramirez@csm.edu.mx</option>
-                                <option value="sofia.ibarra@csm.edu.mx">sofia.ibarra@csm.edu.mx</option>
-                                <option value="sofia.zamora@csm.edu.mx">sofia.zamora@csm.edu.mx</option>
-                                <option value="victoria.aguilar@csm.edu.mx">victoria.aguilar@csm.edu.mx</option>
-                            </select>
+                    <hr>
+                    <h3 class="mb-3">Registrar Pago</h3>
+                    <form class="mb-3" onsubmit="pagar()" action="javascript:void(0);">
+                        <div class="mb-3 row">
+                            <label for="email_pagador" class="col-sm-2 col-form-label">Email del Pagador</label>
+                            <div class="col-sm-10">
+                                <select class="form-select" aria-label="Email Pagador" id="email_pagador">
+                                    <option selected>Selecciona una opción</option>
+                                    <option value="alberto.ospino@csm.edu.mx">alberto.ospino@csm.edu.mx</option>
+                                    <option value="ana.aguilar@csm.edu.mx">ana.aguilar@csm.edu.mx</option>
+                                    <option value="andres.muedano@csm.edu.mx">andres.muedano@csm.edu.mx</option>
+                                    <option value="bianca.barcia@csm.edu.mx">bianca.barcia@csm.edu.mx</option>
+                                    <option value="carlos.carreon@csm.edu.mx">carlos.carreon@csm.edu.mx</option>
+                                    <option value="carlos.egry@csm.edu.mx">carlos.egry@csm.edu.mx</option>
+                                    <option value="camila.lopez@csm.edu.mx">camila.lopez@csm.edu.mx</option>
+                                    <option value="daniel.campa@csm.edu.mx">daniel.campa@csm.edu.mx</option>
+                                    <option value="dominique.olvera@csm.edu.mx">dominique.olvera@csm.edu.mx</option>
+                                    <option value="eduardo.giles@csm.edu.mx">eduardo.giles@csm.edu.mx</option>
+                                    <option value="emilia.christlieb@csm.edu.mx">emilia.christlieb@csm.edu.mx</option>
+                                    <option value="georgina.schiaffino@csm.edu.mx">georgina.schiaffino@csm.edu.mx</option>
+                                    <option value="gustavo.garfias@csm.edu.mx">gustavo.garfias@csm.edu.mx</option>
+                                    <option value="guillermo.bulnes@csm.edu.mx">guillermo.bulnes@csm.edu.mx</option>
+                                    <option value="hector.thomassiny@csm.edu.mx">hector.thomassiny@csm.edu.mx</option>
+                                    <option value="ian.saturno@csm.edu.mx">ian.saturno@csm.edu.mx</option>
+                                    <option value="iann.diaz@csm.edu.mx">iann.diaz@csm.edu.mx</option>
+                                    <option value="julian.gonzalez@csm.edu.mx">julian.gonzalez@csm.edu.mx</option>
+                                    <option value="joel.butzberger@csm.edu.mx">joel.butzberger@csm.edu.mx</option>
+                                    <option value="kebia.urdapilleta@csm.edu.mx">kebia.urdapilleta@csm.edu.mx</option>
+                                    <option value="konstanze.ponisch@csm.edu.mx">konstanze.ponisch@csm.edu.mx</option>
+                                    <option value="lucia.vega@csm.edu.mx">lucia.vega@csm.edu.mx</option>
+                                    <option value="luis.sarzo@csm.edu.mx">luis.sarzo@csm.edu.mx</option>
+                                    <option value="miguel.arenas@csm.edu.mx">miguel.arenas@csm.edu.mx</option>
+                                    <option value="paola.rodriguez@csm.edu.mx">paola.rodriguez@csm.edu.mx</option>
+                                    <option value="paulina.ruiz@csm.edu.mx">paulina.ruiz@csm.edu.mx</option>
+                                    <option value="regina.vazquez@csm.edu.mx">regina.vazquez@csm.edu.mx</option>
+                                    <option value="rene.ramirez@csm.edu.mx">rene.ramirez@csm.edu.mx</option>
+                                    <option value="sofia.ibarra@csm.edu.mx">sofia.ibarra@csm.edu.mx</option>
+                                    <option value="sofia.zamora@csm.edu.mx">sofia.zamora@csm.edu.mx</option>
+                                    <option value="victoria.aguilar@csm.edu.mx">victoria.aguilar@csm.edu.mx</option>
+                                </select>
+                            </div>
                         </div>
-                    </div>
-                    <div class="mb-3 row">
-                        <label for="fecha" class="col-sm-2 col-form-label">Fecha de Pago</label>
-                        <div class="col-sm-10">
-                            <input type="datetime-local" id="fecha"
-                                   name="fecha" value="2023-01-12T19:30"
-                                   min="2023-01-01T00:00" max="2024-01-01T00:00" class="form-control">
+                        <div class="mb-3 row">
+                            <label for="fecha" class="col-sm-2 col-form-label">Fecha de Pago</label>
+                            <div class="col-sm-10">
+                                <input type="datetime-local" id="fecha"
+                                       name="fecha" value="2023-01-12T19:30"
+                                       min="2023-01-01T00:00" max="2024-01-01T00:00" class="form-control">
+                            </div>
                         </div>
-                    </div>
-                    <div class="mb-3 row">
-                        <label for="pagador" class="col-sm-2 col-form-label">Folio Recibo</label>
-                        <div class="col-sm-10">
-                            <input type="text" id="folio" class="form-control">
+                        <div class="mb-3 row">
+                            <label for="pagador" class="col-sm-2 col-form-label">Folio Recibo</label>
+                            <div class="col-sm-10">
+                                <input type="text" id="folio" class="form-control">
+                            </div>
                         </div>
-                    </div>
-                    <div class="mb-3 row">
-                        <label for="cant" class="col-sm-2 col-form-label"># Boletos Pagados</label>
-                        <div class="col-sm-10">
-                            <input type="number" id="cant" class="form-control" oninput="updateMonto()">
+                        <div class="mb-3 row">
+                            <label for="cant" class="col-sm-2 col-form-label"># Boletos Pagados</label>
+                            <div class="col-sm-10">
+                                <input type="number" id="cant" class="form-control" oninput="updateMonto()">
+                            </div>
                         </div>
-                    </div>
-                    <div class="mb-3 row">
-                        <label for="monto" class="col-sm-2 col-form-label">Monto Pagado</label>
-                        <div class="col-sm-10">
-                            <input type="number" id="monto" class="form-control">
+                        <div class="mb-3 row">
+                            <label for="monto" class="col-sm-2 col-form-label">Monto Pagado</label>
+                            <div class="col-sm-10">
+                                <input type="number" id="monto" class="form-control">
+                            </div>
                         </div>
-                    </div>
-                    <div class="mb-3 row">
-                        <label for="pagador" class="col-sm-2 col-form-label">Pagador</label>
-                        <div class="col-sm-10">
-                            <input type="text" id="pagador" class="form-control">
+                        <div class="mb-3 row">
+                            <label for="pagador" class="col-sm-2 col-form-label">Pagador</label>
+                            <div class="col-sm-10">
+                                <input type="text" id="pagador" class="form-control">
+                            </div>
                         </div>
-                    </div>
-                    <div class="mb-3 row">
-                        <label for="receptor" class="col-sm-2 col-form-label">Receptor</label>
-                        <div class="col-sm-10">
-                            <select class="form-select" aria-label="Nombre Receptor" id="receptor">
-                                <option selected>Gustavo Garfias</option>
-                                <option>Lucía Vega</option>
-                                <option>Georgina Schiaffino</option>
-                            </select>
+                        <div class="mb-3 row">
+                            <label for="receptor" class="col-sm-2 col-form-label">Receptor</label>
+                            <div class="col-sm-10">
+                                <select class="form-select" aria-label="Nombre Receptor" id="receptor">
+                                    <option selected>Gustavo Garfias</option>
+                                    <option>Lucía Vega</option>
+                                    <option>Georgina Schiaffino</option>
+                                </select>
+                            </div>
                         </div>
-                    </div>
-                    <div class="col-sm">
-                        <button type="submit" class="btn btn-primary">Registrar Pago</button>
-                    </div>
-                </form>
-                <hr>
-                <h3>Buscar Calendario</h3>
-                <form class="mb-3" onsubmit="buscar()" action="javascript:void(0);">
-                    <div class="mb-3 row">
-                        <label for="cal_email" class="col-sm-2 col-form-label">Email del Pagador</label>
-                        <div class="col-sm-10">
-                            <select class="form-select" aria-label="Email Pagador" id="cal_email">
-                                <option selected>Selecciona una opción</option>
-                                <option value="alberto.ospino@csm.edu.mx">alberto.ospino@csm.edu.mx</option>
-                                <option value="ana.aguilar@csm.edu.mx">ana.aguilar@csm.edu.mx</option>
-                                <option value="andres.muedano@csm.edu.mx">andres.muedano@csm.edu.mx</option>
-                                <option value="bianca.barcia@csm.edu.mx">bianca.barcia@csm.edu.mx</option>
-                                <option value="carlos.carreon@csm.edu.mx">carlos.carreon@csm.edu.mx</option>
-                                <option value="carlos.egry@csm.edu.mx">carlos.egry@csm.edu.mx</option>
-                                <option value="camila.lopez@csm.edu.mx">camila.lopez@csm.edu.mx</option>
-                                <option value="daniel.campa@csm.edu.mx">daniel.campa@csm.edu.mx</option>
-                                <option value="dominique.olvera@csm.edu.mx">dominique.olvera@csm.edu.mx</option>
-                                <option value="eduardo.giles@csm.edu.mx">eduardo.giles@csm.edu.mx</option>
-                                <option value="emilia.christlieb@csm.edu.mx">emilia.christlieb@csm.edu.mx</option>
-                                <option value="georgina.schiaffino@csm.edu.mx">georgina.schiaffino@csm.edu.mx</option>
-                                <option value="gustavo.garfias@csm.edu.mx">gustavo.garfias@csm.edu.mx</option>
-                                <option value="guillermo.bulnes@csm.edu.mx">guillermo.bulnes@csm.edu.mx</option>
-                                <option value="hector.thomassiny@csm.edu.mx">hector.thomassiny@csm.edu.mx</option>
-                                <option value="ian.saturno@csm.edu.mx">ian.saturno@csm.edu.mx</option>
-                                <option value="iann.diaz@csm.edu.mx">iann.diaz@csm.edu.mx</option>
-                                <option value="julian.gonzalez@csm.edu.mx">julian.gonzalez@csm.edu.mx</option>
-                                <option value="joel.butzberger@csm.edu.mx">joel.butzberger@csm.edu.mx</option>
-                                <option value="kebia.urdapilleta@csm.edu.mx">kebia.urdapilleta@csm.edu.mx</option>
-                                <option value="konstanze.ponisch@csm.edu.mx">konstanze.ponisch@csm.edu.mx</option>
-                                <option value="lucia.vega@csm.edu.mx">lucia.vega@csm.edu.mx</option>
-                                <option value="luis.sarzo@csm.edu.mx">luis.sarzo@csm.edu.mx</option>
-                                <option value="miguel.arenas@csm.edu.mx">miguel.arenas@csm.edu.mx</option>
-                                <option value="paola.rodriguez@csm.edu.mx">paola.rodriguez@csm.edu.mx</option>
-                                <option value="paulina.ruiz@csm.edu.mx">paulina.ruiz@csm.edu.mx</option>
-                                <option value="regina.vazquez@csm.edu.mx">regina.vazquez@csm.edu.mx</option>
-                                <option value="rene.ramirez@csm.edu.mx">rene.ramirez@csm.edu.mx</option>
-                                <option value="sofia.ibarra@csm.edu.mx">sofia.ibarra@csm.edu.mx</option>
-                                <option value="sofia.zamora@csm.edu.mx">sofia.zamora@csm.edu.mx</option>
-                                <option value="victoria.aguilar@csm.edu.mx">victoria.aguilar@csm.edu.mx</option>
-                            </select>
+                        <div class="col-sm">
+                            <button type="submit" class="btn btn-primary">Registrar Pago</button>
                         </div>
+                    </form>
+                    <hr>
+                    <h3>Buscar Calendario</h3>
+                    <form class="mb-3" onsubmit="buscar()" action="javascript:void(0);">
+                        <div class="mb-3 row">
+                            <label for="cal_email" class="col-sm-2 col-form-label">Email del Pagador</label>
+                            <div class="col-sm-10">
+                                <select class="form-select" aria-label="Email Pagador" id="cal_email">
+                                    <option selected>Selecciona una opción</option>
+                                    <option value="alberto.ospino@csm.edu.mx">alberto.ospino@csm.edu.mx</option>
+                                    <option value="ana.aguilar@csm.edu.mx">ana.aguilar@csm.edu.mx</option>
+                                    <option value="andres.muedano@csm.edu.mx">andres.muedano@csm.edu.mx</option>
+                                    <option value="bianca.barcia@csm.edu.mx">bianca.barcia@csm.edu.mx</option>
+                                    <option value="carlos.carreon@csm.edu.mx">carlos.carreon@csm.edu.mx</option>
+                                    <option value="carlos.egry@csm.edu.mx">carlos.egry@csm.edu.mx</option>
+                                    <option value="camila.lopez@csm.edu.mx">camila.lopez@csm.edu.mx</option>
+                                    <option value="daniel.campa@csm.edu.mx">daniel.campa@csm.edu.mx</option>
+                                    <option value="dominique.olvera@csm.edu.mx">dominique.olvera@csm.edu.mx</option>
+                                    <option value="eduardo.giles@csm.edu.mx">eduardo.giles@csm.edu.mx</option>
+                                    <option value="emilia.christlieb@csm.edu.mx">emilia.christlieb@csm.edu.mx</option>
+                                    <option value="georgina.schiaffino@csm.edu.mx">georgina.schiaffino@csm.edu.mx</option>
+                                    <option value="gustavo.garfias@csm.edu.mx">gustavo.garfias@csm.edu.mx</option>
+                                    <option value="guillermo.bulnes@csm.edu.mx">guillermo.bulnes@csm.edu.mx</option>
+                                    <option value="hector.thomassiny@csm.edu.mx">hector.thomassiny@csm.edu.mx</option>
+                                    <option value="ian.saturno@csm.edu.mx">ian.saturno@csm.edu.mx</option>
+                                    <option value="iann.diaz@csm.edu.mx">iann.diaz@csm.edu.mx</option>
+                                    <option value="julian.gonzalez@csm.edu.mx">julian.gonzalez@csm.edu.mx</option>
+                                    <option value="joel.butzberger@csm.edu.mx">joel.butzberger@csm.edu.mx</option>
+                                    <option value="kebia.urdapilleta@csm.edu.mx">kebia.urdapilleta@csm.edu.mx</option>
+                                    <option value="konstanze.ponisch@csm.edu.mx">konstanze.ponisch@csm.edu.mx</option>
+                                    <option value="lucia.vega@csm.edu.mx">lucia.vega@csm.edu.mx</option>
+                                    <option value="luis.sarzo@csm.edu.mx">luis.sarzo@csm.edu.mx</option>
+                                    <option value="miguel.arenas@csm.edu.mx">miguel.arenas@csm.edu.mx</option>
+                                    <option value="paola.rodriguez@csm.edu.mx">paola.rodriguez@csm.edu.mx</option>
+                                    <option value="paulina.ruiz@csm.edu.mx">paulina.ruiz@csm.edu.mx</option>
+                                    <option value="regina.vazquez@csm.edu.mx">regina.vazquez@csm.edu.mx</option>
+                                    <option value="rene.ramirez@csm.edu.mx">rene.ramirez@csm.edu.mx</option>
+                                    <option value="sofia.ibarra@csm.edu.mx">sofia.ibarra@csm.edu.mx</option>
+                                    <option value="sofia.zamora@csm.edu.mx">sofia.zamora@csm.edu.mx</option>
+                                    <option value="victoria.aguilar@csm.edu.mx">victoria.aguilar@csm.edu.mx</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-sm">
+                            <button type="button" class="btn btn-primary" onclick="loadCal()">Buscar Pagos</button>
+                        </div>
+                    </form>
+                    <div id="cal_results"></div>
+                    <div class="table-responsive pb-4">
+                        <table class="table table-hover table-sm">
+                            <thead>
+                            <tr>
+                                <th>Fecha Límite de Pago</th>
+                                <th>Cantidad de Boletos a Pagar</th>
+                                <th>Monto a Pagar</th>
+                            </tr>
+                            </thead>
+                            <tbody id="tbody_cal">
+                            </tbody>
+                            <tbody id="totales_cal"></tbody>
+                        </table>
                     </div>
-                    <div class="col-sm">
-                        <button type="button" class="btn btn-primary" onclick="loadCal()">Buscar Pagos</button>
+
+                    <hr>
+                    <h3>Buscar Pagos</h3>
+                    <form class="mb-3" onsubmit="buscar()" action="javascript:void(0);">
+                        <div class="mb-3 row">
+                            <label for="search_email" class="col-sm-2 col-form-label">Email del Pagador</label>
+                            <div class="col-sm-10">
+                                <select class="form-select" aria-label="Email Pagador" id="search_email">
+                                    <option selected>Selecciona una opción</option>
+                                    <option value="alberto.ospino@csm.edu.mx">alberto.ospino@csm.edu.mx</option>
+                                    <option value="ana.aguilar@csm.edu.mx">ana.aguilar@csm.edu.mx</option>
+                                    <option value="andres.muedano@csm.edu.mx">andres.muedano@csm.edu.mx</option>
+                                    <option value="bianca.barcia@csm.edu.mx">bianca.barcia@csm.edu.mx</option>
+                                    <option value="carlos.carreon@csm.edu.mx">carlos.carreon@csm.edu.mx</option>
+                                    <option value="carlos.egry@csm.edu.mx">carlos.egry@csm.edu.mx</option>
+                                    <option value="camila.lopez@csm.edu.mx">camila.lopez@csm.edu.mx</option>
+                                    <option value="daniel.campa@csm.edu.mx">daniel.campa@csm.edu.mx</option>
+                                    <option value="dominique.olvera@csm.edu.mx">dominique.olvera@csm.edu.mx</option>
+                                    <option value="eduardo.giles@csm.edu.mx">eduardo.giles@csm.edu.mx</option>
+                                    <option value="emilia.christlieb@csm.edu.mx">emilia.christlieb@csm.edu.mx</option>
+                                    <option value="georgina.schiaffino@csm.edu.mx">georgina.schiaffino@csm.edu.mx</option>
+                                    <option value="gustavo.garfias@csm.edu.mx">gustavo.garfias@csm.edu.mx</option>
+                                    <option value="guillermo.bulnes@csm.edu.mx">guillermo.bulnes@csm.edu.mx</option>
+                                    <option value="hector.thomassiny@csm.edu.mx">hector.thomassiny@csm.edu.mx</option>
+                                    <option value="ian.saturno@csm.edu.mx">ian.saturno@csm.edu.mx</option>
+                                    <option value="iann.diaz@csm.edu.mx">iann.diaz@csm.edu.mx</option>
+                                    <option value="julian.gonzalez@csm.edu.mx">julian.gonzalez@csm.edu.mx</option>
+                                    <option value="joel.butzberger@csm.edu.mx">joel.butzberger@csm.edu.mx</option>
+                                    <option value="kebia.urdapilleta@csm.edu.mx">kebia.urdapilleta@csm.edu.mx</option>
+                                    <option value="konstanze.ponisch@csm.edu.mx">konstanze.ponisch@csm.edu.mx</option>
+                                    <option value="lucia.vega@csm.edu.mx">lucia.vega@csm.edu.mx</option>
+                                    <option value="luis.sarzo@csm.edu.mx">luis.sarzo@csm.edu.mx</option>
+                                    <option value="miguel.arenas@csm.edu.mx">miguel.arenas@csm.edu.mx</option>
+                                    <option value="paola.rodriguez@csm.edu.mx">paola.rodriguez@csm.edu.mx</option>
+                                    <option value="paulina.ruiz@csm.edu.mx">paulina.ruiz@csm.edu.mx</option>
+                                    <option value="regina.vazquez@csm.edu.mx">regina.vazquez@csm.edu.mx</option>
+                                    <option value="rene.ramirez@csm.edu.mx">rene.ramirez@csm.edu.mx</option>
+                                    <option value="sofia.ibarra@csm.edu.mx">sofia.ibarra@csm.edu.mx</option>
+                                    <option value="sofia.zamora@csm.edu.mx">sofia.zamora@csm.edu.mx</option>
+                                    <option value="victoria.aguilar@csm.edu.mx">victoria.aguilar@csm.edu.mx</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-sm">
+                            <button type="submit" class="btn btn-primary">Buscar Pagos</button>
+                        </div>
+                    </form>
+                    <div id="search_results"></div>
+                    <div class="table-responsive pb-4">
+                        <table class="table table-hover table-sm">
+                            <thead>
+                            <tr>
+                                <th>Fecha de Pago</th>
+                                <th>Cantidad de Boletos Pagados</th>
+                                <th>Monto Pagado</th>
+                                <th>Pagado por</th>
+                                <th>Recibido por</th>
+                                <th>Folio</th>
+                            </tr>
+                            </thead>
+                            <tbody id="tbody">
+                            </tbody>
+                            <tbody id="totales"></tbody>
+                        </table>
                     </div>
-                </form>
-                <div id="cal_results"></div>
-                <div class="table-responsive pb-4">
-                    <table class="table table-hover table-sm">
-                        <thead>
-                        <tr>
-                            <th>Fecha Límite de Pago</th>
-                            <th>Cantidad de Boletos a Pagar</th>
-                            <th>Monto a Pagar</th>
-                        </tr>
-                        </thead>
-                        <tbody id="tbody_cal">
-                        </tbody>
-                        <tbody id="totales_cal"></tbody>
-                    </table>
                 </div>
 
-                <hr>
-                <h3>Buscar Pagos</h3>
-                <form class="mb-3" onsubmit="buscar()" action="javascript:void(0);">
-                    <div class="mb-3 row">
-                        <label for="search_email" class="col-sm-2 col-form-label">Email del Pagador</label>
-                        <div class="col-sm-10">
-                            <select class="form-select" aria-label="Email Pagador" id="search_email">
-                                <option selected>Selecciona una opción</option>
-                                <option value="alberto.ospino@csm.edu.mx">alberto.ospino@csm.edu.mx</option>
-                                <option value="ana.aguilar@csm.edu.mx">ana.aguilar@csm.edu.mx</option>
-                                <option value="andres.muedano@csm.edu.mx">andres.muedano@csm.edu.mx</option>
-                                <option value="bianca.barcia@csm.edu.mx">bianca.barcia@csm.edu.mx</option>
-                                <option value="carlos.carreon@csm.edu.mx">carlos.carreon@csm.edu.mx</option>
-                                <option value="carlos.egry@csm.edu.mx">carlos.egry@csm.edu.mx</option>
-                                <option value="camila.lopez@csm.edu.mx">camila.lopez@csm.edu.mx</option>
-                                <option value="daniel.campa@csm.edu.mx">daniel.campa@csm.edu.mx</option>
-                                <option value="dominique.olvera@csm.edu.mx">dominique.olvera@csm.edu.mx</option>
-                                <option value="eduardo.giles@csm.edu.mx">eduardo.giles@csm.edu.mx</option>
-                                <option value="emilia.christlieb@csm.edu.mx">emilia.christlieb@csm.edu.mx</option>
-                                <option value="georgina.schiaffino@csm.edu.mx">georgina.schiaffino@csm.edu.mx</option>
-                                <option value="gustavo.garfias@csm.edu.mx">gustavo.garfias@csm.edu.mx</option>
-                                <option value="guillermo.bulnes@csm.edu.mx">guillermo.bulnes@csm.edu.mx</option>
-                                <option value="hector.thomassiny@csm.edu.mx">hector.thomassiny@csm.edu.mx</option>
-                                <option value="ian.saturno@csm.edu.mx">ian.saturno@csm.edu.mx</option>
-                                <option value="iann.diaz@csm.edu.mx">iann.diaz@csm.edu.mx</option>
-                                <option value="julian.gonzalez@csm.edu.mx">julian.gonzalez@csm.edu.mx</option>
-                                <option value="joel.butzberger@csm.edu.mx">joel.butzberger@csm.edu.mx</option>
-                                <option value="kebia.urdapilleta@csm.edu.mx">kebia.urdapilleta@csm.edu.mx</option>
-                                <option value="konstanze.ponisch@csm.edu.mx">konstanze.ponisch@csm.edu.mx</option>
-                                <option value="lucia.vega@csm.edu.mx">lucia.vega@csm.edu.mx</option>
-                                <option value="luis.sarzo@csm.edu.mx">luis.sarzo@csm.edu.mx</option>
-                                <option value="miguel.arenas@csm.edu.mx">miguel.arenas@csm.edu.mx</option>
-                                <option value="paola.rodriguez@csm.edu.mx">paola.rodriguez@csm.edu.mx</option>
-                                <option value="paulina.ruiz@csm.edu.mx">paulina.ruiz@csm.edu.mx</option>
-                                <option value="regina.vazquez@csm.edu.mx">regina.vazquez@csm.edu.mx</option>
-                                <option value="rene.ramirez@csm.edu.mx">rene.ramirez@csm.edu.mx</option>
-                                <option value="sofia.ibarra@csm.edu.mx">sofia.ibarra@csm.edu.mx</option>
-                                <option value="sofia.zamora@csm.edu.mx">sofia.zamora@csm.edu.mx</option>
-                                <option value="victoria.aguilar@csm.edu.mx">victoria.aguilar@csm.edu.mx</option>
-                            </select>
-                        </div>
+                <div class="printable">
+                    <hr>
+
+                    <h3 class="pb-3">Todos los Pagos</h3>
+                    <button type="button" class="btn btn-primary mb-3" onclick="loadAll()">Cargar Todos los Pagos</button>
+                    <div class="table-responsive pb-4">
+                        <table class="table table-hover table-sm">
+                            <thead>
+                            <tr>
+                                <th>Fecha de Pago</th>
+                                <th># Boletos Pagados</th>
+                                <th>Monto Pagado</th>
+                                <th>Pagado por</th>
+                                <th>Recibido por</th>
+                                <th>Folio</th>
+                            </tr>
+                            </thead>
+                            <tbody id="body_all">
+                            </tbody>
+                            <tbody id="body_all_tot">
+                            </tbody>
+                        </table>
                     </div>
-                    <div class="col-sm">
-                        <button type="submit" class="btn btn-primary">Buscar Pagos</button>
+                    <hr>
+
+                    <h3 class="pb-3">Estados de Pago</h3>
+                    <button type="button" class="btn btn-primary mb-3" onclick="loadStatus()">Cargar Todos los Estados de Pago</button>
+                    <div class="table-responsive pb-4">
+                        <table class="table table-hover table-sm">
+                            <thead>
+                            <tr>
+                                <th>Nombre</th>
+                                <th># Boletos Pagados</th>
+                                <th>Monto Pagado</th>
+                                <th>Status</th>
+                            </tr>
+                            </thead>
+                            <tbody id="body_status">
+                            </tbody>
+                            <tbody id="body_status_tot">
+                            </tbody>
+                        </table>
                     </div>
-                </form>
-                <div id="search_results"></div>
-                <div class="table-responsive pb-4">
-                    <table class="table table-hover table-sm">
-                        <thead>
-                        <tr>
-                            <th>Fecha de Pago</th>
-                            <th>Cantidad de Boletos Pagados</th>
-                            <th>Monto Pagado</th>
-                            <th>Pagado por</th>
-                            <th>Recibido por</th>
-                            <th>Folio</th>
-                        </tr>
-                        </thead>
-                        <tbody id="tbody">
-                        </tbody>
-                        <tbody id="totales"></tbody>
-                    </table>
-                </div>
-                <hr>
 
-                <h3 class="pb-3">Todos los Pagos</h3>
-                <button type="button" class="btn btn-primary mb-3" onclick="loadAll()">Cargar Todos los Pagos</button>
-                <div class="table-responsive pb-4">
-                    <table class="table table-hover table-sm">
-                        <thead>
-                        <tr>
-                            <th>Fecha de Pago</th>
-                            <th># Boletos Pagados</th>
-                            <th>Monto Pagado</th>
-                            <th>Pagado por</th>
-                            <th>Recibido por</th>
-                            <th>Folio</th>
-                        </tr>
-                        </thead>
-                        <tbody id="body_all">
-                        </tbody>
-                        <tbody id="body_all_tot">
-                        </tbody>
-                    </table>
+                    <hr>
                 </div>
-                <hr>
-
-                <h3 class="pb-3">Estados de Pago</h3>
-                <button type="button" class="btn btn-primary mb-3" onclick="loadStatus()">Cargar Todos los Estados de Pago</button>
-                <div class="table-responsive pb-4">
-                    <table class="table table-hover table-sm">
-                        <thead>
-                        <tr>
-                            <th>Nombre</th>
-                            <th># Boletos Pagados</th>
-                            <th>Monto Pagado</th>
-                            <th>Status</th>
-                        </tr>
-                        </thead>
-                        <tbody id="body_status">
-                        </tbody>
-                        <tbody id="body_status_tot">
-                        </tbody>
-                    </table>
-                </div>
-
-                <hr>
                 <!-- Cerrar sesión -->
-                <div class="container">
+                <div class="container noPrint">
                     <button type="button" class="btn btn-outline-danger mb-3" onclick="logout()">Cerrar Sesión</button>
                 </div>
             </div>
