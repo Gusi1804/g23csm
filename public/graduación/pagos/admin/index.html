@@ -97,6 +97,7 @@
     <div class="container-sm py-5 text-center align-items-center  justify-content-center">
         <main>
             <h1 class="pb-4">Pagos Graduación Admin</h1>
+            <h6 class="pb-4" id="date"></h6>
 
             <!-- Loading spinner -->
             <div class="container align-items-center text-center" id="spinner">
@@ -402,6 +403,8 @@
             var now = new Date();
             now.setMinutes(now.getMinutes() - now.getTimezoneOffset());
             document.getElementById('fecha').value = now.toISOString().slice(0,16);
+
+            document.getElementById("date").innerText = `Fecha actual: ${new Date().toLocaleString()}`;
 
             checkLogInStatus();
         });
