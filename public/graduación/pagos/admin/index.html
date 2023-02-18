@@ -82,12 +82,13 @@
 
             .printable {
                 display : block;
-                font-family: Helvetica, Arial, sans-serif;
             }
 
             body {
                 -webkit-print-color-adjust: exact !important;
                 print-color-adjust:exact !important;
+
+                font-size: 12px;
             }
         }
     </style>
@@ -369,8 +370,8 @@
                         </table>
                     </div>
 
-                    <hr>
                 </div>
+                <hr class="noPrint">
                 <!-- Cerrar sesión -->
                 <div class="container noPrint">
                     <button type="button" class="btn btn-outline-danger mb-3" onclick="logout()">Cerrar Sesión</button>
