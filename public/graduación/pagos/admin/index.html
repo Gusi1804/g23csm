@@ -7,7 +7,7 @@
     <!-- Required meta tags -->
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
 
     <!-- update the version number as needed -->
     <script src="https://www.gstatic.com/firebasejs/9.8.1/firebase-app-compat.js"></script>
@@ -180,6 +180,68 @@
                     </div>
                 </form>
                 <hr>
+                <h3>Buscar Calendario</h3>
+                <form class="mb-3" onsubmit="buscar()" action="javascript:void(0);">
+                    <div class="mb-3 row">
+                        <label for="cal_email" class="col-sm-2 col-form-label">Email del Pagador</label>
+                        <div class="col-sm-10">
+                            <select class="form-select" aria-label="Email Pagador" id="cal_email">
+                                <option selected>Selecciona una opción</option>
+                                <option value="alberto.ospino@csm.edu.mx">alberto.ospino@csm.edu.mx</option>
+                                <option value="ana.aguilar@csm.edu.mx">ana.aguilar@csm.edu.mx</option>
+                                <option value="andres.muedano@csm.edu.mx">andres.muedano@csm.edu.mx</option>
+                                <option value="bianca.barcia@csm.edu.mx">bianca.barcia@csm.edu.mx</option>
+                                <option value="carlos.carreon@csm.edu.mx">carlos.carreon@csm.edu.mx</option>
+                                <option value="carlos.egry@csm.edu.mx">carlos.egry@csm.edu.mx</option>
+                                <option value="camila.lopez@csm.edu.mx">camila.lopez@csm.edu.mx</option>
+                                <option value="daniel.campa@csm.edu.mx">daniel.campa@csm.edu.mx</option>
+                                <option value="dominique.olvera@csm.edu.mx">dominique.olvera@csm.edu.mx</option>
+                                <option value="eduardo.giles@csm.edu.mx">eduardo.giles@csm.edu.mx</option>
+                                <option value="emilia.christlieb@csm.edu.mx">emilia.christlieb@csm.edu.mx</option>
+                                <option value="georgina.schiaffino@csm.edu.mx">georgina.schiaffino@csm.edu.mx</option>
+                                <option value="gustavo.garfias@csm.edu.mx">gustavo.garfias@csm.edu.mx</option>
+                                <option value="guillermo.bulnes@csm.edu.mx">guillermo.bulnes@csm.edu.mx</option>
+                                <option value="hector.thomassiny@csm.edu.mx">hector.thomassiny@csm.edu.mx</option>
+                                <option value="ian.saturno@csm.edu.mx">ian.saturno@csm.edu.mx</option>
+                                <option value="iann.diaz@csm.edu.mx">iann.diaz@csm.edu.mx</option>
+                                <option value="julian.gonzalez@csm.edu.mx">julian.gonzalez@csm.edu.mx</option>
+                                <option value="joel.butzberger@csm.edu.mx">joel.butzberger@csm.edu.mx</option>
+                                <option value="kebia.urdapilleta@csm.edu.mx">kebia.urdapilleta@csm.edu.mx</option>
+                                <option value="konstanze.ponisch@csm.edu.mx">konstanze.ponisch@csm.edu.mx</option>
+                                <option value="lucia.vega@csm.edu.mx">lucia.vega@csm.edu.mx</option>
+                                <option value="luis.sarzo@csm.edu.mx">luis.sarzo@csm.edu.mx</option>
+                                <option value="miguel.arenas@csm.edu.mx">miguel.arenas@csm.edu.mx</option>
+                                <option value="paola.rodriguez@csm.edu.mx">paola.rodriguez@csm.edu.mx</option>
+                                <option value="paulina.ruiz@csm.edu.mx">paulina.ruiz@csm.edu.mx</option>
+                                <option value="regina.vazquez@csm.edu.mx">regina.vazquez@csm.edu.mx</option>
+                                <option value="rene.ramirez@csm.edu.mx">rene.ramirez@csm.edu.mx</option>
+                                <option value="sofia.ibarra@csm.edu.mx">sofia.ibarra@csm.edu.mx</option>
+                                <option value="sofia.zamora@csm.edu.mx">sofia.zamora@csm.edu.mx</option>
+                                <option value="victoria.aguilar@csm.edu.mx">victoria.aguilar@csm.edu.mx</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-sm">
+                        <button type="button" class="btn btn-primary" onclick="loadCal()">Buscar Pagos</button>
+                    </div>
+                </form>
+                <div id="cal_results"></div>
+                <div class="table-responsive pb-4">
+                    <table class="table table-hover table-sm">
+                        <thead>
+                        <tr>
+                            <th>Fecha Límite de Pago</th>
+                            <th>Cantidad de Boletos a Pagar</th>
+                            <th>Monto a Pagar</th>
+                        </tr>
+                        </thead>
+                        <tbody id="tbody_cal">
+                        </tbody>
+                        <tbody id="totales_cal"></tbody>
+                    </table>
+                </div>
+
+                <hr>
                 <h3>Buscar Pagos</h3>
                 <form class="mb-3" onsubmit="buscar()" action="javascript:void(0);">
                     <div class="mb-3 row">
@@ -246,7 +308,7 @@
                 <hr>
 
                 <h3 class="pb-3">Todos los Pagos</h3>
-                <button type="button" class="btn btn-primary" onclick="loadAll()">Cargar Todos los Pagos</button>
+                <button type="button" class="btn btn-primary mb-3" onclick="loadAll()">Cargar Todos los Pagos</button>
                 <div class="table-responsive pb-4">
                     <table class="table table-hover table-sm">
                         <thead>
@@ -265,7 +327,26 @@
                         </tbody>
                     </table>
                 </div>
+                <hr>
 
+                <h3 class="pb-3">Estados de Pago</h3>
+                <button type="button" class="btn btn-primary mb-3" onclick="loadStatus()">Cargar Todos los Estados de Pago</button>
+                <div class="table-responsive pb-4">
+                    <table class="table table-hover table-sm">
+                        <thead>
+                        <tr>
+                            <th>Email</th>
+                            <th># Boletos Pagados</th>
+                            <th>Monto Pagado</th>
+                            <th>Status</th>
+                        </tr>
+                        </thead>
+                        <tbody id="body_status">
+                        </tbody>
+                        <tbody id="body_status_tot">
+                        </tbody>
+                    </table>
+                </div>
 
                 <hr>
                 <!-- Cerrar sesión -->
@@ -455,6 +536,8 @@
             document.getElementById('body_all').innerHTML = "";
 
             var paid = 0;
+            var paid_amount = 0;
+            var payments = 0;
 
             db.collection("pagos-grad").orderBy('fecha')
                 .get()
@@ -496,33 +579,387 @@
                                     folio.innerText = pago.folio;
 
                                     paid += pago.cant;
+                                    paid_amount += pago.monto;
+                                    payments += 1;
 
                                     row.append(fecha, cant, monto, pagador, receptor, folio);
                                     document.getElementById('body_all').append(row);
                                 });
+
+                                document.getElementById('body_all_tot').innerHTML = "";
+
+                                let totals_row = document.createElement('tr');
+                                let empty = document.createElement('th');
+                                empty.innerText = `Total (${payments})`;
+                                let cant_tot = document.createElement('th');
+                                cant_tot.innerText = paid;
+                                let monto_tot = document.createElement('th');
+
+                                var symbol = "";
+
+                                if (paid_amount == paid * 1450) {
+                                    symbol = " ✔︎";
+                                } else {
+                                    symbol = " ✖️";
+                                }
+
+                                monto_tot.innerText = format_currency(paid_amount) +  symbol;
+                                totals_row.append(empty, cant_tot, monto_tot, document.createElement('th'), document.createElement('th'), document.createElement('th'));
+
+                                document.getElementById('body_all_tot').append(totals_row);
                             })
                             .catch((error) => {
                                 console.log("Error getting documents: ", error);
                             });
 
-
                     });
 
-
-                    let totals_row = document.createElement('tr');
-                    let empty = document.createElement('th');
-                    empty.innerText = "Total"
-                    let cant_tot = document.createElement('th');
-                    cant_tot.innerText = paid;
-                    let monto_tot = document.createElement('th');
-                    monto_tot.innerText = format_currency(paid * 1450);
-                    totals_row.append(empty, cant_tot, monto_tot, document.createElement('th'), document.createElement('th'), document.createElement('th'));
-
-                    document.getElementById('body_all_tot').append(totals_row);
                 })
                 .catch((error) => {
                     console.log("Error getting documents: ", error);
                 });
+        }
+
+        function loadCal() {
+            let email = document.getElementById('cal_email').value;
+
+            db.collection("votos").where("email", "==", email)
+                .get()
+                .then((querySnapshot) => {
+                    document.getElementById('tbody_cal').innerHTML = "";
+                    document.getElementById('totales_cal').innerHTML = "";
+                    querySnapshot.forEach((doc) => {
+                        // doc.data() is never undefined for query doc snapshots
+                        console.log(doc.id, " => ", doc.data());
+                        let voto = doc.data();
+
+                        let boletos = voto.invitados_cena;
+
+                        // document.getElementById('boletos').innerHTML = `<b>Te recordamos que comprometiste a pagar ${boletos} boletos.</b><br>Ya has pagado ${paid} boletos.`;
+
+                        let p1 = Math.floor((boletos - 1) / 3) + 1;
+                        var p2 = Math.floor((boletos - 2) / 3) + 1;
+                        var p3 = Math.floor((boletos - 3) / 3) + 1;
+
+                        if (boletos == 2) {
+                            p3 = 0;
+                        } else if (boletos == 1) {
+                            p2 = 0;
+                            p3 = 0;
+                        }
+
+                        const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+
+                        let p1_row = document.createElement('tr');
+                        let p1_date = new Date('17 Feb 2023 20:30:00 GMT');
+
+                        let p1_1 = document.createElement('td');
+                        p1_1.innerText = `${p1_date.toLocaleDateString(undefined, options)} a las ${p1_date.toLocaleTimeString()}`;
+                        let p1_2 = document.createElement('td');
+                        p1_2.innerText = p1;
+                        let p1_3 = document.createElement('td');
+                        p1_3.innerText = format_currency(p1 * 1450);
+
+                        p1_row.append(p1_1, p1_2, p1_3);
+
+                        let p2_row = document.createElement('tr');
+                        let p2_date = new Date('17 Mar 2023 20:30:00 GMT');
+
+                        let p2_1 = document.createElement('td');
+                        p2_1.innerText = `${p2_date.toLocaleDateString(undefined, options)} a las ${p2_date.toLocaleTimeString()}`;
+                        let p2_2 = document.createElement('td');
+                        p2_2.innerText = p2;
+                        let p2_3 = document.createElement('td');
+                        p2_3.innerText = format_currency(p2 * 1450);
+
+                        p2_row.append(p2_1, p2_2, p2_3);
+
+                        let p3_row = document.createElement('tr');
+                        let p3_date = new Date('17 Apr 2023 20:30:00 GMT');
+
+                        let p3_1 = document.createElement('td');
+                        p3_1.innerText = `${p3_date.toLocaleDateString(undefined, options)} a las ${p3_date.toLocaleTimeString()}`;
+                        let p3_2 = document.createElement('td');
+                        p3_2.innerText = p3;
+                        let p3_3 = document.createElement('td');
+                        p3_3.innerText = format_currency(p3 * 1450);
+
+                        let totals_row = document.createElement('tr');
+                        let empty = document.createElement('th');
+                        empty.innerText = "Total"
+                        let cant_tot = document.createElement('th');
+                        cant_tot.innerText = p1 + p2 + p3;
+                        let monto_tot = document.createElement('th');
+                        monto_tot.innerText = format_currency((p1 + p2 + p3) * 1450);
+                        totals_row.append(empty, cant_tot, monto_tot);
+
+                        p3_row.append(p3_1, p3_2, p3_3);
+
+                        document.getElementById('tbody_cal').append(p1_row, p2_row, p3_row);
+                        document.getElementById('totales_cal').append(totals_row);
+
+                        /*
+                        let alert = document.getElementById('alert');
+                        let alert_text = document.getElementById('alert_text');
+
+                        if (new Date() < p1_date) {
+                            // before 1st payment
+                            let difference = p1_date.getTime() - new Date().getTime();
+                            let TotalDays = Math.ceil(difference / (1000 * 3600 * 24));
+
+                            if (paid >= p1 + p2 + p3) {
+                                alert.classList.add('alert-success');
+                                alert_text.innerHTML = `¡Has finalizado de realizar tus pagos!<br>Tu "código de reservación" es: <b>${code}</b>`;
+                            } else if (paid >= p1) {
+                                alert.classList.add('alert-success');
+                                alert_text.innerText = 'Has realizado el pago de este periodo, ¡muchas gracias!';
+                            } else if (TotalDays <= 5) {
+                                alert.classList.add('alert-warning');
+                                alert_text.innerText = `Estás al corriente con tus pagos, ¡pero solo te quedan ${TotalDays} días para realizar el siguiente!`;
+                            } else {
+                                alert.classList.add('alert-success');
+                                alert_text.innerText = `¡Aún estás a tiempo para realizar tu siguiente pago, te quedan ${TotalDays} días!`;
+                            }
+                        } else if (new Date() < p2_date) {
+                            // before 2nd payment
+                            let difference = p2_date.getTime() - new Date().getTime();
+                            let TotalDays = Math.ceil(difference / (1000 * 3600 * 24));
+
+                            if (paid >= p1 + p2 + p3) {
+                                alert.classList.add('alert-success');
+                                alert_text.innerHTML = `¡Has finalizado de realizar tus pagos!<br>Tu "código de reservación" es: <b>${code}</b>`;
+                            } else if (paid >= p1 + p2) {
+                                alert.classList.add('alert-success');
+                                alert_text.innerText = 'Has realizado el pago de este periodo, ¡muchas gracias!';
+                            } else if (paid >= p1) {
+                                alert.classList.add('alert-success');
+                                alert_text.innerText = '¡Estás al corriente, gracias! Aún estás a tiempo para realizar tu siguiente pago.';
+                            } else if (TotalDays <= 5) {
+                                alert.classList.add('alert-warning');
+                                alert_text.innerText = `Estás al corriente con tus pagos, ¡pero solo te quedan ${TotalDays} días para realizar el siguiente!`;
+                            } else {
+                                alert.classList.add('alert-warning');
+                                alert_text.innerText = 'Estás atrasad@ con tus pagos 😱. Por favor ponte en contacto con el Comité de Graduación lo más pronto posible para ponerte al corriente.';
+                            }
+
+                        } else if (new Date() < p3_date) {
+                            // before 3rd payment
+                            let difference = p3_date.getTime() - new Date().getTime();
+                            let TotalDays = Math.ceil(difference / (1000 * 3600 * 24));
+
+                            if (paid >= p1 + p2 + p3) {
+                                alert.classList.add('alert-success');
+                                alert_text.innerHTML = `¡Has finalizado de realizar tus pagos!<br>Tu "código de reservación" es: <b>${code}</b>`;
+                            } else if (paid >= p1 + p2) {
+                                alert.classList.add('alert-success');
+                                alert_text.innerText = '¡Estás al corriente, gracias! Aún estás a tiempo para realizar tu siguiente pago, te quedan ${TotalDays} días.';
+                            } else if (TotalDays <= 5) {
+                                alert.classList.add('alert-warning');
+                                alert_text.innerText = `Estás al corriente con tus pagos, ¡pero solo te quedan ${TotalDays} días para realizar el siguiente!`;
+                            } else {
+                                alert.classList.add('alert-danger');
+                                alert_text.innerText = 'Estás atrasad@ con tus pagos 😱. Por favor ponte en contacto con el Comité de Graduación lo más pronto posible para ponerte al corriente.';
+                            }
+
+                        } else {
+                            // after 3rd payment
+                            if (paid >= p1 + p2 + p3) {
+                                alert.classList.add('alert-success');
+                                alert_text.innerHTML = `¡Has finalizado de realizar tus pagos!<br>Tu "código de reservación" es: <b>${code}</b>`;
+                            } else if (TotalDays <= 5) {
+                                alert.classList.add('alert-warning');
+                                alert_text.innerText = `Estás al corriente con tus pagos, ¡pero solo te quedan ${TotalDays} días para realizar el siguiente!`;
+                            } else {
+                                alert.classList.add('alert-danger');
+                                alert_text.innerText = 'Estás atrasad@ con tus pagos 😱. Por favor ponte en contacto con el Comité de Graduación lo más pronto posible para ponerte al corriente.';
+                            }
+
+                        }
+                         */
+                    });
+
+                    show();
+                })
+                .catch((error) => {
+                    console.log("Error getting documents: ", error);
+                });
+        }
+
+        function loadStatus() {
+            let emails = ['alberto.ospino@csm.edu.mx', 'ana.aguilar@csm.edu.mx', 'andres.muedano@csm.edu.mx', 'bianca.barcia@csm.edu.mx', 'camila.lopez@csm.edu.mx', 'carlos.carreon@csm.edu.mx', 'carlos.egry@csm.edu.mx', 'daniel.campa@csm.edu.mx', 'dominique.olvera@csm.edu.mx', 'eduardo.giles@csm.edu.mx', 'emilia.christlieb@csm.edu.mx', 'georgina.schiaffino@csm.edu.mx', 'guillermo.bulnes@csm.edu.mx', 'gustavo.garfias@csm.edu.mx', 'hector.thomassiny@csm.edu.mx', 'ian.saturno@csm.edu.mx', 'iann.diaz@csm.edu.mx', 'joel.butzberger@csm.edu.mx', 'julian.gonzalez@csm.edu.mx', 'kebia.urdapilleta@csm.edu.mx', 'konstanze.ponisch@csm.edu.mx', 'lucia.vega@csm.edu.mx', 'luis.sarzo@csm.edu.mx', 'miguel.arenas@csm.edu.mx', 'paola.rodriguez@csm.edu.mx', 'paulina.ruiz@csm.edu.mx', 'regina.vazquez@csm.edu.mx', 'rene.ramirez@csm.edu.mx', 'sofia.ibarra@csm.edu.mx', 'sofia.zamora@csm.edu.mx', 'victoria.aguilar@csm.edu.mx'];
+
+            document.getElementById('body_status').innerHTML = "";
+            document.getElementById('body_status_tot').innerHTML = "";
+
+            var all_paid = 0;
+            var all_monto = 0;
+            var all_boletos = 0;
+
+            emails.forEach(em => {
+                var paid = 0;
+                var monto = 0;
+
+                db.collection("pagos-grad").where("email", "==", em)
+                    .get()
+                    .then((querySnapshot) => {
+                        querySnapshot.forEach((doc) => {
+                            // doc.data() is never undefined for query doc snapshots
+                            console.log(doc.id, " => ", doc.data());
+
+                            let pago = doc.data();
+
+                            paid += pago.cant;
+                            all_paid += pago.cant;
+
+                            monto += pago.monto;
+                            all_monto += pago.monto;
+
+                        });
+
+                        db.collection("votos").where("email", "==", em)
+                            .get()
+                            .then((querySnapshot) => {
+                                querySnapshot.forEach((doc) => {
+                                    // doc.data() is never undefined for query doc snapshots
+                                    console.log(doc.id, " => ", doc.data());
+                                    let voto = doc.data();
+
+                                    let boletos = voto.invitados_cena;
+                                    all_boletos += boletos;
+
+                                    let p1 = Math.floor((boletos - 1) / 3) + 1;
+                                    var p2 = Math.floor((boletos - 2) / 3) + 1;
+                                    var p3 = Math.floor((boletos - 3) / 3) + 1;
+
+                                    if (boletos == 2) {
+                                        p3 = 0;
+                                    } else if (boletos == 1) {
+                                        p2 = 0;
+                                        p3 = 0;
+                                    }
+
+                                    let p1_date = new Date('17 Feb 2023 20:30:00 GMT');
+                                    let p2_date = new Date('17 Mar 2023 20:30:00 GMT');
+                                    let p3_date = new Date('17 Apr 2023 20:30:00 GMT');
+
+                                    var to_pay = 0;
+                                    var corr_payment = 0;
+
+                                    if (new Date() < p1_date) {
+                                        to_pay = p1;
+                                        corr_payment = p1_date;
+                                    } else if (new Date() < p2_date) {
+                                        to_pay = p1 + p2;
+                                        corr_payment = p2_date;
+                                    } else {
+                                        to_pay = p1 + p2 + p3;
+                                        corr_payment = p3_date;
+                                    }
+
+                                    var status = "";
+
+                                    /*
+                                    if (paid < to_pay && new Date() < corr_payment) {
+                                        status = `<span class="badge text-bg-warning">Pendiente</span>`;
+                                    } else if (paid < to_pay && new Date() > corr_payment) {
+                                        status = `<span class="badge text-bg-danger">Atrasado</span>`;
+                                    } else if (paid == p1 + p2 + p3) {
+                                        status = `<span class="badge text-bg-success">Liquidado</span>`;
+                                    } else if (paid >= to_pay) {
+                                        status = `<span class="badge text-bg-secondary">Realizado</span>`;
+                                    }
+
+                                     */
+
+                                    // Status calculation
+                                    if (new Date() < p1_date) {
+                                        // before 1st payment
+
+                                        if (paid >= p1 + p2 + p3) {
+                                            status = `<span class="badge text-bg-success">Liquidado</span>`;
+                                        } else if (paid >= p1) {
+                                            status = `<span class="badge text-bg-secondary">Realizado</span>`;
+                                        } else {
+                                            status = `<span class="badge text-bg-warning">Pendiente</span>`;
+                                        }
+                                    } else if (new Date() < p2_date) {
+                                        // before 2nd payment
+
+                                        if (paid >= p1 + p2 + p3) {
+                                            status = `<span class="badge text-bg-success">Liquidado</span>`;
+                                        } else if (paid >= p1 + p2) {
+                                            status = `<span class="badge text-bg-secondary">Realizado</span>`;
+                                        } else if (paid >= p1) {
+                                            status = `<span class="badge text-bg-warning">Pendiente</span>`;
+                                        } else {
+                                            status = `<span class="badge text-bg-danger">Atrasado</span>`;
+                                        }
+
+                                    } else if (new Date() < p3_date) {
+                                        // before 3rd payment
+
+                                        if (paid >= p1 + p2 + p3) {
+                                            status = `<span class="badge text-bg-success">Liquidado</span>`;
+                                        } else if (paid >= p1 + p2) {
+                                            status = `<span class="badge text-bg-warning">Pendiente</span>`;
+                                        } else {
+                                            status = `<span class="badge text-bg-danger">Atrasado</span>`;
+                                        }
+
+                                    } else {
+                                        // after 3rd payment
+                                        if (paid >= p1 + p2 + p3) {
+                                            status = `<span class="badge text-bg-success">Liquidado</span>`;
+                                        } else {
+                                            status = `<span class="badge text-bg-danger">Atrasado</span>`;
+                                        }
+                                    }
+
+                                    let row = document.createElement('tr');
+                                    let tot_row = document.createElement('th');
+                                    tot_row.innerText = "TOTAL"
+
+                                    let email_r = document.createElement('td');
+                                    email_r.innerText = voto.email;
+
+                                    let paid_r = document.createElement('td');
+                                    paid_r.innerText = `${paid} / ${p1 + p2 + p3}`;
+
+                                    let monto_r = document.createElement('td');
+                                    monto_r.innerText = `${format_currency(monto)}`;
+
+                                    let status_r = document.createElement('td');
+                                    status_r.innerHTML = status;
+
+                                    row.append(email_r, paid_r, monto_r, status_r);
+                                    document.getElementById('body_status').append(row);
+
+                                    let totals_row = document.createElement('tr');
+
+                                    let total_paid_r = document.createElement('th');
+                                    total_paid_r.innerText = `${all_paid} / ${all_boletos}`;
+
+                                    let total_monto_r = document.createElement('th');
+                                    total_monto_r.innerText = `${format_currency(all_monto)} / ${format_currency(all_boletos * 1450)}`;
+
+                                    totals_row.append(tot_row, total_paid_r, total_monto_r, document.createElement('td'));
+                                    document.getElementById('body_status_tot').innerHTML = "";
+                                    document.getElementById('body_status_tot').append(totals_row);
+
+                                });
+                            })
+                            .catch((error) => {
+                                console.log("Error getting documents: ", error);
+                            });
+                    })
+                    .catch((error) => {
+                        console.log("Error getting documents: ", error);
+                    });
+            });
+        }
+
+        function getStatus() {
+
         }
 
         function capitalizeFirstLetter(str) {

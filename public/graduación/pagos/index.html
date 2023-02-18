@@ -330,9 +330,6 @@
                                     } else if (paid >= p1) {
                                         alert.classList.add('alert-success');
                                         alert_text.innerText = '¡Estás al corriente, gracias! Aún estás a tiempo para realizar tu siguiente pago.';
-                                    } else if (TotalDays <= 5) {
-                                        alert.classList.add('alert-warning');
-                                        alert_text.innerText = `Estás al corriente con tus pagos, ¡pero solo te quedan ${TotalDays} días para realizar el siguiente!`;
                                     } else {
                                         alert.classList.add('alert-warning');
                                         alert_text.innerText = 'Estás atrasad@ con tus pagos 😱. Por favor ponte en contacto con el Comité de Graduación lo más pronto posible para ponerte al corriente.';
@@ -349,9 +346,6 @@
                                     } else if (paid >= p1 + p2) {
                                         alert.classList.add('alert-success');
                                         alert_text.innerText = '¡Estás al corriente, gracias! Aún estás a tiempo para realizar tu siguiente pago, te quedan ${TotalDays} días.';
-                                    } else if (TotalDays <= 5) {
-                                        alert.classList.add('alert-warning');
-                                        alert_text.innerText = `Estás al corriente con tus pagos, ¡pero solo te quedan ${TotalDays} días para realizar el siguiente!`;
                                     } else {
                                         alert.classList.add('alert-danger');
                                         alert_text.innerText = 'Estás atrasad@ con tus pagos 😱. Por favor ponte en contacto con el Comité de Graduación lo más pronto posible para ponerte al corriente.';
@@ -362,14 +356,10 @@
                                     if (paid >= p1 + p2 + p3) {
                                         alert.classList.add('alert-success');
                                         alert_text.innerHTML = `¡Has finalizado de realizar tus pagos!<br>Tu "código de reservación" es: <b>${code}</b>`;
-                                    } else if (TotalDays <= 5) {
-                                        alert.classList.add('alert-warning');
-                                        alert_text.innerText = `Estás al corriente con tus pagos, ¡pero solo te quedan ${TotalDays} días para realizar el siguiente!`;
                                     } else {
                                         alert.classList.add('alert-danger');
                                         alert_text.innerText = 'Estás atrasad@ con tus pagos 😱. Por favor ponte en contacto con el Comité de Graduación lo más pronto posible para ponerte al corriente.';
                                     }
-
                                 }
                             });
 
