@@ -573,6 +573,51 @@
 
                         let pago = doc.data();
 
+                        let row = document.createElement('tr');
+
+                        let fecha = document.createElement('td');
+                        fecha.innerText = `${pago.fecha.toDate().toLocaleDateString()}, ${pago.fecha.toDate().toLocaleTimeString()}`;
+                        let cant = document.createElement('td');
+                        cant.innerText = `${pago.cant}`;
+                        let monto = document.createElement('td');
+                        monto.innerText = format_currency(pago.monto);
+                        let pagador = document.createElement('td');
+                        pagador.innerHTML = `${pago.pagador}<br>${pago.email}`;
+                        let receptor = document.createElement('td');
+                        receptor.innerText = pago.receptor;
+                        let folio = document.createElement('td');
+                        folio.innerText = pago.folio;
+
+                        paid += pago.cant;
+                        paid_amount += pago.monto;
+                        payments += 1;
+
+                        row.append(fecha, cant, monto, pagador, receptor, folio);
+                        document.getElementById('body_all').append(row);
+
+                        document.getElementById('body_all_tot').innerHTML = "";
+
+                        let totals_row = document.createElement('tr');
+                        let empty = document.createElement('th');
+                        empty.innerText = `Total (${payments})`;
+                        let cant_tot = document.createElement('th');
+                        cant_tot.innerText = paid;
+                        let monto_tot = document.createElement('th');
+
+                        var symbol = "";
+
+                        if (paid_amount == paid * 1450) {
+                            symbol = " ✔︎";
+                        } else {
+                            symbol = " ✖️";
+                        }
+
+                        monto_tot.innerText = format_currency(paid_amount) +  symbol;
+                        totals_row.append(empty, cant_tot, monto_tot, document.createElement('th'), document.createElement('th'), document.createElement('th'));
+
+                        document.getElementById('body_all_tot').append(totals_row);
+
+                        /*
                         db.collection("votos").where("email", "==", pago.email)
                             .get()
                             .then((querySnapshot) => {
@@ -636,6 +681,8 @@
                             .catch((error) => {
                                 console.log("Error getting documents: ", error);
                             });
+
+                         */
 
                     });
 
