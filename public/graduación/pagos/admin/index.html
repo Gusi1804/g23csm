@@ -544,7 +544,9 @@
                                 let name = capitalizeFirstLetter(search_email.split('@')[0].split('.')[0]);
                                 let last_name = capitalizeFirstLetter(search_email.split('@')[0].split('.')[1]);
 
-                                document.getElementById('search_results').innerHTML = `<b>${name} ${last_name} ha pagado ${paid} de ${boletos} boletos que se compremetió a adquirir.</b>`;
+                                const status = getStatus(paid, boletos);
+
+                                document.getElementById('search_results').innerHTML = `<b>${name} ${last_name} ha pagado ${paid} de ${boletos} boletos que se compremetió a adquirir.</b> ${status}`;
                             });
                         })
                         .catch((error) => {
@@ -916,15 +918,19 @@
 
                                     var to_pay = 0;
                                     var corr_payment = 0;
+                                    var this_payment = 0;
 
                                     if (new Date() < p1_date) {
                                         to_pay = p1;
+                                        this_payment = p1;
                                         corr_payment = p1_date;
                                     } else if (new Date() < p2_date) {
                                         to_pay = p1 + p2;
+                                        this_payment = p2;
                                         corr_payment = p2_date;
                                     } else {
                                         to_pay = p1 + p2 + p3;
+                                        this_payment = p3;
                                         corr_payment = p3_date;
                                     }
 
@@ -944,6 +950,7 @@
                                      */
 
                                     // Status calculation
+                                    /*
                                     if (new Date() < p1_date) {
                                         // before 1st payment
 
@@ -987,6 +994,9 @@
                                         }
                                     }
 
+                                     */
+                                    status = getStatus(paid, boletos);
+
                                     let row = document.createElement('tr');
                                     let tot_row = document.createElement('th');
                                     tot_row.innerText = "TOTAL"
@@ -1005,6 +1015,20 @@
 
                                     let status_r = document.createElement('td');
                                     status_r.innerHTML = status;
+
+                                    let reminder_r = document.createElement('td');
+                                    switch (status) {
+                                        case `<span class="badge text-bg-success">Liquidado</span>`:
+                                            break;
+                                        case `<span class="badge text-bg-secondary">Realizado</span>`:
+                                            break;
+                                        case `<span class="badge text-bg-warning">Pendiente</span>`:
+                                            status_r.innerHTML = `<a href="mailto:${em}?cc=pagosg23@csm.edu.mx&subject=Recodatorio de tu Pago Pendiente&body=Estimad@ ${name}:%0D%0A%0D%0ATe recordamos que aún no has realizado el pago mínimo para la siguiente fecha de pago.%0D%0A%0D%0AEl número mínimo de boletos a pagar antes del ${corr_payment.toLocaleString()} es: ${this_payment} boleto(s) (${format_currency(this_payment * 1450)}).%0D%0A%0D%0APor favor no olvides que si no realizas tu pago a tiempo se te cobrará un interés compuesto de 1.00% diario sobre tu adeudo.%0D%0A%0D%0ADe igual manera te recordamos que es OBLIGATORIO realizar una cita previa a realizar tu pago enviando un email a pagosg23@csm.edu.mx donde indiques la cantidad de boletos a pagar y la fecha de pago.%0D%0A%0D%0AMuchas gracias de antemano por tu colaboración.%0D%0A%0D%0AAtentamente,%0D%0AComités de Tesorería y Graduación G23">${status}</a>`;
+                                            break;
+                                        case `<span class="badge text-bg-danger">Atrasado</span>`:
+                                            status_r.innerHTML = `<a href="mailto:${em}?cc=pagosg23@csm.edu.mx&subject=URGENTE: Recodatorio de tu Pago ATRASADO&body=Estimad@ ${name}:%0D%0A%0D%0A¡Te recordamos que no realizaste el pago mínimo para la fecha de pago anterior a tiempo!.%0D%0A%0D%0APor favor realiza tu pago a la brevedad posible.%0D%0A%0D%0ANo olvides que por cada día que no liquides tu pago atrasado se te cobrará un interés compuesto de 1.00% diario sobre tu adeudo.%0D%0A%0D%0ADe igual manera te recordamos que es OBLIGATORIO realizar una cita previa a realizar tu pago enviando un email a pagosg23@csm.edu.mx donde indiques la cantidad de boletos a pagar y la fecha de pago.%0D%0A%0D%0AMuchas gracias de antemano por tu colaboración.%0D%0A%0D%0AAtentamente,%0D%0AComités de Tesorería y Graduación G23">${status}</a>`;
+                                            break;
+                                    }
 
                                     row.append(name_r, paid_r, monto_r, status_r);
                                     document.getElementById('body_status').append(row);
@@ -1033,8 +1057,69 @@
             });
         }
 
-        function getStatus() {
+        function getStatus(paid, boletos) {
+            var status = "";
 
+            let p1_date = new Date('17 Feb 2023 20:30:00 GMT');
+            let p2_date = new Date('17 Mar 2023 20:30:00 GMT');
+            let p3_date = new Date('17 Apr 2023 20:30:00 GMT');
+
+            let p1 = Math.floor((boletos - 1) / 3) + 1;
+            var p2 = Math.floor((boletos - 2) / 3) + 1;
+            var p3 = Math.floor((boletos - 3) / 3) + 1;
+
+            if (boletos == 2) {
+                p3 = 0;
+            } else if (boletos == 1) {
+                p2 = 0;
+                p3 = 0;
+            }
+
+            // Status calculation
+            if (new Date() < p1_date) {
+                // before 1st payment
+
+                if (paid >= p1 + p2 + p3) {
+                    status = `<span class="badge text-bg-success">Liquidado</span>`;
+                } else if (paid >= p1) {
+                    status = `<span class="badge text-bg-secondary">Realizado</span>`;
+                } else {
+                    status = `<span class="badge text-bg-warning">Pendiente</span>`;
+                }
+            } else if (new Date() < p2_date) {
+                // before 2nd payment
+
+                if (paid >= p1 + p2 + p3) {
+                    status = `<span class="badge text-bg-success">Liquidado</span>`;
+                } else if (paid >= p1 + p2) {
+                    status = `<span class="badge text-bg-secondary">Realizado</span>`;
+                } else if (paid >= p1) {
+                    status = `<span class="badge text-bg-warning">Pendiente</span>`;
+                } else {
+                    status = `<span class="badge text-bg-danger">Atrasado</span>`;
+                }
+
+            } else if (new Date() < p3_date) {
+                // before 3rd payment
+
+                if (paid >= p1 + p2 + p3) {
+                    status = `<span class="badge text-bg-success">Liquidado</span>`;
+                } else if (paid >= p1 + p2) {
+                    status = `<span class="badge text-bg-warning">Pendiente</span>`;
+                } else {
+                    status = `<span class="badge text-bg-danger">Atrasado</span>`;
+                }
+
+            } else {
+                // after 3rd payment
+                if (paid >= p1 + p2 + p3) {
+                    status = `<span class="badge text-bg-success">Liquidado</span>`;
+                } else {
+                    status = `<span class="badge text-bg-danger">Atrasado</span>`;
+                }
+            }
+
+            return status
         }
 
         function capitalizeFirstLetter(str) {
