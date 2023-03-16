@@ -360,6 +360,7 @@
                                 <th>Nombre</th>
                                 <th># Boletos Pagados</th>
                                 <th>Monto Pagado</th>
+                                <th>Monto Faltante</th>
                                 <th>Status</th>
                             </tr>
                             </thead>
@@ -1013,6 +1014,9 @@
                                     let monto_r = document.createElement('td');
                                     monto_r.innerText = `${format_currency(monto)}`;
 
+                                    let faltante_r = document.createElement('td');
+                                    faltante_r.innerText = `${format_currency((p1 + p2 + p3) * 1450 - monto)}`;
+
                                     let status_r = document.createElement('td');
                                     status_r.innerHTML = status;
 
@@ -1030,7 +1034,7 @@
                                             break;
                                     }
 
-                                    row.append(name_r, paid_r, monto_r, status_r);
+                                    row.append(name_r, paid_r, monto_r, faltante_r, status_r);
                                     document.getElementById('body_status').append(row);
 
                                     let totals_row = document.createElement('tr');
@@ -1041,7 +1045,10 @@
                                     let total_monto_r = document.createElement('th');
                                     total_monto_r.innerText = `${format_currency(all_monto)} / ${format_currency(all_boletos * 1450)}`;
 
-                                    totals_row.append(tot_row, total_paid_r, total_monto_r, document.createElement('td'));
+                                    let total_missing_r = document.createElement('th');
+                                    total_missing_r.innerText = `${format_currency((all_boletos - all_paid) * 1450)} / ${format_currency(all_boletos * 1450)}`;
+
+                                    totals_row.append(tot_row, total_paid_r, total_monto_r, total_missing_r, document.createElement('td'));
                                     document.getElementById('body_status_tot').innerHTML = "";
                                     document.getElementById('body_status_tot').append(totals_row);
 
